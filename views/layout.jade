@@ -1,0 +1,22 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		div.menu
+			div.menu-items
+				ul.list-inline.col-md-12
+					li.home-page.col-md-6.col-md-offset-0
+						a(href='/') OptiOption
+					- if (profile)
+						li.profile-page.col-md-1
+							a(href='/#{profile}') #{profile}
+					- else
+						li.col-md-4.auth-page
+							a(href='/registration') Registration
+							a(href='/login') Login
+					li.feed-page.col-md-1
+						a(href='/posts') Feed
+		block content

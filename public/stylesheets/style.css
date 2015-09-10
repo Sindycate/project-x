@@ -1,0 +1,512 @@
+html {
+	background-color: #fafafa;
+}
+
+body {
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.menu {
+	/*background-color: rgb(238, 114, 136);*/
+	/*background-color: #EAEAEA;*/
+	background-color: #fff;
+	margin: 0 0 10px 0;
+	height: 70px;
+	/*background-image: url(../images/codepen.svg);*/
+	box-shadow: 0px 1px 1px #EAEAEA;
+}
+
+.menu-items {
+	font-family: "Helvetica";
+	margin: 0;
+	padding: 16px 0 0 20px;
+	font-size: 30px;
+	text-shadow: 1px 1px 1px #bbb;
+	cursor: pointer;
+	/*opacity: .9;*/
+}
+
+.menu-items a {
+	color: #346BA9;
+	/*color: #fff;*/
+}
+
+.menu-items .home-page {
+	float: left;
+	padding-right: 40px;
+	/*color: #fff;*/
+}
+
+.menu-items .profile-page {
+	float: right;
+	margin-top: 8px;
+	margin-right: 20px;
+	font-size: 20px;
+
+	/*color: #fff;*/
+}
+
+.menu-items .auth-page {
+	float: right;
+	/*color: #fff;*/
+}
+
+.menu-items .auth-page a {
+	float: right;
+	margin-right: 10px;
+	margin-top: 8px;
+	font-size: 20px;
+	/*color: #fff;*/
+}
+
+
+
+.menu-items .feed-page {
+	margin-left: -40px;
+}
+
+
+.menu-items a:hover {
+	color: #fff;
+	/*color: #346BA9;*/
+	text-shadow:1px 1px 1px #444;
+}
+
+/************************profile*******************************/
+
+.profile-information {
+	margin-top: 20px;
+	background: none;
+	padding: 0;
+}
+
+.profile-picture {
+	background-color: none;
+	opacity: .8;
+	border-radius: 250px;
+	width: 130px;
+	height: 132px;
+	margin-top: 10px;
+	margin-left: 30px;
+	background-image: url(../images/icons/no_profile_picture3.png);
+	background-size: cover;
+}
+
+#login {
+	margin: 12px 0 0 70px;
+	font-size: 28px;
+}
+
+.profile-description {
+	margin: 10px 0 0 70px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.profile-stat {
+	margin: 0 0 0 70px;
+	font-size: 18px;
+	padding: 0;
+}
+
+.follow button {
+	margin-top: -10px;
+	border: none;
+	border-radius: 2px;
+	opacity: .9;
+	color: #fff;
+}
+
+.follow button:hover {
+	opacity: 1;
+	color: #fff;
+}
+
+.follow button:focus {
+	outline: none;
+}
+.unfollow button {
+	margin-top: -10px;
+	background-color: #E19494;
+	border: none;
+	border-radius: 2px;
+	opacity: .9;
+	color: #fff;
+}
+
+.unfollow button:hover {
+	opacity: 1;
+	color: #fff;
+}
+
+.unfollow button:focus {
+	outline: none;
+}
+
+.log-out button {
+	margin-top: -10px;
+	border: none;
+	border-radius: 2px;
+	opacity: .9;
+}
+
+.profile-stat ul {
+	margin: 0;
+	padding: 0;
+}
+
+.profile-stat li {
+	margin-right: 20px;
+	margin-top: 10px;
+	padding: 0;
+}
+
+.empty-posts {
+	margin-top: 100px;
+	/*background-color: #bbb;*/
+	font-size: 20px;
+}
+
+/*************************************post*****************************************/
+.right-post-menu {
+}
+
+
+.delete-post {
+	margin-top: 55px;
+	margin-left: 8px;
+	background: none;
+	border: none;
+	background-image: url(../images/icons/delete6.png);
+	background-size: cover;
+	width: 25px;
+	height: 30px;
+	opacity: .5;
+}
+
+.delete-post:hover {
+	opacity: .9;
+	background-image: url(../images/icons/delete7.png);
+	cursor: pointer;
+}
+
+.delete-post:focus {
+	outline: none;
+}
+
+.post {
+	background-color: #F0F0F0;
+	border: 1px solid #E6E6E6;
+	border-radius: 3px;
+	padding: 0;
+	margin-top: 40px;
+	margin-bottom: 30px;
+}
+
+.post-information {
+	background-color: #fff;
+	margin: 0;
+	padding: 8px 25px 10px 25px;
+	border-radius: 3px 3px 0 0;
+}
+
+.post-information a {
+	float: left;
+	color: #346BA9;
+	font-size: 20px;
+	padding-top: 6px;
+	/*font-weight: bold;*/
+}
+
+.post-information h4 {
+	float: right;
+	color: #bbb;
+}
+
+.post-title {
+	background-color: #F0F0F0;
+	color: #777;
+	/*background-color: #fff;*/
+	border-top: 1px solid #E9E9E9;
+	margin: 0;
+	padding: 20px 40px 20px 50px;
+}
+
+.btn-vote {
+	background-color: grey;
+	border: none;
+	border-radius:0 0 3px 3px;
+	opacity: .4;
+	float: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.statistics {
+	background-color: #E19494;
+	padding: 10px 20px 10px 20px;
+	margin-bottom: 0;
+	margin-top: -10px;
+	border-radius:0 0 3px 3px;
+	float: right;
+	border-top: 1px solid #E9E9E9;
+	color: #fff
+}
+
+.statistics li:first-of-type {
+
+}
+
+.statistics li:last-of-type {
+}
+
+.post .thumbnail {
+	padding: 0;
+	border: none;
+}
+
+.post-footer {
+	background-color: #fff;
+	border-top: 1px solid #E9E9E9;
+	margin-top: 25px;
+	height: 30px;
+	padding: 10px;
+}
+
+/*****************************posts******************************/
+
+.sorting-params {
+	margin-top: 30px;
+}
+
+#sortAllPosts {
+	background-color: #FAFAFA;
+	padding: 2px;
+	color: #666;
+	font-size: 20px;
+}
+
+#sortAllPosts:hover {
+	background-color: #FAFAFA;
+	color: #333;
+	border-radius: 0;
+}
+
+#sortAllPosts:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+#sortFollowers {
+	background-color: #FAFAFA;
+	padding: 2px;
+	color: #666;
+	font-size: 20px;
+}
+
+#sortFollowers:before:hover {
+	content: '|';
+	color: #666;
+	margin-right: 10px;
+}
+
+#sortFollowers:hover {
+	background-color: #FAFAFA;
+	color: #333;
+	border-radius: 0;
+}
+
+#sortFollowers:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+/************************profile*****************************/
+
+#profileSettings button {
+	margin-bottom: -4px;
+	margin-left: 12px;
+	height: 25px;
+	width: 25px;
+	background-image: url(../images/icons/settings6.png);
+	background-size: cover;
+	opacity: .7;
+	cursor: pointer;
+	background-color: #FAFAFA;
+	box-shadow: none;
+	border: none;
+}
+
+#profileSettings button:hover {
+	opacity: 1;
+}
+
+#profileSettings button:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+#userPosts {
+	cursor: pointer;
+}
+
+#subscriptions {
+	cursor: pointer;
+}
+
+#followers {
+	cursor: pointer;
+}
+
+#subscriptions-followers {
+	background-color: #E9E9E9;
+	margin-top: 50px;
+	margin-bottom: 100px;
+	border-radius: 4px;
+	border: 1px solid #E4E4E4;
+}
+
+#subscriptions-followers ul {
+	margin-top: 10px;
+}
+
+#subscriptions-followers ul li:nth-child(2) {
+	float: left;
+	margin-top: 4px;
+	margin-left: 14px;
+	font-size: 22px;
+}
+
+#subscriptions-followers ul li:nth-child(1) {
+	float: left;
+	margin-top: 0;
+	margin-left: 0;
+	font-size: 22px;
+	height: 35px;
+	width: 35px;
+	border-radius: 25px;
+	background-image: url(../images/icons/no_profile_picture3.png);
+	background-size: cover;
+	background-color: #E9E9E9;
+	opacity: 1;
+}
+
+#subscriptions-followers ul li:nth-child(3) {
+	float: right;
+}
+
+.profile-stat li span:first-child {
+	margin-right: 3px;
+	font-weight: bold;
+}
+.profile-stat li span:last-child {
+
+}
+
+/***********************login***********************/
+
+#authForm {
+	background-color: #E9E9E9;
+	margin-top: 25px;
+	border: 1px solid #E4E4E4;
+	border-radius: 4px;
+	padding: 0;
+}
+
+#authTitle {
+	background-color: #fff;
+	height: 30px;
+	border-radius: 4px 4px 0 0;
+	border-color: #fff;
+}
+
+#authTitle h4 {
+	padding: 0;
+	margin-top: 6px;
+	color: #999;
+}
+
+#authBody {
+	padding: 15px 15px 0 15px;
+}
+
+#authBody button {
+	width: 100%;
+	margin: 0;
+	background-color: #52ABA3;
+	border-color: #E4E4E4;
+	border-radius: 3px;
+	color: #E4E4E4;
+}
+
+#authBody button:focus {
+	outline: none;
+}
+
+.messageLogin {
+	margin-top: 20px;
+}
+
+.messageLogin h4 {
+	color: #CE5E5E;
+}
+
+/***********************registration***********************/
+
+#regForm {
+	background-color: #E9E9E9;
+	margin-top: 25px;
+	border: 1px solid #E4E4E4;
+	border-radius: 4px;
+	padding: 0;
+}
+
+#regTitle {
+	background-color: #fff;
+	height: 30px;
+	border-radius: 4px 4px 0 0;
+	border-color: #fff;
+}
+
+#regTitle h4 {
+	padding: 0;
+	margin-top: 6px;
+	color: #999;
+}
+
+#regBody {
+	padding: 15px 15px 0 15px;
+}
+
+#regBody button {
+	width: 100%;
+	margin: 0;
+	background-color: #52ABA3;
+	border-color: #E4E4E4;
+	border-radius: 3px;
+	color: #E4E4E4;
+}
+
+#regBody button:focus {
+	outline: none;
+}
+
+.messageReg {
+	margin-top: 20px;
+}
+
+.messageReg h4 {
+	color: #CE5E5E;
+}
+
+.messageRegSuccess {
+	margin-top: 20px;
+}
+
+.messageRegSuccess h4 {
+	color: #555;
+}
