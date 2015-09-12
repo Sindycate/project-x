@@ -510,3 +510,32 @@ a {
 .messageRegSuccess h4 {
 	color: #555;
 }
+
+/*********************profile-settings*****************/
+
+small {
+	margin-left: 7px;
+}
+
+#profile-settings h4 {
+	color: #444;
+	font-size: 25px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.profile-item .page-header {
+	cursor: pointer;
+}
+
+.suggestions {
+	padding-top: 47px;
+	background-color: #C6C6C6;
+	height: 182px;
+	border-radius: 4px;
+	color: #fff;
+}
+
+.suggestions h3 {
+	font-size: 20px;
+}
