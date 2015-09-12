@@ -1,8 +1,47 @@
 extends layout
 
 block content
-	.col-md-12
-		h1 Настройки профиля
+	.col-md-8.col-md-offset-2#profile-settings
+		h4.text-center Настройки аккаунта
+		.col-md-12.profile-item#mainSettings
+			.page-header
+				h3 Основные настройки
+					small смена логина, пароля или почты
+			.settings-content(style='display: none;')
+				.col-md-6
+					.form-group
+						input.form-control(placeholder='Логин' name='login' type='text')
+					.form-group
+						input.form-control(placeholder='Старый пароль' name='oldPassword' type='password')
+					.form-group
+						input.form-control(placeholder='Новый пароль' name='newPassword' type='password')
+					.form-group
+						input.form-control(placeholder='Email' name='email' type='email')
+					.form-group
+						button.btn(type='submit') Сохранить
+				.col-md-6.text-center.suggestions
+					h3 Будьте внимательны при изменении основных данных
+		.col-md-12.profile-item#personalSettings
+			.page-header
+				h3 Личные настройки
+					small редактирование информации о пользователе
+			.settings-content
+				.col-md-6
+					.form-group
+						input.form-control(placeholder='Имя' name='name' type='text')
+					.form-group
+						input.form-control(placeholder='Фамилия' name='lastname' type='password')
+					.form-group
+						textarea.form-control(placeholder='О себе' rows='3' name='email' type='email')
+					.form-group
+						button.btn(type='submit') Сохранить
+				.col-md-6.text-center.suggestions
+						h3 Данная информация будет отображаться в профиле пользователя
+		.col-md-12.profile-item#additionalSettings
+			.page-header
+				h3 Дополнительно
+					small удаление аккаунта
+			.settings-content(style='display: none;')
 
 	script(src='/js/jquery-2.1.4.min.js')
 	script(src='/js/profileSettingsF.js')
