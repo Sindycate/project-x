@@ -33,17 +33,16 @@ function checkEnteredData(post) {
 		return {success: false, message: 'Заполните все поля'};
 	}
 
-	if (!(/^.{6,20}$/.test(post.password))) {
+	if (!(/^[\-\_a-zA-Z0-9]{4,20}$/.test(post.login))) {
+		console.log('mistake in login');
+		return {success: false, message: 'Логин должен содержать от 4 до 20 символов, разрешены только следующие специальные символы: (-,_)'};
+	} else if (!(/^.{6,20}$/.test(post.password))) {
 		console.log('mistake in password');
 		return {success: false, message: 'Пароль должен содержать от 6 до 20 символов'};
 	} else if (!(/^[\-\.\_a-zA-Z0-9]+@[a-zA-Z0-9\-]+\.[a-zA-Z]+\.?[a-zA-Z]*$/.test(post.email))) {
 		console.log('mistake in email');
 		return {success: false, message: 'Неправильная почта'};
-	} else if (!(/^[\-\_a-zA-Z0-9]{4,20}$/.test(post.login))) {
-		console.log('mistake in login');
-		return {success: false, message: 'Логин должен содержать от 4 до 20 символов, разрешены только следующие специальные символы: (-,_)'};
 	}
-
 	return {success: true};
 };
 
@@ -85,18 +84,22 @@ router.post('/', function(req, res) {
 				var query = connection.query('INSERT INTO users SET ?', data, function(err, result) {
 					connection.end();
 					if (!err) {
-						res.render('registration', {success: true, message: 'Регистрация прошла успешно, теперь вы можете авторизироваться.'});
+						var userId = result.insertId;
+						req.session.user = userId;
+						req.session.login = data.login;
+
+						res.json({success: true, userLogin: data.login});
 					} else {
 						console.log(err);
-						res.render('registration', {success: false, message: 'Произошёл сбой, обратитесь к администрации'});
+						res.json({success: false, message: 'Произошёл сбой, обратитесь к администрации'});
 					}
 				});
 			} else {
-				res.render('registration', {success: false, message: 'Пользователь с таким именем уже существует'});
+				res.json({success: false, message: 'Пользователь с таким именем уже существует'});
 			}
 		});
 	} else {
-		res.render('registration', {success: false, message: enteredData.message});
+		res.json({success: false, message: enteredData.message});
 	}
 
 	// res.redirect('/');

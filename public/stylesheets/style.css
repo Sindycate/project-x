@@ -528,14 +528,32 @@ small {
 	cursor: pointer;
 }
 
-.suggestions {
-	padding-top: 47px;
+.messages {
+	display: table;
 	background-color: #C6C6C6;
 	height: 182px;
 	border-radius: 4px;
 	color: #fff;
 }
 
-.suggestions h3 {
+.messages h3 {
+	display: table-cell;
+	vertical-align: middle;
 	font-size: 20px;
 }
+
+.errInput input {
+	border-color: rgb(223, 120, 120);
+	background-color: rgb(237, 173, 173);
+	color: #fff;
+}
+
+.errInput input::-webkit-input-placeholder {
+	color: #fff;
+}
+
+.errInput input:focus {
+	border-color: rgb(223, 120, 120);
+	box-shadow: 0 0 2px rgb(223, 120, 120);
+}
+

@@ -3,42 +3,44 @@ extends layout
 block content
 	.col-md-8.col-md-offset-2#profile-settings
 		h4.text-center Настройки аккаунта
-		.col-md-12.profile-item#mainSettings
-			.page-header
+		.col-md-12.profile-item
+			.page-header#mainSettings
 				h3 Основные настройки
 					small смена логина, пароля или почты
 			.settings-content(style='display: none;')
 				.col-md-6
 					.form-group
-						input.form-control(placeholder='Логин' name='login' type='text')
+						input.form-control(id='oldPassword' placeholder='Текущий пароль' name='oldPassword' type='password')
+					//- .form-group.errInput.has-feedback.has-error
 					.form-group
-						input.form-control(placeholder='Старый пароль' name='oldPassword' type='password')
+						input.disabledInputs.form-control(id='loginSettings' value='#{userInfo.login}' placeholder='Логин' name='login' type='text' disabled)
+						//- span(class="glyphicon glyphicon-remove form-control-feedback")
 					.form-group
-						input.form-control(placeholder='Новый пароль' name='newPassword' type='password')
+						input.disabledInputs.form-control(id='newPassword' placeholder='Новый пароль' name='newPassword' type='password' disabled)
 					.form-group
-						input.form-control(placeholder='Email' name='email' type='email')
+						input.disabledInputs.form-control(id='emailSettings' value='#{userInfo.email}' placeholder='email' name='email' type='email' disabled)
 					.form-group
-						button.btn(type='submit') Сохранить
-				.col-md-6.text-center.suggestions
-					h3 Будьте внимательны при изменении основных данных
-		.col-md-12.profile-item#personalSettings
-			.page-header
+						button.btn.disabled.btnMainSet(type='submit') Сохранить
+				.col-md-6.text-center.messages#suggestMainSet
+					h3.newMainMessage Для изменения основных данных вам необходимо ввести свой пароль
+		.col-md-12.profile-item
+			.page-header#personalSettings
 				h3 Личные настройки
 					small редактирование информации о пользователе
 			.settings-content
 				.col-md-6
 					.form-group
-						input.form-control(placeholder='Имя' name='name' type='text')
+						input.form-control(id='nameSettings' maxlength='20' value='#{userInfo.name}' placeholder='Имя' name='name' type='text')
 					.form-group
-						input.form-control(placeholder='Фамилия' name='lastname' type='password')
+						input.form-control(id='lastNameSettings' maxlength='30' value='#{userInfo.last_name}' placeholder='Фамилия' name='lastname' type='text')
 					.form-group
-						textarea.form-control(placeholder='О себе' rows='3' name='email' type='email')
+						textarea.form-control(id='aboutSettings' maxlength='300'  placeholder='О себе' rows='3' name='about' type='text') #{userInfo.about_user}
 					.form-group
-						button.btn(type='submit') Сохранить
-				.col-md-6.text-center.suggestions
-						h3 Данная информация будет отображаться в профиле пользователя
-		.col-md-12.profile-item#additionalSettings
-			.page-header
+						button.btn.btnPersonalSet(type='submit') Сохранить
+				.col-md-6.text-center.messages
+						h3.newPersonalMessage Данная информация будет отображаться в профиле пользователя
+		.col-md-12.profile-item
+			.page-header#additionalSettings
 				h3 Дополнительно
 					small удаление аккаунта
 			.settings-content(style='display: none;')

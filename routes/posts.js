@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var session = require('express-session');
+var express = require('express'),
+	router = express.Router(),
+	session = require('express-session');
 
 router.post('/', function(req, res) {
 	var post = req.body;
