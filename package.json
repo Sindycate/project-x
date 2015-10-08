@@ -15,6 +15,7 @@
     "express-sessions": "^1.0.5",
     "jade": "~1.9.2",
     "morgan": "^1.5.2",
+    "multer": "^1.0.5",
     "mysql": "^2.6.2",
     "serve-favicon": "^2.2.0"
   }

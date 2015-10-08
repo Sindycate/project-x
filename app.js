@@ -6,6 +6,7 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
 	SessionStore = require('express-mysql-session'),
+	// multer = require('multer'),
 	sass = require('node-sass');
 
 var routes = require('./routes/index'),
@@ -15,6 +16,7 @@ var routes = require('./routes/index'),
 	post = require('./routes/post'),
 	posts = require('./routes/posts'),
 	profile = require('./routes/profile'),
+	upload = require('./routes/upload'),
 	profileSettings = require('./routes/profileSettings');
 
 var app = express();
@@ -63,6 +65,30 @@ app.use(session({
 	store: new SessionStore(options)
 }));
 
+// var storage = multer.diskStorage({
+// 	destination: function (req, file, cb) {
+// 		cb(null, './public/images/upload/');
+// 	},
+// 	filename: function (req, file, cb) {
+// 		console.log(file);
+// 		cb(null, file.originalname);
+// 	}
+// })
+
+// var upload = multer({
+// 	storage: storage,
+// 	fileFilter: function(req, file, cb) {
+// 		if (file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg') {
+// 			cd(null, false);
+// 		}
+
+// 		cb(null, true);
+
+// 		// You can always pass an error if something goes wrong:
+// 		// cb(new Error('I don\'t have a clue!'))
+// 	}
+// }).single('userPhoto');
+
 app.use(function(req, res, next) {
 
 	if (!req.cookies.uid) {
@@ -73,12 +99,35 @@ app.use(function(req, res, next) {
 	next();
 });
 
+// app.post('/upload/image', function (req, res, next) {
+// 	upload(req, res, function (err) {
+// 		if (err) {
+// 			console.log(err);
+// 			console.log('err');
+// 			res.json(err);
+// 			// An error occurred when uploading
+// 			return;
+// 		}
+
+// 		res.json(req.file);
+// 		console.log(req.body);
+// 		// Everything went fine
+// 	})
+// 	// console.log(req.file);
+// 	// req.file is the `avatar` file
+// 	// req.body will hold the text fields, if there were any
+// });
+
+
+
+
 app.use('/posts', posts);
 app.use('/post/[0-9]*$/', post);
 app.use('/', routes);
 app.use('/registration', registration);
 app.use('/login', login);
 app.use('/constructer', constructer);
+app.use('/upload', upload);
 app.use('/settings', profileSettings);
 app.use('/[a-zA-Z0-9_]+$/', profile);
 

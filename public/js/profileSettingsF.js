@@ -40,6 +40,7 @@ $(document).ready(function() {
 		}
 	}
 	var personalInfo = {name: nameSettings.val(), lastName: lastNameSettings.val(), about: aboutSettings.val()};
+	var mainInfo = {login: loginSettings.val(), email: emailSettings.val()};
 	var personalInfoUpdate = {name: '', lastName: '', about: ''};
 
 	loginSettings.change(function() {
@@ -54,6 +55,9 @@ $(document).ready(function() {
 				blockMessages.mainSet.showNewMessage('Логин должен содержать от 4 до 20 символов, разрешены только следующие специальные символы: (-,_)');
 				keysAccess.login = false;
 				btnMainSet.addClass('disabled');
+			} else if (loginSettings.val() == mainInfo.login) {
+				keysAccess.login = true;
+				blockMessages.mainSet.showNewMessage('Логин останется прежним');
 			} else {
 				var parameters = {type: 'login', value: loginSettings.val()};
 
@@ -79,7 +83,7 @@ $(document).ready(function() {
 	emailSettings.change(function() {
 		if (keysAccess.oldPassword) {
 			if (emailSettings.val() == '' && keysAccess.login && keysAccess.newPassword) {
-				blockMessages.mainSet.defaultMessage();
+				blockMessages.mainSet.showNewMessage('Почта останется прежней');
 				btnMainSet.removeClass('disabled');
 			} else if (emailSettings.val() == '') {
 				blockMessages.mainSet.defaultMessage();
@@ -132,9 +136,11 @@ $(document).ready(function() {
 	});
 
 	newPassword.change(function() {
-		if (newPassword.val() == '' && keysAccess.login && keysAccess.newPassword) {
+		if (newPassword.val() == '' && keysAccess.login && keysAccess.email) {
 			blockMessages.mainSet.defaultMessage();
 			btnMainSet.removeClass('disabled');
+			keysAccess.newPassword = true;
+			blockMessages.mainSet.showNewMessage('Пароль останется прежним');
 		} else if (newPassword.val() == '') {
 			blockMessages.mainSet.defaultMessage();
 			keysAccess.newPassword = true;
@@ -154,7 +160,7 @@ $(document).ready(function() {
 	btnMainSet.click(function() {
 		console.log(keysAccess);
 		var getString = '';
-		if (keysAccess.oldPassword) {
+		if (keysAccess.oldPassword && keysAccess.login && keysAccess.newPassword && keysAccess.email) {
 			if (keysAccess.login && loginSettings.val() != '') {
 				getString = 'login=' + loginSettings.val() + '&';
 				var newLogin = loginSettings.val();
@@ -213,9 +219,10 @@ $(document).ready(function() {
 
 	btnPersonalSet.click(function() {
 		var getInfo = '';
-		((personalInfoUpdate.name)     ? getInfo = 'name=' + personalInfoUpdate.name + '&' : '');
-		((personalInfoUpdate.lastName) ? getInfo += 'lastName=' + personalInfoUpdate.lastName + '&' : '');
-		((personalInfoUpdate.about)    ? getInfo += 'about=' + personalInfoUpdate.about + '&' : '');
+		getInfo = (
+			((personalInfoUpdate.name)     ? ('name=' + personalInfoUpdate.name + '&') : '') +
+			((personalInfoUpdate.lastName) ? ('lastName=' + personalInfoUpdate.lastName + '&') : '') +
+			((personalInfoUpdate.about)    ? ('about=' + personalInfoUpdate.about + '&') : ''));
 		console.log(getInfo);
 		if (getInfo == '') {
 			blockMessages.personalSet.showNewMessage('Данные не будут изменены');

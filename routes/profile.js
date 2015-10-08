@@ -320,101 +320,101 @@ function checkProfile(login, callback) {
 	);
 };
 
-function getPostsNoLogin(profileId ,callback) {
-	connection.query(
-		'SELECT \
-			`posts`.`id`, \
-			`posts`.`date`, \
-			`posts`.`title`, \
-			i1.name as name1, \
-			i2.name as name2, \
-			i3.name as name3, \
-			i4.name as name4, \
-			i1.desc as desc1, \
-			i2.desc as desc2, \
-			i3.desc as desc3, \
-			i4.desc as desc4, \
-			i1.img  as img1, \
-			i2.img  as img2, \
-			i3.img  as img3, \
-			i4.img  as img4, \
-			i1.votes as votes1, \
-			i2.votes as votes2, \
-			i3.votes as votes3, \
-			i4.votes as votes4 \
-		FROM \
-			`users_posts`, `posts` \
-			LEFT JOIN \
-				items as i1 \
-			ON posts.item1 = i1.id \
-			LEFT JOIN \
-				items as i2 \
-			ON posts.item2 = i2.id \
-			LEFT JOIN \
-				items as i3 \
-			ON posts.item3 = i3.id \
-			LEFT JOIN \
-				items as i4 \
-			ON posts.item4 = i4.id \
-		WHERE users_posts.post_id = posts.id AND users_posts.user_id = ?', profileId, function(err, result) {
-			if (!err && result[0] != null) {
-				callback(result);
-			} else {
-				console.log('error');
-				callback(false);
-			}
-		}
-	);
-};
+// function getPostsNoLogin(profileId ,callback) {
+// 	connection.query(
+// 		'SELECT \
+// 			`posts`.`id`, \
+// 			`posts`.`date`, \
+// 			`posts`.`title`, \
+// 			i1.name as name1, \
+// 			i2.name as name2, \
+// 			i3.name as name3, \
+// 			i4.name as name4, \
+// 			i1.desc as desc1, \
+// 			i2.desc as desc2, \
+// 			i3.desc as desc3, \
+// 			i4.desc as desc4, \
+// 			i1.img  as img1, \
+// 			i2.img  as img2, \
+// 			i3.img  as img3, \
+// 			i4.img  as img4, \
+// 			i1.votes as votes1, \
+// 			i2.votes as votes2, \
+// 			i3.votes as votes3, \
+// 			i4.votes as votes4 \
+// 		FROM \
+// 			`users_posts`, `posts` \
+// 			LEFT JOIN \
+// 				items as i1 \
+// 			ON posts.item1 = i1.id \
+// 			LEFT JOIN \
+// 				items as i2 \
+// 			ON posts.item2 = i2.id \
+// 			LEFT JOIN \
+// 				items as i3 \
+// 			ON posts.item3 = i3.id \
+// 			LEFT JOIN \
+// 				items as i4 \
+// 			ON posts.item4 = i4.id \
+// 		WHERE users_posts.post_id = posts.id AND users_posts.user_id = ?', profileId, function(err, result) {
+// 			if (!err && result[0] != null) {
+// 				callback(result);
+// 			} else {
+// 				console.log('error');
+// 				callback(false);
+// 			}
+// 		}
+// 	);
+// };
 
-function getPostsWithLogin(user_id, profileId, callback) {
-	connection.query(
-		'SELECT \
-			`posts`.`id`, \
-			`posts`.`date`, \
-			`posts`.`title`, \
-			i1.name as name1, \
-			i2.name as name2, \
-			i3.name as name3, \
-			i4.name as name4, \
-			i1.desc as desc1, \
-			i2.desc as desc2, \
-			i3.desc as desc3, \
-			i4.desc as desc4, \
-			i1.img  as img1, \
-			i2.img  as img2, \
-			i3.img  as img3, \
-			i4.img  as img4, \
-			i1.votes as votes1, \
-			i2.votes as votes2, \
-			i3.votes as votes3, \
-			i4.votes as votes4, \
-			(case when (SELECT count(*) from votes where votes.user_id = ' + user_id + ' and votes.post_id = posts.id) then 1 else 0 end) as vote \
-		FROM \
-			`users_posts`, `posts` \
-			LEFT JOIN \
-				items as i1 \
-			ON posts.item1 = i1.id \
-			LEFT JOIN \
-				items as i2 \
-			ON posts.item2 = i2.id \
-			LEFT JOIN \
-				items as i3 \
-			ON posts.item3 = i3.id \
-			LEFT JOIN \
-				items as i4 \
-			ON posts.item4 = i4.id \
-		WHERE users_posts.post_id = posts.id AND users_posts.user_id = ?', profileId, function(err, result) {
-			if (!err && result[0] != null) {
-				// console.log(result);
-				callback(result);
-			} else {
-				console.log('error');
-				callback(false);
-			}
-		}
-	);
-};
+// function getPostsWithLogin(user_id, profileId, callback) {
+// 	connection.query(
+// 		'SELECT \
+// 			`posts`.`id`, \
+// 			`posts`.`date`, \
+// 			`posts`.`title`, \
+// 			i1.name as name1, \
+// 			i2.name as name2, \
+// 			i3.name as name3, \
+// 			i4.name as name4, \
+// 			i1.desc as desc1, \
+// 			i2.desc as desc2, \
+// 			i3.desc as desc3, \
+// 			i4.desc as desc4, \
+// 			i1.img  as img1, \
+// 			i2.img  as img2, \
+// 			i3.img  as img3, \
+// 			i4.img  as img4, \
+// 			i1.votes as votes1, \
+// 			i2.votes as votes2, \
+// 			i3.votes as votes3, \
+// 			i4.votes as votes4, \
+// 			(case when (SELECT count(*) from votes where votes.user_id = ' + user_id + ' and votes.post_id = posts.id) then 1 else 0 end) as vote \
+// 		FROM \
+// 			`users_posts`, `posts` \
+// 			LEFT JOIN \
+// 				items as i1 \
+// 			ON posts.item1 = i1.id \
+// 			LEFT JOIN \
+// 				items as i2 \
+// 			ON posts.item2 = i2.id \
+// 			LEFT JOIN \
+// 				items as i3 \
+// 			ON posts.item3 = i3.id \
+// 			LEFT JOIN \
+// 				items as i4 \
+// 			ON posts.item4 = i4.id \
+// 		WHERE users_posts.post_id = posts.id AND users_posts.user_id = ?', profileId, function(err, result) {
+// 			if (!err && result[0] != null) {
+// 				// console.log(result);
+// 				callback(result);
+// 			} else {
+// 				console.log('error');
+// 				callback(false);
+// 			}
+// 		}
+// 	);
+// };
 
 function addVote(itemId ,callback) {
 	connection.query(

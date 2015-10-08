@@ -29,7 +29,6 @@ router.post('/', function(req, res) {
 					}
 			});
 		} else if (post.sort && !req.session.login) {
-			console.log('test');
 			var queryParams = {
 				usersVotes: ''
 			};
@@ -40,7 +39,6 @@ router.post('/', function(req, res) {
 				};
 			}
 
-			console.log(queryParams);
 			getPosts(queryParams, function (result) {
 					if (result) {
 						for (var ii in result) {
@@ -160,11 +158,9 @@ function getPosts(queryParams, callback) {
 				posts[queryPosts[ii].id] = queryPosts[ii];
 			}
 			postsIdStr = postsIdStr.substr(2);
-			// console.log(postsIdStr);
 
 			connection.query('SELECT * FROM items WHERE post_id IN (' + postsIdStr + ')', function(err, items) {
 				if (!err) {
-					// console.log(items);
 					for (var ii = 0; ii < items.length; ii++) {
 						if (typeof posts[items[ii].post_id].items == 'undefined') {
 							posts[items[ii].post_id].items = [];
@@ -212,7 +208,6 @@ function saveVotes(postId, itemId, userId, callback) {
 function checkForVote(postId, userId, callback) {
 	connection.query('SELECT * FROM votes WHERE votes.user_id = ? and votes.post_id = ?', [userId, postId], function(err, rows, fields) {
 		if (!err) {
-			console.log(rows);
 			if(rows != '') {
 				callback(false);
 			} else {

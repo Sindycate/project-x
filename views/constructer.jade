@@ -1,42 +1,128 @@
 extends layout
 
 block content
-	.step1
-		.col-md-12
-			h1 Step 1 | Settings
-		.col-sm-12.col-md-12
-			p.error(style='display: none;') Заполните все поля
-			.col-sm-12.col-md-4
-				.form-group
-					label(for='countItems') Количество объектов для выбора
-					input#countItems.form-control(name='countItems', type='number', min='2', max='10')
-					label(for='countVotesForEnd') Ограничение на количество голосов
-					input#countVotesForEnd.form-control(name='countVotesForEnd', type='number', min='10')
-				.form-group
-					input.form-control(name='stepOne', type='hidden', value='1')
-					button.btn.btn-primary.btn-step1(type='submit') Next
-	.step2(style='display: none;')
-		h1 Step 2 | Create objects for vote
-		hr
-		p.error(style='display: none;') Заполните все поля
-		form#step2Form(method='POST')
-			.col-sm-12.col-md-12.group-items
-				textarea.form-control(placeholder='Описание выборки', cols='40', rows='3', name='postName', type='text')
-				.col-sm-3.col-md-3.text-center.item
-					.thumbnail
-						h4.itemHeading Item
-						.caption
-							p
-								input.form-control.itemName(placeholder='Название', type='text')
-							p
-								textarea.form-control.itemDescribe(placeholder='Краткое описание', cols='40', rows='3', type='text')
-		.col-md-12
-			input.form-control(name='stepTwo', type='hidden', value='1')
-			button.btn.btn-primary.btn-step2(type='submit') Next
-	.step3(style='display: none;')
-		h1 Step 3 | Share to your friends
-		hr
-		div#postStep3
+	.col-md-12.constructorBeginning
+		div#postForm
+			.col-md-8.col-md-offset-2
+				.col-md-12.constructorPostHead
+					.col-md-4.postImageBlock
+						form.uploadForm(enctype='multipart/form-data' action='/upload/image' method='post')
+							.mask-wrapper
+								ul.list-inline.mask
+									li.col-md-6
+										input.fileInputText(type="text" disabled value='Файл не выбран')
+									li.col-md-3
+										input.fileInput(type='file', name='postImg')
+										div#inputMask
+									li.col-md-3
+										input.download-image(type='submit' value='' name='submit')
+								//- span.status
+						.col-md-12.imgBlock
+							p.alignmentPostImg
+								img.postImg(src="../images/default-thumb.gif" alt="Mountain View" )
+					.col-md-8.constructorPostInfo
+						input.form-control.postName(placeholder='Название поста' type='text' name='postName')
+						textarea.form-control(placeholder='Описание поста' cols='40' rows='5' name='postDesc' type='text')
+				.col-md-12.text-center.display-type
+					ul.list-inline.col-md-5
+						li.fullStrItems#activeStr
+						li.shortStrItems
+					div.col-md-2.counter 2
+					div.col-md-5.addItem Добавить
+				.col-md-10.col-md-offset-1.messageConstructor.text-center(style='display: none;')
+					.col-md-2
+					.col-md-10
+						h3.messageConstructorText
+				.col-md-12.group-items
+					.col-md-6.text-center.item
+						.col-md-1.delItemShort.delItem(style='display: none;')
+						.thumbnail
+							form.itemForm.uploadForm(enctype='multipart/form-data', action='/upload/image', method='post')
+								.mask-wrapper
+									ul.list-inline.mask
+										li.col-md-8
+											input.fileInputText(type="text" disabled value='Файл не выбран')
+										li.col-md-2
+											input.fileInput(type='file', name='itemImg1')
+											div#inputMask
+										li.col-md-2
+											input.download-image(type='submit' value='' name='submit')
+								input.itemsImagePath(type='hidden' name='itemsImage')
+								.col-md-12
+									p.alignmentItemsImg
+										img.itemImg1(src="../images/noimage.png" alt="Mountain View")
+							.caption
+								p
+									input.form-control.itemName(name='itemsName' placeholder='Название', type='text')
+								p.itemDescribe
+									textarea.form-control(name='itemsDescription' placeholder='Краткое описание', cols='40', rows='3', type='text')
+						.col-md-12.delItemFull.delItem Удалить
+					.col-md-6.text-center.item
+						.col-md-1.delItemShort.delItem(style='display: none;')
+						.thumbnail
+							form.itemForm.uploadForm(enctype='multipart/form-data', action='/upload/image', method='post')
+								.mask-wrapper
+									ul.list-inline.mask
+										li.col-md-8
+											input.fileInputText(type="text" disabled value='Файл не выбран')
+										li.col-md-2
+											input.fileInput(type='file', name='itemImg2')
+											div#inputMask
+										li.col-md-2
+											input.download-image(type='submit' value='' name='submit')
+								input.itemsImagePath(type='hidden' name='itemsImage')
+								.col-md-12
+									p.alignmentItemsImg
+										img.itemImg2(src="../images/noimage.png" alt="Mountain View")
+							.caption
+								p
+									input.form-control.itemName(name='itemsName' placeholder='Название', type='text')
+								p.itemDescribe
+									textarea.form-control(name='itemsDescription' placeholder='Краткое описание', cols='40', rows='3', type='text')
+						.col-md-12.delItemFull.delItem Удалить
+		.col-md-11.col-md-offset-1.text-center
+			.col-md-3.col-md-offset-2.goToSettings Открыть настройки
+			.col-md-3.col-md-offset-1.savePost.btn-step2 Завершить редактирование
+		.col-md-8.col-md-offset-2.text-center(style='display: none;')
+			.col-md-12.openSettings
+				.col-md-12.titleSettings
+					h3 Параметры
+				.col-md-5.text-left
+					.row.col-md-12
+						label Ограничение на количество голосов
+						input#countVotesForEnd.form-control(onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='countVotesForEnd' type='number' min='10')
+					.row.col-md-12
+						label Ограничение по времени
+						.col-md-12.timeForEnd
+							.col-md-12
+								label По кол-ву часов
+								input#timeForEndHours.form-control(onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='timeForEndHours' type='number' min='10')
+							.col-md-12
+								label По дате
+								input#timeForEndDate.form-control(name='timeForEndDate' type="date" min="2015-09-27" max="2016-01-01")
+				.col-md-6.col-xs-12.settingsMes
+					h3.newSettingsMessage
+				.row.col-md-12.text-left.checkboxBlock
+					ul.list-inline
+						li
+							input#onlyForReg(type='checkbox' size='30')
+						li
+							label(for='onlyForReg') Голосовать могут только зарегистрированные пользователи
+			.col-md-4.col-md-offset-4.savePost.btn-step2 Завершить
+	.col-md-12.constructorComplete(style='display: none;')
+		.col-md-4.col-md-offset-4.text-center.constructorInfo
+			.col-md-12.shareToFriends
+				h3 Сделать репост в социальные сети
+				ul.socialNet.list-inline
+					li#shareVk
+					li#shareTwitter
+					li#shareFB
+				h5.postLink Ссылка на пост
+					span optioption.com/post/34
+			.col-md-12.goToPost
+				h3 Перейти к посту
 	script(src='/js/jquery-2.1.4.min.js')
+	script(src='/js/jquery.form.min.js')
+	script(src='/js/jquery-ui.min.js')
 	script(src='/js/constructorF.js')
 
