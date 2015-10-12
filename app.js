@@ -17,7 +17,8 @@ var routes = require('./routes/index'),
 	posts = require('./routes/posts'),
 	profile = require('./routes/profile'),
 	upload = require('./routes/upload'),
-	profileSettings = require('./routes/profileSettings');
+	profileSettings = require('./routes/profileSettings')
+	passport = require('passport');
 
 var app = express();
 
@@ -37,9 +38,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 var options = {
 	host: 'localhost',
 	user: 'root',
-	password: '2177721',
+	password: '',
 	database: 'test'
 };
+
+app.use(session({
+	secret: 'keyboard cat',
+	resave: false,
+	saveUninitialized: false,
+	cookie: { maxAge: 157680000000 },
+	store: new SessionStore(options)
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // app.use(function(){
 //   sass.middleware({
@@ -57,13 +70,7 @@ var options = {
 // 	})
 // );
 
-app.use(session({
-	secret: 'keyboard cat',
-	resave: false,
-	saveUninitialized: false,
-	cookie: { maxAge: 157680000000 },
-	store: new SessionStore(options)
-}));
+
 
 // var storage = multer.diskStorage({
 // 	destination: function (req, file, cb) {
@@ -121,6 +128,86 @@ app.use(function(req, res, next) {
 
 
 
+
+
+
+
+
+
+
+
+// passport.serializeUser(function(user, done) {
+// 		done(null, user.id);
+//     });
+
+//  passport.deserializeUser(function(id, done) {
+// 		connection.query("select * from users where id = "+id,function(err,rows){
+// 			done(err, rows[0]);
+// 		});
+//     });
+
+// passport.use(new LocalStrategy(
+//   function(username, password, done) {
+//     console.log(1);
+//     console.log(done);
+
+//     // password = passwordHash(password);
+//     password = crypto.createHmac('sha1', '').update(password).digest('hex');
+
+//     var query = 'SELECT * from users where login = ? and password = ?';
+//     connection.query(query, [username, password], function(err, rows, fields) {
+//       if (!err) {
+//         console.log(rows);
+//         if(rows != '') {
+//           return done(null,  rows[0]);
+//         } else {
+//           return done(null, false, { message: 'Incorrect username or password.' });
+//         }
+//       } else {
+//         return done(null, false, { message: 'Incorrect username or password.' });
+//       }
+//     });
+
+//     // checkForDuplicates(username, password, function(result, user) {
+//     //   if (result) {
+//     //     // req.session.user = user.id;
+//     //     // req.session.login = user.login;
+//     //     // res.json({success: true, userLogin: user.login});
+//     //     return done(null, user);
+//     //   } else {
+//     //     res.json({success: false, message: 'Логин или пароль не подходят'});
+//     //     return done(null, false, { message: 'Incorrect username or password.' });
+//     //     return;
+//     //   }
+//     // });
+
+
+
+
+//     // User.findOne({ username: username }, function(err, user) {
+//     //   if (err) { return done(err); }
+//     //   if (!user) {
+//     //     return done(null, false, { message: 'Incorrect username.' });
+//     //   }
+//     //   if (!user.validPassword(password)) {
+//     //     return done(null, false, { message: 'Incorrect password.' });
+//     //   }
+//     //   return done(null, user);
+//     // });
+//   }
+// ));
+
+
+
+
+
+
+
+
+
+
+
+
 app.use('/posts', posts);
 app.use('/post/[0-9]*$/', post);
 app.use('/', routes);
@@ -130,6 +217,7 @@ app.use('/constructer', constructer);
 app.use('/upload', upload);
 app.use('/settings', profileSettings);
 app.use('/[a-zA-Z0-9_]+$/', profile);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

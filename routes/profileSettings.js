@@ -5,7 +5,7 @@ var express = require('express'),
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	if (req.session.login) {
+	if (req.user.login) {
 		if (req.query.mainSettingsChange) {
 			var dataForUpdate = {};
 			if (req.query.login) {
@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 			if (req.query.email) {
 				dataForUpdate.email = req.query.email;
 			}
-			changeUserInformation(dataForUpdate, req.session.user, req, res);
+			changeUserInformation(dataForUpdate, req.user.id, req, res);
 		} else if (req.query.personalSettingsChange) {
 			var dataForUpdate = {};
 			if (req.query.name) {
@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 			if (req.query.about) {
 				dataForUpdate.about_user = req.query.about;
 			}
-			dataForUpdate.user_id = req.session.user;
+			dataForUpdate.user_id = req.user.id;
 			changePersonalUserInfo(dataForUpdate, req, res);
 
 		} else if (req.query.checkDuplicate) {
@@ -42,9 +42,9 @@ router.get('/', function(req, res, next) {
 			checkForDuplicate(parameters, res);
 		} else if (req.query.checkPassword && req.query.password) {
 			var password = passwordHash(req.query.password);
-			checkPassword(password, req.session.login, res);
+			checkPassword(password, req.user.login, res);
 		} else {
-			getUserInfo(req.session.user, res, req.session.login);
+			getUserInfo(req.user.id, res, req.user);
 		}
 	} else {
 		res.redirect('/');
@@ -63,7 +63,7 @@ function changePersonalUserInfo(dataForUpdate, req, res) {
 	});
 }
 
-function getUserInfo(userId, res, profileLogin) {
+function getUserInfo(userId, res, profile) {
 	connection.query(
 		'SELECT login, email, u_info.name, u_info.last_name, u_info.about_user \
 		 FROM `users` as u \
@@ -72,7 +72,7 @@ function getUserInfo(userId, res, profileLogin) {
 		 WHERE `u`.`id` = ?', userId, function(err, information) {
 			if (!err) {
 				console.log(information);
-				res.render('profileSettings', {profile: profileLogin, userInfo: information[0]});
+				res.render('profileSettings', {profile: profile, userInfo: information[0]});
 			} else {
 				console.log(err);
 			}
@@ -121,7 +121,7 @@ function changeUserInformation(dataForUpdate, userId, req, res) {
 		'UPDATE users SET ? WHERE id = ' + userId, dataForUpdate, function(err, result) {
 		if (!err) {
 			if (dataForUpdate.login) {
-				req.session.login = dataForUpdate.login;
+				req.user.login = dataForUpdate.login;
 			}
 			res.json({ success: true });
 		} else {

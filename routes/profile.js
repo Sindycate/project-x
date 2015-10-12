@@ -4,13 +4,17 @@ var express = require('express'),
 
 router.post('/', function(req, res, next) {
 	var post = req.body;
-	if (post.logOut && req.session.login) {
-		req.session.destroy();
+	if (post.logOut && req.user.login) {
+		console.log(333);
+	// if (post.logOut && req.session.login) {
+		// req.session.destroy();
+		req.logout();
 		res.redirect(req.get('referer'));
 	} else {
 		console.log('error log out');
 	}
-	if (post.profileSettings && req.session.login) {
+	if (post.profileSettings && req.user.login) {
+	// if (post.profileSettings && req.session.login) {
 		res.redirect('/settings');
 	} else {
 		console.log('error settigns');
@@ -29,10 +33,10 @@ router.get('/', function(req, res, next) {
 			// выборка по подпискам
 			switchSubs = 'WHERE followers.user_id = (SELECT id FROM users WHERE login = ?) AND followers.follower_id = users.id';
 		}
-		if (req.session.user) {
-			getSubsWhithLogin(switchSubs, req.session.user, req.query.profileLogin, function (subsInfo) {
+		if (req.user.id) {
+			getSubsWhithLogin(switchSubs, req.user.id, req.query.profileLogin, function (subsInfo) {
 				if (subsInfo) {
-					res.json({ success: true, subsInfo: subsInfo, currentUserId: req.session.user });
+					res.json({ success: true, subsInfo: subsInfo, currentUserId: req.user.id });
 				} else {
 					res.json({ success: false });
 				}
@@ -49,10 +53,11 @@ router.get('/', function(req, res, next) {
 	// пользователь подписался
 	} else if (req.query.follow && req.query.profileId) {
 		var usersOwnPage;
-		if (req.baseUrl.split('/')[1] == req.session.login) {
+		if (req.baseUrl.split('/')[1] == req.user.login) {
+		// if (req.baseUrl.split('/')[1] == req.session.login) {
 			usersOwnPage = true;
 		}
-		addFollower(req.session.user, req.query.profileId, function (result) {
+		addFollower(req.user.id, req.query.profileId, function (result) {
 			if (result) {
 				res.json({ success: true, ownPage: usersOwnPage });
 			} else {
@@ -62,10 +67,11 @@ router.get('/', function(req, res, next) {
 	// пользователь отписался
 	} else if (req.query.unfollow && req.query.profileId) {
 		var usersOwnPage;
-		if (req.baseUrl.split('/')[1] == req.session.login) {
+		if (req.baseUrl.split('/')[1] == req.user.login) {
+		// if (req.baseUrl.split('/')[1] == req.session.login) {
 			usersOwnPage = true;
 		}
-		removeFollower(req.session.user, req.query.profileId, function (result) {
+		removeFollower(req.user.id, req.query.profileId, function (result) {
 			if (result) {
 				res.json({ success: true, ownPage: usersOwnPage });
 			} else {
@@ -76,7 +82,7 @@ router.get('/', function(req, res, next) {
 		var login = req.baseUrl.split('/')[1];
 		console.log(login);
 		checkProfile(login, function (userInfo) {
-			if (userInfo.id == req.session.user) {
+			if (userInfo.id == req.user.id) {
 				deletePost(req.query.postId, function (result) {
 					if (result) {
 						res.json({ success: true });
@@ -91,7 +97,9 @@ router.get('/', function(req, res, next) {
 	// пользователь проголосовал
 	} else if (req.query.vote && req.query.itemId && req.query.postId) {
 		// проверка на авторизацию пользователя
-		if (!req.session.login) {
+		if (!req.user) {
+		// if (!req.user.login) {
+		// if (!req.session.login) {
 			if (req.cookies['postIdVoted' + req.query.postId] != req.query.postId) {
 				addVote(req.query.itemId, function(result) {
 					if (result) {
@@ -106,11 +114,11 @@ router.get('/', function(req, res, next) {
 			}
 			// пользователь авторизирован, то начинается проверка на возможность голосовать
 			} else {
-				checkForVote(req.query.postId, req.session.user, function (result) {
+				checkForVote(req.query.postId, req.user.id, function (result) {
 					if (result) {
 						addVote(req.query.itemId, function (result) {
 							if (result) {
-								saveVotes(req.query.postId, req.query.itemId, req.session.user, function (result) {
+								saveVotes(req.query.postId, req.query.itemId, req.user.id, function (result) {
 									if (result) {
 										res.json({ success: true });
 									} else {
@@ -137,7 +145,9 @@ router.get('/', function(req, res, next) {
 						tables: '`users_posts`, `posts`'
 					}
 				};
-				if (!req.session.login) {
+				if (!req.user) {
+				// if (!req.user.login) {
+				// if (!req.session.login) {
 					getPosts(queryParams ,function (result) {
 						if (result) {
 							for (var ii in result) {
@@ -151,39 +161,46 @@ router.get('/', function(req, res, next) {
 						}
 					});
 				} else {
-					queryParams.usersVotes = ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.session.user + ' and votes.post_id = posts.id) then 1 else 0 end) as vote';
+					queryParams.usersVotes = ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.user.id + ' and votes.post_id = posts.id) then 1 else 0 end) as vote';
 					queryParams.sorting.tables = '`users_posts`, `followers`, `posts`';
 					getPosts(queryParams, function (result) {
 						if (result) {
-							checkForFollow(req.session.user, userInfo.id, function (resultFollow) {
+							checkForFollow(req.user.id, userInfo.id, function (resultFollow) {
 								// пользователь может подписаться и он находится не на своей странице
-								if (resultFollow && req.session.user != userInfo.id) {
-									res.render('profile', {data: result, userInfo: userInfo, profile: req.session.login, authorization: true, follow: true, unfollow: false});
+								if (resultFollow && req.user.id != userInfo.id) {
+									res.render('profile', {data: result, userInfo: userInfo, profile: req.user, authorization: true, follow: true, unfollow: false});
+									// res.render('profile', {data: result, userInfo: userInfo, profile: req.session, authorization: true, follow: true, unfollow: false});
 								// пользователь может отписатсья и он находится не на своей странице
-								} else if (!resultFollow && req.session.user != userInfo.id) {
-									res.render('profile', {data: result, userInfo: userInfo, profile: req.session.login, authorization: true, follow: false, unfollow: true});
+								} else if (!resultFollow && req.user.id != userInfo.id) {
+									res.render('profile', {data: result, userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: true});
+									// res.render('profile', {data: result, userInfo: userInfo, profile: req.session, authorization: true, follow: false, unfollow: true});
 								// пользователь на своей странице
 								} else {
 									console.log('err');
-									res.render('profile', {data: result, userInfo: userInfo, profile: req.session.login, authorization: true, follow: false, unfollow: false});
+									res.render('profile', {data: result, userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: false});
+									// res.render('profile', {data: result, userInfo: userInfo, profile: req.session, authorization: true, follow: false, unfollow: false});
 								}
 							});
-						} else if (!result && req.session.user == userInfo.id) {
-							res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.session.login, authorization: true, follow: false, unfollow: false});
+						} else if (!result && req.user.id == userInfo.id) {
+							res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: false});
+							// res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.session, authorization: true, follow: false, unfollow: false});
 						} else {
-							checkForFollow(req.session.user, userInfo.id, function (resultFollow) {
+							checkForFollow(req.user.id, userInfo.id, function (resultFollow) {
 								if (resultFollow) {
-									res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.session.login, authorization: true, follow: true, unfollow: false});
+									res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.user, authorization: true, follow: true, unfollow: false});
+									// res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.session, authorization: true, follow: true, unfollow: false});
 								} else {
-									res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.session.login, authorization: true, follow: false, unfollow: true});
+									res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: true});
+									// res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.session, authorization: true, follow: false, unfollow: true});
 								}
 							});
 						}
 					});
 				}
 			} else {
-				if (req.session.user) {
-					res.render('profile', {error: true, profile: req.session.login});
+				if (req.user.id) {
+					res.render('profile', {error: true, profile: req.user});
+					// res.render('profile', {error: true, profile: req.session});
 				} else {
 					res.render('profile', {error: true,  profile: false});
 				}
