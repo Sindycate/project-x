@@ -7,7 +7,7 @@ var express = require('express'),
 connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '2177721',
+	password : '',
 	database : 'test'
 });
 

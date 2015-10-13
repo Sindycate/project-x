@@ -62,20 +62,16 @@ passport.use('local-signup', new LocalStrategy(
               return done(null, {id: userId, success: true, userLogin: data.login});
             } else {
               console.log(err);
-              // res.json({success: false, message: });
               return done(null, false, { success: false, message: 'Произошёл сбой, обратитесь к администрации' });
-              // res.json({success: false, message: 'Произошёл сбой, обратитесь к администрации'});
             }
           });
         } else {
           return done(null, false, { success: false, message: 'Пользователь с таким именем уже существует' });
-          // res.json({success: false, message: 'Пользователь с таким именем уже существует'});
         }
       });
     } else {
       console.log(1212);
       return done(null, false, { success: false, message: enteredData.message });
-      // res.json({success: false, message: enteredData.message});
     }
 
   }
@@ -146,43 +142,6 @@ router.post('/', function(req, res, next) {
       return res.json(user);
     });
   })(req, res, next);
-
-
-  // var post = req.body;
-  // var enteredData = checkEnteredData(post);
-
-  // if (enteredData.success) {
-  //   checkForDuplicates(post, function(result) {
-  //     if (result) {
-
-  //       var password = post.password;
-
-  //       password = passwordHash(password);
-
-  //       var data = {login: post.username, password: password, email: post.email};
-
-  //       var query = connection.query('INSERT INTO users SET ?', data, function(err, result) {
-  //         connection.end();
-  //         if (!err) {
-  //           var userId = result.insertId;
-  //           req.user = userId;
-  //           req.user.login = data.login;
-
-  //           res.json({success: true, userLogin: data.login});
-  //         } else {
-  //           console.log(err);
-  //           res.json({success: false, message: 'Произошёл сбой, обратитесь к администрации'});
-  //         }
-  //       });
-  //     } else {
-  //       res.json({success: false, message: 'Пользователь с таким именем уже существует'});
-  //     }
-  //   });
-  // } else {
-  //   res.json({success: false, message: enteredData.message});
-  // }
-
-  // res.redirect('/');
 });
 
 module.exports = router;
