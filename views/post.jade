@@ -1,35 +1,59 @@
 extends layout
 
 block content
-	- if (!error)
-		.col-md-6.col-md-offset-3.post
-			.post-information.row
-				- if (data.loginPostOwners != 0)
-					a.text-left(href='/#{data.loginPostOwners}') #{data.loginPostOwners}
-				h4.text-right #{data.date}
-			.post-title
-				h3.text-center #{data.title}
-			- for (var jj in data.items)
-				.text-center.item-step3
-					.col-md-8.col-md-offset-2.thumbnail
-						h3.itemHeading #{data.items[jj].name}
-						.caption
-							p #{data.items[jj].desc}
-						- if (data.vote != 1)
-							p
-								button.btn.btn-primary.btn-vote.col-md-12.col-xs-12(type='submit' name='#{Number(jj) + 1}' value='#{data.items[jj].id}') Голосовать
-								ul.list-inline.statistics.col-md-12.col-xs-12(style='display: none;' id='stat#{Number(jj) + 1}')
-									li
-									li #{data.items[jj].votes}
-						- else
-							p
-								ul.list-inline.statistics.col-md-12.col-xs-12
-									li
-									li #{data.items[jj].votes}
-								button.btn.btn-primary.btn-vote.col-md-12.col-xs-12(style='display: none;' type='submit' name='#{Number(jj) + 1}') Голосовать
-	- else
-		h1 Поста с таким id не существует
-			hr
+  - if (!error)
+    .col-md-8.col-md-offset-2.post
+      .post-information.row
+        - if (data.loginPostOwners != 0)
+          a.text-left(href='/#{data.loginPostOwners}') #{data.loginPostOwners}
+        h4 #{data.date}
+      .post-title
+        .col-md-10.col-md-offset-1.postHead
+          h3.postName.text-center #{data.title}
+          h4.postDesc.text-center #{data.desc}
+      .col-md-10.col-md-offset-1.postItemsBlock
+        - for (var jj in data.items)
+          - if (data.postSettings.full_mode)
+            .postItem.col-md-6
+              .text-center.postBody
+                .itemName
+                  h3 #{data.items[jj].name}
+                -if (data.items[jj].img != '')
+                  p.alignItems
+                    img.itemImg1(src="..#{data.items[jj].img}" alt="Mountain View")
+                .caption.text-left
+                  p.itemDesc #{data.items[jj].desc}
+                - if (data.vote != 1)
+                  button.btn.btn-primary.btn-vote.btnVoteFull.col-md-12(type='submit' name='#{Number(jj) + 1}' value='#{data. items[jj].id}') Голосовать
+                  .statistics.col-md-12(style='display: none;' id='stat#{Number(jj) + 1}') #{data.items[jj].votes}
+                - else
+                  .statistics.col-md-12 #{data.items[jj].votes}
+                  button.btn.btn-primary.btn-vote.btnVoteFull.col-md-12(style='display: none;' type='submit' name='#{Number(jj) + 1}') Голосовать
+          - else
+            .postItemInRow.col-md-10.col-md-offset-1
+              .text-center.postBody
+                .itemNameInRow.col-md-10
+                  h3 #{data.items[jj].name}
+                - if (data.vote != 1)
+                  button.btn-vote.btnVoteInRow.col-md-2(type='submit' name='#{Number(jj) + 1}' value='#{data.items[jj].id}') Голосовать
+                  .statInRow.col-md-2(style='display: none;' id='stat#{Number(jj) + 1}') #{data.items[jj].votes}
+                - else
+                  .statInRow.col-md-2 #{data.items[jj].votes}
+                  button.btn.btn-primary.btn-vote.btnVoteFull(style='display: none;' type='submit' name='#{Number(jj) + 1}') Голосовать
+      .postLimit.col-md-12.text-center
+        ul.list-inline
+          - if (data.dateLimit)
+            li.dateLimit Опрос закроется
+              div #{data.dateLimit}
+          - if (data.postSettings.votes_limit)
+            li.voteLimit Голосов
+              div #{data.countVotesItems}
+                span из
+              div #{data.postSettings.votes_limit}
+      .post-footer.col-md-12
+  - else
+    h1 Поста с таким id не существует
+      hr
 
-	script(src='/js/jquery-2.1.4.min.js')
-	script(src='/js/postF.js')
+  script(src='/js/jquery-2.1.4.min.js')
+  script(src='/js/postF.js')

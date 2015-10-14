@@ -50,7 +50,7 @@ router.post('/', function(req, res) {
 
 
 function addPost(post, userId, res) {
-	var newPost = {title: post.postName, img: post.postImg};
+	var newPost = {title: post.postName, desc: post.postDesc, img: post.postImg};
 	console.log(newPost);
 
 	connection.query('INSERT INTO posts SET ?', newPost, function(err, result) {

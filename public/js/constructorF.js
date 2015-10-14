@@ -9,7 +9,7 @@ $(document).ready(function() {
 		counter             = $('.counter'),
 		btnStep1            = $('.btn-step1'),
 		btnStep2            = $('.btn-step2'),
-		postName            = $('.postName'),
+		postName            = $('.postNameConstructor'),
 		itemCopy            = $('.itemCopy'),
 		postStep3           = $('#postStep3'),
 		fullStructureItems  = $('.fullStrItems'),
@@ -36,9 +36,9 @@ $(document).ready(function() {
 	function createItem(typeOfStructureItems, countItems) {
 		var itemStr = '';
 		if (typeOfStructureItems == 'full') {
-			itemStr = '<div class="text-center item col-md-6"><div style="display: none;" class="col-md-1 delItemShort delItem"></div><div class="thumbnail"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: block;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" class="form-control itemName"></p><p class="itemDescribe" style="display: block;"><textarea name="itemsDescription" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: block;">Удалить</div></div>';
+			itemStr = '<div class="text-center item col-md-6"><div style="display: none;" class="col-md-1 delItemShort delItem"></div><div class="thumbnail"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: block;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: block;"><textarea name="itemsDescription" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: block;">Удалить</div></div>';
 		} else if (typeOfStructureItems == 'short') {
-			itemStr = '<div class="text-center item col-md-12"><div style="" class="col-md-1 delItemShort delItem"></div><div class="thumbnail itemBody col-md-10"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: none;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" class="form-control itemName"></p><p class="itemDescribe" style="display: none;"><textarea name="itemsDescription" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: none;">Удалить</div></div>';
+			itemStr = '<div class="text-center item col-md-12"><div style="" class="col-md-1 delItemShort delItem"></div><div class="thumbnail itemBody col-md-10"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: none;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: none;"><textarea name="itemsDescription" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: none;">Удалить</div></div>';
 		}
 			$('.group-items').append(itemStr);
 	}
@@ -299,7 +299,7 @@ $(document).ready(function() {
 	}
 	refreshUploadForm();
 
-	savePost.click(function() {
+	savePost.click(function(e) {
 
 		if (countItems < 2) {
 			message.show();
@@ -319,6 +319,7 @@ $(document).ready(function() {
 				$('html,body').animate({
 					scrollTop: message.offset().top-100
 				}, 400);
+				console.log('hui hui');
 				return;
 			}
 		});
@@ -426,7 +427,7 @@ $(document).ready(function() {
 		if (postName.val() != '') {
 			var itemsName = $('.itemName');
 			for (var ii = 0; ii < itemsName.length; ii++) {
-				if (itemsName[ii].value == '') {
+				if (itemsName[ii].value == '' || (Number(itemsName[ii].value.length) > 85)) {
 					callback(false);
 					return;
 				}

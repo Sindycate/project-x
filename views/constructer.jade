@@ -21,7 +21,7 @@ block content
 							p.alignmentPostImg
 								img.postImg(src="../images/default-thumb.gif" alt="Mountain View" )
 					.col-md-8.constructorPostInfo
-						input.form-control.postName(placeholder='Название поста' type='text' name='postName')
+						input.form-control.postNameConstructor(placeholder='Название поста' type='text' name='postName')
 						textarea.form-control(placeholder='Описание поста' cols='40' rows='5' name='postDesc' type='text')
 				.col-md-12.text-center.display-type
 					ul.list-inline.col-md-5
@@ -53,7 +53,7 @@ block content
 										img.itemImg1(src="../images/noimage.png" alt="Mountain View")
 							.caption
 								p
-									input.form-control.itemName(name='itemsName' placeholder='Название', type='text')
+									input.form-control.itemName(name='itemsName' placeholder='Название' type='text' maxlength='85')
 								p.itemDescribe
 									textarea.form-control(name='itemsDescription' placeholder='Краткое описание', cols='40', rows='3', type='text')
 						.col-md-12.delItemFull.delItem Удалить
@@ -76,7 +76,7 @@ block content
 										img.itemImg2(src="../images/noimage.png" alt="Mountain View")
 							.caption
 								p
-									input.form-control.itemName(name='itemsName' placeholder='Название', type='text')
+									input.form-control.itemName(name='itemsName' placeholder='Название' type='text' maxlength='85')
 								p.itemDescribe
 									textarea.form-control(name='itemsDescription' placeholder='Краткое описание', cols='40', rows='3', type='text')
 						.col-md-12.delItemFull.delItem Удалить
