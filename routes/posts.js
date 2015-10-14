@@ -4,13 +4,13 @@ var express = require('express'),
 
 router.post('/', function(req, res) {
 	var post = req.body;
-	if (post.sort && req.session.login) {
+	if (post.sort && req.user.login) {
 			var queryParams = {
-				usersVotes: ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.session.user + ' and votes.post_id = posts.id) then 1 else 0 end) as vote'
+				usersVotes: ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.user.id + ' and votes.post_id = posts.id) then 1 else 0 end) as vote'
 			};
 			if (post.sortFollowers) {
 				queryParams.sorting = {
-					query: ' WHERE users_posts.post_id = posts.id AND followers.user_id = ' + req.session.user + ' and followers.follower_id = users_posts.user_id ',
+					query: ' WHERE users_posts.post_id = posts.id AND followers.user_id = ' + req.user.id + ' and followers.follower_id = users_posts.user_id ',
 					tables: '`users_posts`, `followers`, `posts`'
 				};
 			} else if (post.sortAllPosts) {
@@ -23,12 +23,12 @@ router.post('/', function(req, res) {
 			console.log(queryParams);
 			getPosts(queryParams, function (result) {
 					if (result) {
-						res.render('posts', {data: result , items: result, profile: req.session.login});
+						res.render('posts', {data: result , items: result, profile: req.user});
 					} else {
-						res.render('posts', {error: 'Empty followers posts', profile: req.session.login});
+						res.render('posts', {error: 'Empty followers posts', profile: req.user});
 					}
 			});
-		} else if (post.sort && !req.session.login) {
+		} else if (post.sort && !req.user.login) {
 			var queryParams = {
 				usersVotes: ''
 			};
@@ -60,7 +60,7 @@ router.get('/', function(req, res, next) {
 	// console.log(req.query);
 	if (req.query.vote && req.query.itemId && req.query.postId) {
 		// проверка на авторизацию пользователя
-		if (!req.session.login) {
+		if (!req.user.login) {
 			if (req.cookies['postIdVoted' + req.query.postId] != req.query.postId) {
 				addVote(req.query.itemId, function(result) {
 					if (result) {
@@ -75,11 +75,11 @@ router.get('/', function(req, res, next) {
 			}
 			// если пользователь авторизирован, то начинается проверка на возможность голосовать
 		} else {
-			checkForVote(req.query.postId, req.session.user, function (result) {
+			checkForVote(req.query.postId, req.user.id, function (result) {
 				if (result) {
 					addVote(req.query.itemId, function (result) {
 						if (result) {
-							saveVotes(req.query.postId, req.query.itemId, req.session.user, function (result) {
+							saveVotes(req.query.postId, req.query.itemId, req.user.id, function (result) {
 								if (result) {
 									res.json({ success: true });
 								} else {
@@ -96,7 +96,7 @@ router.get('/', function(req, res, next) {
 			});
 		}
 	} else {
-		if(!req.session.login) {
+		if(!req.user.login) {
 			var queryParams = {
 				usersVotes: '',
 				sorting: {
@@ -119,7 +119,7 @@ router.get('/', function(req, res, next) {
 			});
 		} else {
 			var queryParams = {
-				usersVotes: ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.session.user + ' and votes.post_id = posts.id) then 1 else 0 end) as vote',
+				usersVotes: ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.user.id + ' and votes.post_id = posts.id) then 1 else 0 end) as vote',
 				sorting: {
 					query: '',
 					tables: '`posts`'
@@ -127,9 +127,9 @@ router.get('/', function(req, res, next) {
 			};
 			getPosts(queryParams, function(posts) {
 				if (posts) {
-					res.render('posts', {data: posts , items: posts, profile: req.session.login});
+					res.render('posts', {data: posts , items: posts, profile: req.user});
 				} else {
-					res.render('posts', {error: true, profile: req.session.login});
+					res.render('posts', {error: true, profile: req.user});
 				}
 			});
 		}
