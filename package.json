@@ -20,6 +20,8 @@
     "mysql": "^2.6.2",
     "node-sass": "^3.3.3",
     "passport": "^0.3.0",
+    "passport-facebook": "^2.0.0",
+    "passport-twitter": "^1.0.3",
     "serve-favicon": "^2.2.0"
   }
 }

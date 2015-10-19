@@ -87,7 +87,10 @@ app.use('/login', login);
 app.use('/constructer', constructer);
 app.use('/upload', upload);
 app.use('/settings', profileSettings);
+
 app.use('/[a-zA-Z0-9_]+$/', profile);
+
+
 
 
 // catch 404 and forward to error handler

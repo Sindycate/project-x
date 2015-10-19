@@ -5,8 +5,6 @@ var express = require('express'),
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(req.session);
-  console.log(req.user);
   res.render('index', {profile: req.user});
   // res.render('index', {profile: req.session.login});
 });
