@@ -4,7 +4,8 @@ var express = require('express'),
   crypto = require('crypto'),
 
   passport = require('passport'),
-  LocalStrategy = require('passport-local').Strategy;
+  LocalStrategy = require('passport-local').Strategy,
+  TwitterStrategy = require('passport-twitter').Strategy;
 
 
 passport.serializeUser(function(user, done) {
@@ -27,7 +28,6 @@ passport.use('local-login', new LocalStrategy(
     var query = 'SELECT * from users where login = ? and password = ?';
     connection.query(query, [username, password], function(err, rows, fields) {
       if (!err) {
-        console.log(rows);
         if(rows != '') {
           return done(null, rows[0]);
         } else {
@@ -39,6 +39,33 @@ passport.use('local-login', new LocalStrategy(
     });
   }
 ));
+
+passport.use(new TwitterStrategy({
+    consumerKey: 'Z7IJ6x3TvVJyIfICb7Gd9yDAB',
+    consumerSecret: 'EhbZ6gBCXXXxDBMbi1fk2KALTitMnufI8SQnxA9PqICHvHj3NI',
+    callbackURL: "http://127.0.0.1:3000/login/twitter/callback"
+  },
+  function(token, tokenSecret, profile, done) {
+
+    checkSocial(profile.id, function(err, result) {
+      if (err) {
+        return done(err);
+      } else {
+        return done(null, result);
+      }
+    });
+  }
+));
+
+
+router.get('/twitter', passport.authenticate('twitter'));
+router.get('/twitter/callback',
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+);
 
 router.get('/', function(req, res, next) {
   if (req.user) {
@@ -61,6 +88,54 @@ router.post('/', function(req, res, next) {
     });
   })(req, res, next);
 });
+
+function checkSocial(id, cb) {
+  var query = 'SELECT * from social_auth where social_id = ?';
+  connection.query(query, [id], function(err, rows, fields) {
+    if (!err) {
+      if (rows != '') {
+        cb(null, {id: rows[0].user_id});
+      } else {
+        connection.beginTransaction(function(err) {
+          if (err) { throw err; }
+
+          var newUserQuery = 'INSERT INTO `test`.`users` (`login`) VALUES (?);'
+          connection.query(newUserQuery, [id], function(err, result, fields) {
+            if (err) {
+              cb(err);
+              return connection.rollback(function() {
+                throw err;
+              });
+            } else {
+              var newSocialQuery = 'INSERT INTO `test`.`social_auth` (`user_id`, `social_id`, `social_site`) VALUES (?, ?, ?);'
+              var user_id = result.insertId;
+              connection.query(newSocialQuery, [user_id, id, 'twitter'], function(err, result, fields) {
+                if (err) {
+                  cb(err);
+                  return connection.rollback(function() {
+                    throw err;
+                  });
+                } else {
+                  cb(null, {id: user_id, login: id});
+                  connection.commit(function(err) {
+                    if (err) {
+                      return connection.rollback(function() {
+                        throw err;
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        });
+      }
+    } else {
+      console.log(err);
+      cb(err);
+    }
+  });
+}
 
 function checkForDuplicates(username, password, callback) {
 
