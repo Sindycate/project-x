@@ -126,59 +126,37 @@ router.get('/', function(req, res, next) {
           }
         });
       }
-  } else {
+  }
+  else {
     var login = req.baseUrl.split('/')[1];
     checkProfile(login, function (userInfo) {
       if (userInfo.id) {
-        var queryParams = {
-          usersVotes: '',
-          sorting: {
-            query: ' WHERE users_posts.post_id = posts.id AND users_posts.user_id = ' + userInfo.id,
-            tables: '`users_posts`, `posts`'
-          }
-        };
         if (!req.user) {
-          getPosts(queryParams ,function (result) {
-            if (result) {
-              for (var ii in result) {
-                if (result[ii].id == req.cookies['postIdVoted' + result[ii].id]) {
-                  result[ii].vote = 1;
-                }
-              }
-              res.render('profile', {data: result, userInfo: userInfo, authorization: false, follow: false, unfollow: false});
-            } else {
-              res.render('profile', {error: 'empty posts', userInfo: userInfo, authorization: false, follow: false, unfollow: false});
-            }
-          });
+          res.render('profile', {userInfo: userInfo, authorization: false, follow: false, unfollow: false});
         } else {
-          queryParams.usersVotes = ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.user.id + ' and votes.post_id = posts.id) then 1 else 0 end) as vote';
-          queryParams.sorting.tables = '`users_posts`, `followers`, `posts`';
-          getPosts(queryParams, function (result) {
-            if (result) {
-              checkForFollow(req.user.id, userInfo.id, function (resultFollow) {
-                // пользователь может подписаться и он находится не на своей странице
-                if (resultFollow && req.user.id != userInfo.id) {
-                  res.render('profile', {data: result, userInfo: userInfo, profile: req.user, authorization: true, follow: true, unfollow: false});
-                // пользователь может отписатсья и он находится не на своей странице
-                } else if (!resultFollow && req.user.id != userInfo.id) {
-                  res.render('profile', {data: result, userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: true});
-                // пользователь на своей странице
-                } else {
-                  console.log('err');
-                  res.render('profile', {data: result, userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: false});
-                }
-              });
-            } else if (!result && req.user.id == userInfo.id) {
-              res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: false});
+          checkForFollow(req.user.id, userInfo.id, function (resultFollow) {
+            // пользователь может подписаться и он находится не на своей странице
+            if (resultFollow && req.user.id != userInfo.id) {
+              res.render('profile', {userInfo: userInfo, profile: req.user, authorization: true, follow: true, unfollow: false});
+            // пользователь может отписатсья и он находится не на своей странице
+            } else if (!resultFollow && req.user.id != userInfo.id) {
+              res.render('profile', {userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: true});
+            // пользователь на своей странице
             } else {
-              checkForFollow(req.user.id, userInfo.id, function (resultFollow) {
-                if (resultFollow) {
-                  res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.user, authorization: true, follow: true, unfollow: false});
-                } else {
-                  res.render('profile', {error: 'empty posts', userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: true});
-                }
-              });
+              console.log('err');
+              res.render('profile', {userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: false});
             }
+            // if (req.user.id == userInfo.id) {
+            //   res.render('profile', {userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: false});
+            // } else {
+            //   checkForFollow(req.user.id, userInfo.id, function (resultFollow) {
+            //     if (resultFollow) {
+            //       res.render('profile', {userInfo: userInfo, profile: req.user, authorization: true, follow: true, unfollow: false});
+            //     } else {
+            //       res.render('profile', {userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: true});
+            //     }
+            //   });
+            // }
           });
         }
       } else {
@@ -191,51 +169,6 @@ router.get('/', function(req, res, next) {
     });
   }
 });
-
-function getPosts(queryParams, callback) {
-  connection.query(
-    'SELECT * \
-    ' + queryParams.usersVotes + ', \
-    (case when \
-      (SELECT count(*) \
-      FROM users_posts \
-      WHERE users_posts.post_id = posts.id) \
-      THEN (SELECT `users`.`login` \
-        FROM users, users_posts \
-        WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) else 0 end) as loginPostOwners \
-    FROM ' + queryParams.sorting.tables + queryParams.sorting.query, function(err, queryPosts) {
-    if (!err) {
-      var postsIdStr = '';
-      var posts = {};
-      for (var ii = 0; ii < queryPosts.length; ii++) {
-        postsIdStr += ', ' + queryPosts[ii].id;
-        posts[queryPosts[ii].id] = queryPosts[ii];
-      }
-      postsIdStr = postsIdStr.substr(2);
-      // console.log(postsIdStr);
-
-      connection.query('SELECT * FROM items WHERE post_id IN (' + postsIdStr + ')', function(err, items) {
-        if (!err) {
-          // console.log(items);
-          for (var ii = 0; ii < items.length; ii++) {
-            if (typeof posts[items[ii].post_id].items == 'undefined') {
-              posts[items[ii].post_id].items = [];
-            }
-            posts[items[ii].post_id].items.push(items[ii]);
-          }
-          callback(posts);
-        } else {
-          console.log(err);
-          callback(false);
-        }
-      });
-    } else {
-      console.log(err);
-      callback(false);
-    }
-  });
-}
-
 
 function getSubsWhithLogin (switchSubs, userId, profileLogin, callback) {
   connection.query(
@@ -319,102 +252,6 @@ function checkProfile(login, callback) {
     }
   );
 };
-
-// function getPostsNoLogin(profileId ,callback) {
-//  connection.query(
-//    'SELECT \
-//      `posts`.`id`, \
-//      `posts`.`date`, \
-//      `posts`.`title`, \
-//      i1.name as name1, \
-//      i2.name as name2, \
-//      i3.name as name3, \
-//      i4.name as name4, \
-//      i1.desc as desc1, \
-//      i2.desc as desc2, \
-//      i3.desc as desc3, \
-//      i4.desc as desc4, \
-//      i1.img  as img1, \
-//      i2.img  as img2, \
-//      i3.img  as img3, \
-//      i4.img  as img4, \
-//      i1.votes as votes1, \
-//      i2.votes as votes2, \
-//      i3.votes as votes3, \
-//      i4.votes as votes4 \
-//    FROM \
-//      `users_posts`, `posts` \
-//      LEFT JOIN \
-//        items as i1 \
-//      ON posts.item1 = i1.id \
-//      LEFT JOIN \
-//        items as i2 \
-//      ON posts.item2 = i2.id \
-//      LEFT JOIN \
-//        items as i3 \
-//      ON posts.item3 = i3.id \
-//      LEFT JOIN \
-//        items as i4 \
-//      ON posts.item4 = i4.id \
-//    WHERE users_posts.post_id = posts.id AND users_posts.user_id = ?', profileId, function(err, result) {
-//      if (!err && result[0] != null) {
-//        callback(result);
-//      } else {
-//        console.log('error');
-//        callback(false);
-//      }
-//    }
-//  );
-// };
-
-// function getPostsWithLogin(user_id, profileId, callback) {
-//  connection.query(
-//    'SELECT \
-//      `posts`.`id`, \
-//      `posts`.`date`, \
-//      `posts`.`title`, \
-//      i1.name as name1, \
-//      i2.name as name2, \
-//      i3.name as name3, \
-//      i4.name as name4, \
-//      i1.desc as desc1, \
-//      i2.desc as desc2, \
-//      i3.desc as desc3, \
-//      i4.desc as desc4, \
-//      i1.img  as img1, \
-//      i2.img  as img2, \
-//      i3.img  as img3, \
-//      i4.img  as img4, \
-//      i1.votes as votes1, \
-//      i2.votes as votes2, \
-//      i3.votes as votes3, \
-//      i4.votes as votes4, \
-//      (case when (SELECT count(*) from votes where votes.user_id = ' + user_id + ' and votes.post_id = posts.id) then 1 else 0 end) as vote \
-//    FROM \
-//      `users_posts`, `posts` \
-//      LEFT JOIN \
-//        items as i1 \
-//      ON posts.item1 = i1.id \
-//      LEFT JOIN \
-//        items as i2 \
-//      ON posts.item2 = i2.id \
-//      LEFT JOIN \
-//        items as i3 \
-//      ON posts.item3 = i3.id \
-//      LEFT JOIN \
-//        items as i4 \
-//      ON posts.item4 = i4.id \
-//    WHERE users_posts.post_id = posts.id AND users_posts.user_id = ?', profileId, function(err, result) {
-//      if (!err && result[0] != null) {
-//        // console.log(result);
-//        callback(result);
-//      } else {
-//        console.log('error');
-//        callback(false);
-//      }
-//    }
-//  );
-// };
 
 function addVote(itemId ,callback) {
   connection.query(

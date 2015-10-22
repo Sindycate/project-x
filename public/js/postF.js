@@ -8,11 +8,14 @@ $(document).ready(function() {
   btnVote.click(function() {
     var postId = location.pathname.substr(6);
     var num = this.name;
+    var oldValueVoteCounter = $('.votesCount').text();
 
     $.getJSON('/post/'+ postId + '?vote=1&itemId=' + this.value + '&itemNum=' + this.name + '&postId=' + postId, function(response) {
       if (response.success) {
         btnVote.hide();
         var oldvalue = $('#stat' + num).text();
+
+        $('.votesCount').text((Number(oldValueVoteCounter) + 1));
 
         if ($('.statistics').length) {
           statistics.show();

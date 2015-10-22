@@ -1,7 +1,8 @@
 extends layout
 
 block content
-  - if (!error)
+  div.posts.col-md-12
+  //- - if (!error)
     .col-md-8.col-md-offset-2.post
       .post-information.row
         - if (data.loginPostOwners != 0)
@@ -46,14 +47,15 @@ block content
             li.dateLimit Опрос закроется
               div #{data.dateLimit}
           - if (data.postSettings.votes_limit)
-            li.voteLimit Голосов
-              div #{data.countVotesItems}
-                span из
+            li.voteLimit.postVoteLim Голосов
+              div.votesCount #{data.countVotesItems}
+              span из
               div #{data.postSettings.votes_limit}
       .post-footer.col-md-12
-  - else
+  //- - else
     h1 Поста с таким id не существует
       hr
 
   script(src='/js/jquery-2.1.4.min.js')
   script(src='/js/postF.js')
+  script(src='/js/main.js')

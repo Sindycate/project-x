@@ -216,49 +216,46 @@ a {
 
 .sorting-params {
 	margin-top: 30px;
-}
-
-#sortAllPosts {
-	background-color: #FAFAFA;
-	padding: 2px;
 	color: #666;
-	font-size: 20px;
 }
 
-#sortAllPosts:hover {
-	background-color: #FAFAFA;
+.sorting-params div {
+	padding: 1px;
+}
+
+#activeSorting {
 	color: #333;
-	border-radius: 0;
+	border-bottom: 1px dashed #666;
 }
 
-#sortAllPosts:focus {
-	outline: none;
-	box-shadow: none;
-}
-
-#sortFollowers {
+.sortAllPosts {
 	background-color: #FAFAFA;
 	padding: 2px;
-	color: #666;
 	font-size: 20px;
-}
-
-#sortFollowers:before:hover {
-	content: '|';
-	color: #666;
 	margin-right: 10px;
 }
 
-#sortFollowers:hover {
+.sortAllPosts:hover {
 	background-color: #FAFAFA;
 	color: #333;
 	border-radius: 0;
+	cursor: pointer;
 }
 
-#sortFollowers:focus {
-	outline: none;
-	box-shadow: none;
+.sortFollowers {
+	background-color: #FAFAFA;
+	padding: 2px;
+	/*color: #666;*/
+	font-size: 20px;
 }
+
+.sortFollowers:hover {
+	background-color: #FAFAFA;
+	color: #333;
+	border-radius: 0;
+	cursor: pointer;
+}
+
 
 /************************profile*****************************/
 
@@ -1107,22 +1104,34 @@ small {
 	padding-bottom: 3px;
 	border-bottom: 1px solid #eee;
 }
+.postVoteLim span {
+	margin: 0 5px 0 5px;
+}
+
+.postVoteLim div:nth-child(1) {
+	margin-left: 5px;
+}
 
 .postLimit span {
-	margin-left: 5px;
 	color: #999;
 }
 
 .postLimit div {
 	color: #555;
 	display: inline-block;
-	margin-left: 5px;
 }
 
 .dateLimit {
 	margin-right: 30px;
 }
 
+.dateLimit div {
+	margin-left: 5px;
+}
+
+.pollFinished {
+	/*color: #111;*/
+}
 
 .postHead {
 	max-height: 185px;
@@ -1249,6 +1258,7 @@ small {
 	background-size: cover;
 }
 
+
 .postItemInRow {
 	border-radius: 2px;
 	padding: 0;
@@ -1298,6 +1308,11 @@ small {
 	background-image: url(../images/icons/vote3.png);
 	background-size: cover;
 	opacity: .7;
+}
+
+.usersVote:before {
+	background-image: url(../images/icons/vote_heart.png);
+	opacity: 1;
 }
 
 .btnVoteInRow {

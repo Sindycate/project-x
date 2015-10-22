@@ -44,7 +44,8 @@ block content
 		- if (error == 'empty posts')
 			.empty-posts.col-md-12.text-center У данного пользователя нет ни одной записи.
 		- if (error != 'empty posts')
-			- for (var ii in data)
+			div.posts.col-md-12
+			//- - for (var ii in data)
 				div.posts.col-md-12(id='post#{data[ii].id}')
 					.col-md-6.col-md-offset-3.post
 						.post-information.row
@@ -89,3 +90,4 @@ block content
 
 	script(src='/js/jquery-2.1.4.min.js')
 	script(src='/js/profileF.js')
+	script(src='/js/main.js')

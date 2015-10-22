@@ -7,14 +7,14 @@ var express = require('express'),
 connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '',
+	password : '2177721',
 	database : 'test'
 });
 
 router.get('/', function(req, res, next) {
   if (req.query.vote && req.query.itemNum && req.query.postId) {
     // проверка на авторизацию пользователя
-    if (!req.session.login) {
+    if (!req.user) {
       if (req.cookies['postIdVoted' + req.query.postId] != req.query.postId) {
         addVote(req.query.postId, req.query.itemId, function(result) {
           if (result) {
@@ -29,13 +29,13 @@ router.get('/', function(req, res, next) {
       }
     // если пользователь авторизирован, то начинается проверка на возможность голосовать
     } else {
-      checkForVote(req.query.postId, req.session.user, function (result) {
+      checkForVote(req.query.postId, req.user.id, function (result) {
         if (result) {
           console.log(req.query.itemId);
           addVote(req.query.itemId, function (result) {
             if (result) {
               console.log('test2');
-              saveVotes(req.query.postId, req.query.itemId, req.session.user, function (result) {
+              saveVotes(req.query.postId, req.query.itemId, req.user.id, function (result) {
                 if (result) {
                   res.json({ success: true });
                 } else {
@@ -55,7 +55,7 @@ router.get('/', function(req, res, next) {
     var postId = req.baseUrl.split('/')[2];
     var queryParams = {};
 
-    if (!req.session.login) {
+    if (!req.user) {
       queryParams.usersVotes = '';
 
       getPosts(queryParams, postId, function(result) {
@@ -70,22 +70,22 @@ router.get('/', function(req, res, next) {
         }
       });
     } else {
-      queryParams.usersVotes = ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.session.user + ' and votes.post_id = posts.id) then 1 else 0 end) as vote';
+      queryParams.usersVotes = ', (case when (SELECT count(*) FROM votes WHERE votes.user_id = ' + req.user.id + ' and votes.post_id = posts.id) then 1 else 0 end) as vote';
 
       getPosts(queryParams, postId, function(result) {
         if (result) {
           console.log(result[postId].date);
           // var date = result[postId].date;
-          if (result[postId].postSettings.votes_limit) {
+          if (result[postId].postSettings.hours_limit) {
             result[postId].dateLimit = new Date(result[postId].date);
-            result[postId].dateLimit.setHours(result[postId].dateLimit.getHours() + result[postId].postSettings.votes_limit);
+            result[postId].dateLimit.setHours(result[postId].dateLimit.getHours() + result[postId].postSettings.hours_limit);
           } else if (result[postId].postSettings.date_limit) {
             result[postId].dateLimit = result[postId].postSettings.date_limit;
           }
           console.log(result[postId]);
-          res.render('post', {data: result[postId], profile: req.session.login});
+          res.render('post', {data: result[postId], profile: req.user});
         } else {
-          res.render('post', {error: true, profile: req.session.login});
+          res.render('post', {error: true, profile: req.user});
         }
       });
     }

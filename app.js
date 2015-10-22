@@ -6,7 +6,8 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
   SessionStore = require('express-mysql-session'),
-  sass = require('node-sass');
+  sass = require('node-sass'),
+  passport = require('passport');
 
 var routes = require('./routes/index'),
   login = require('./routes/login'),
@@ -16,8 +17,9 @@ var routes = require('./routes/index'),
   posts = require('./routes/posts'),
   profile = require('./routes/profile'),
   upload = require('./routes/upload'),
-  profileSettings = require('./routes/profileSettings')
-  passport = require('passport');
+  api = require('./routes/api'),
+  profileSettings = require('./routes/profileSettings');
+
 
 var app = express();
 
@@ -37,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var options = {
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: '2177721',
   database: 'test'
 };
 
@@ -87,6 +89,7 @@ app.use('/login', login);
 app.use('/constructer', constructer);
 app.use('/upload', upload);
 app.use('/settings', profileSettings);
+app.use('/api', api);
 app.use('/[a-zA-Z0-9_]+$/', profile);
 
 

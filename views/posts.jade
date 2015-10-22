@@ -1,47 +1,75 @@
 extends layout
 
 block content
-	div.sorting.col-md-12.text-center
-		form(method='POST')
-			input.form-control(name='sort', type='hidden', value='1')
-			ul.sorting-params.list-inline.col-md-4.col-md-offset-4
-				li
-					button.btn(id='sortAllPosts' type='submit' name='sortAllPosts' value='1') Все посты
-				li
-					- if (profile)
-						button.btn(id='sortFollowers' type='submit' name='sortFollowers' value='1') Мои подписки
-	div.posts.col-md-12
-		- if (error == 'Empty followers posts')
-			.empty-posts.col-md-12.text-center Нет публикаций.
-		- else
-			- for (var ii in data)
-					.col-md-6.col-md-offset-3.post
-						.post-information.row
-							- if (data[ii].loginPostOwners != 0)
-								a.text-left(href='/#{data[ii].loginPostOwners}') #{data[ii].loginPostOwners}
-							h4.text-right #{data[ii].date}
-						.post-title
-							h3.text-center #{data[ii].title}
-						h2#header.text-center
-						.group-items-step3
-							- for (var jj in data[ii].items)
-								.text-center.item-step3
-									.col-md-8.col-md-offset-2.thumbnail
-										h3.itemHeading #{data[ii].items[jj].name}
-										.caption
-											p #{data[ii].items[jj].desc}
-										- if (data[ii].vote != 1)
-											div
-												div(class='stat#{data[ii].id}' style='display: none;')
-													ul.list-inline.statistics.col-md-12.col-xs-12(id='post#{data[ii].items[jj].id}Stat')
-														li
-														li #{data[ii].items[jj].votes}
-												div(class='btn#{data[ii].id}')
-													button.btn.btn-primary.btn-vote.col-md-12.col-xs-12(type='submit' name='#{data[ii].items[jj].id}' value='#{data[ii].id}') Голосовать
-										- else
-											p
-												ul.list-inline.statistics.col-md-12.col-xs-12
-													li
-													li #{data[ii].items[jj].votes}
-	script(src='/js/jquery-2.1.4.min.js')
-	script(src='/js/postsF.js')
+  div.sorting.col-md-12.text-center
+    //- div(method='POST')
+    //-   input.form-control(name='sort', type='hidden', value='1')
+    ul.sorting-params.list-inline.col-md-4.col-md-offset-4
+      li
+        .sortAllPosts#activeSorting(type='submit' name='sortAllPosts' value='1') Популярное
+      - if (profile)
+        li
+          .sortFollowers(type='submit' name='sortFollowers' value='1') Мои подписки
+  div.posts.col-md-12
+  //- div.scroll.col-md-12 sd
+    //- - if (error == 'Empty followers posts')
+    //-   .empty-posts.col-md-12.text-center Нет публикаций.
+    //- - else
+      //- for (var ii in data)
+        .col-md-8.col-md-offset-2.post
+          .post-information.row
+            - if (data[ii].loginPostOwners != 0)
+              a.text-left(href='/#{data[ii].loginPostOwners}') #{data[ii].loginPostOwners}
+            h4.text-right #{data[ii].date}
+          .post-title
+            .col-md-10.col-md-offset-1.postHead
+              h3.postName.text-center #{data[ii].title}
+              h4.postDesc.text-center #{data[ii].desc}
+          .col-md-10.col-md-offset-1.postItemsBlock
+            - for (var jj in data[ii].items)
+              - if (data[ii].postSettings.full_mode)
+                .postItem.col-md-6
+                  .text-center.postBody
+                    .itemName
+                      h3.itemHeading #{data[ii].items[jj].name}
+                    - if (data[ii].items[jj].img != '')
+                      p.alignItems
+                        img.itemImg1(src="..#{data[ii].items[jj].img}" alt="Mountain View")
+                      .caption.text-left
+                        p.itemDesc #{data[ii].items[jj].desc}
+                      - if (data[ii].vote != 1)
+                        div(class='stat#{data[ii].id}' style='display: none;')
+                          .statistics.col-md-12(id='post#{data[ii].items[jj].id}Stat')  #{data[ii].items[jj].votes}
+                        div(class='btn#{data[ii].id}')
+                          button.btn.btn-primary.btn-vote.btnVoteFull.col-md-12.col-xs-12(type='submit' name='#{data[ii].items[jj].id}' value='#{data[ii].id}') Голосовать
+                      - else
+                        div(class='stat#{data[ii].id}')
+                          .statistics.col-md-12 #{data[ii].items[jj].votes}
+              - else
+                .postItemInRow.col-md-10.col-md-offset-1
+                  .text-center.postBody
+                    .itemNameInRow.col-md-10
+                      h3 #{data[ii].items[jj].name}
+                    - if (data[ii].vote != 1)
+                      div(class='stat#{data[ii].id}' style='display: none;')
+                        .statInRow.col-md-2(id='post#{data[ii].items[jj].id}Stat') #{data[ii].items[jj].votes}
+                      div(class='btn#{data[ii].id}')
+                        button.btn-vote.btnVoteInRow.col-md-2(type='submit' name='#{data[ii].items[jj].id}' value='#{data[ii].id}') Голосовать
+                    - else
+                      div(class='stat#{data[ii].id}')
+                        .statInRow.col-md-2 #{data[ii].items[jj].votes}
+          .postLimit.col-md-12.text-center
+            ul.list-inline
+              - if (data[ii].dateLimit)
+                li.dateLimit Опрос закроется
+                  div #{data[ii].dateLimit}
+              - if (data[ii].postSettings.votes_limit)
+                li.voteLimit Голосов
+                  div #{data[ii].countVotesItems}
+                    span из
+                  div #{data[ii].postSettings.votes_limit}
+          .post-footer.col-md-12
+  script(src='/js/jquery-2.1.4.min.js')
+  script(src='/js/jquery.infinitescroll.min.js')
+  script(src='/js/postsF.js')
+  script(src='/js/main.js')

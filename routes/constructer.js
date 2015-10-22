@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 	} else if (req.query.ajax && !req.query.countItems) {
 		res.json({ success: false });
 	} else {
-		res.render('constructer', {profile: req.session.login});
+		res.render('constructer', {profile: req.user});
 	}
 });
 
@@ -36,7 +36,7 @@ router.post('/', function(req, res) {
 					throw err;
 				}
 
-				addPost(post, req.session.user, res);
+				addPost(post, req.user.id, res);
 
 			});
 		} catch (err) {
