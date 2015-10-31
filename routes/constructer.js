@@ -17,34 +17,23 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res) {
 	var post = req.body;
-	console.log('***');
-	console.log(post);
-	console.log('***');
+	var userId = 0;
+	if (req.user) {
+		userId = req.user.id;
+	}
 
-	if (post.postName) {
-		// проверка на заполненные имена объектов
-		for (var ii = 0; ii < post.itemsName.length; ii++) {
-			if (!post.itemsName[ii]) {
-				res.json({ success: false, message: 'Нужно присвоить имена созданным объектам, либо удалить лишние'});
-				return;
+	try {
+		connection.beginTransaction(function(err) {
+			if (err) {
+				throw err;
 			}
-		}
 
-		try {
-			connection.beginTransaction(function(err) {
-				if (err) {
-					throw err;
-				}
+			addPost(post, userId, res);
 
-				addPost(post, req.user.id, res);
-
-			});
-		} catch (err) {
-			console.log(err);
-			res.json({ success: false });
-		}
-	} else {
-		res.json({ success: false, message: 'Чтобы продолжить, необходимо дать название вашему посту'});
+		});
+	} catch (err) {
+		console.log(err);
+		res.json({ success: false });
 	}
 });
 

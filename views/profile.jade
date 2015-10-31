@@ -1,93 +1,104 @@
 extends layout
 
 block content
-	- if (!error || error == 'empty posts')
-		.col-md-6.col-md-offset-3.profile-information
-			ul.list-inline.col-md-12
-				li.profile-picture.col-md-2
-				li.col-md-9
-					ul.list-inline
-						li(id='login') @#{userInfo.login}
-						li.follow
-						- if (authorization && follow && !unfollow)
-								button.btn.btn-success(class='btn-follow' id='btn-follow' type='submit' name='follow' value='#{userInfo.id}') Подписаться
-								button.btn(style='display: none;' class='btn-unfollow' id='btn-unfollow' type='submit' name='unfollow' value='#{userInfo.id}') Отписаться
-						- else if (authorization && !follow && unfollow)
-							li.unfollow
-								button.btn(class='btn-unfollow' id='btn-unfollow' type='submit' name='unfollow' value='#{userInfo.id}') Отписаться
-								button.btn.btn-success(class='btn-follow' style='display: none;' id='btn-follow' type='submit' name='follow' value='#{userInfo.id}') Подписаться
-						- else if (authorization && !follow && !unfollow)
-							li.log-out
-								form.text-right(method='POST')
-									button.btn(id='logOut' type='submit' name='logOut' value='1') Выйти
-							li#profileSettings
-								form.text-right(method='POST')
-									button(type='submit' name='profileSettings' value='1')
-						li.col-md-12.profile-description Сметанин Павел
-						li.profile-stat.col-md-8
-							ul.list-inline.col-md-12
-								li.col-md-12#userPosts
-									span #{userInfo.count_posts}
-									desc публикаций
-								li#followers
-									span #{userInfo.count_followers}
-									desc подписчиков
-								li#followersViewOnly(style='display: none;')
-									span #{userInfo.count_followers}
-									desc подписчиков
-								li#subscriptions
-									span #{userInfo.count_subscriptions}
-									desc подписок
-								li#subscriptionsViewOnly(style='display: none;')
-									span #{userInfo.count_subscriptions}
-									desc подписок
-		- if (error == 'empty posts')
-			.empty-posts.col-md-12.text-center У данного пользователя нет ни одной записи.
-		- if (error != 'empty posts')
-			div.posts.col-md-12
-			//- - for (var ii in data)
-				div.posts.col-md-12(id='post#{data[ii].id}')
-					.col-md-6.col-md-offset-3.post
-						.post-information.row
-							- if (data[ii].loginPostOwners != 0)
-								a.text-left(href='/#{data[ii].loginPostOwners}') #{data[ii].loginPostOwners}
-							h4.text-right 2 days
-						.post-title
-							h3.text-center #{data[ii].title}
-						h2#header.text-center
-						.group-items-step3
-							- for (var jj in data[ii].items)
-								.text-center.item-step3
-									.col-md-8.col-md-offset-2.thumbnail
-										h3.itemHeading #{data[ii].items[jj].name}
-										.caption
-											p #{data[ii].items[jj].desc}
-										- if (data[ii].vote != 1)
-											div
-												div(class='stat#{data[ii].id}' style='display: none;')
-													ul.list-inline.statistics.col-md-12.col-xs-12(id='post#{data[ii].items[jj].id}Stat')
-														li
-														li #{data[ii].items[jj].votes}
-												div(class='btn#{data[ii].id}')
-													button.btn.btn-primary.btn-vote.col-md-12.col-xs-12(type='submit' name='#{data[ii].items[jj].id}' value='#{data[ii].id}') Голосовать
-										- else
-											p
-												ul.list-inline.statistics.col-md-12.col-xs-12
-													li
-													li #{data[ii].items[jj].votes}
-						.post-footer.col-md-12
-					- if (authorization && !follow && !unfollow)
-						.right-post-menu.col-md-1
-							button.delete-post(value='#{data[ii].id}')
-		.col-md-6.col-md-offset-3(style='display: none;' id = 'subscriptions-followers')
-			//- ul.subs.list-inline.col-md-12.text-center
-			//- 	li.subs-logo
-			//- 	li.subs-login @test
-			//- 	li
-			//- 		button.btn.btn-success( id='btn-follow' type='submit' name='follow' value='#{userInfo.id}') Подписаться
-	- else
-		h3 Пользователя с таким именем не существует
+  - if (!error || error == 'empty posts')
+    //- .col-md-6.col-md-offset-3.text-center Внимание! Привяжите аккаунт к уже существующему, либо создайте новый
+    .col-md-6.col-md-offset-3.profile-information
+      ul.list-inline.col-md-12
+        li.profile-picture.col-md-2
+          p.alignProfileImg
+            - if (userInfo.img != '')
+              img(src="..#{userInfo.img}" alt="Mountain View")
+            - else
+              img(src="../images/noimage.png" alt="Mountain View")
+        li.col-md-9
+          ul.list-inline
+            - if (userInfo.login != '')
+              li(id='login') @#{userInfo.login}
+            - else
+              li(id='login') @#{userInfo.id}
+            li.follow
+            - if (authorization && follow && !unfollow)
+                button.btn.btn-success(class='btn-follow' id='btn-follow' type='submit' name='follow' value='#{userInfo.id}') Подписаться
+                button.btn(style='display: none;' class='btn-unfollow' id='btn-unfollow' type='submit' name='unfollow' value='#{userInfo.id}') Отписаться
+            - else if (authorization && !follow && unfollow)
+              li.unfollow
+                button.btn(class='btn-unfollow' id='btn-unfollow' type='submit' name='unfollow' value='#{userInfo.id}') Отписаться
+                button.btn.btn-success(class='btn-follow' style='display: none;' id='btn-follow' type='submit' name='follow' value='#{userInfo.id}') Подписаться
+            - else if (authorization && !follow && !unfollow)
+              li.log-out
+                form.text-right(method='POST')
+                  button.btn(id='logOut' type='submit' name='logOut' value='1') Выйти
+              li#profileSettings
+                form.text-right(method='POST')
+                  button(type='submit' name='profileSettings' value='1')
+            li.col-md-12.profile-description
+              span.profileName #{userInfo.name}
+              span.profileDesc #{userInfo.about_user}
+            li.profile-stat.col-md-8
+              ul.list-inline.col-md-12
+                li.col-md-12#userPosts
+                  span #{userInfo.count_posts}
+                  desc публикаций
+                li#followers
+                  span #{userInfo.count_followers}
+                  desc подписчиков
+                li#followersViewOnly(style='display: none;')
+                  span #{userInfo.count_followers}
+                  desc подписчиков
+                li#subscriptions
+                  span #{userInfo.count_subscriptions}
+                  desc подписок
+                li#subscriptionsViewOnly(style='display: none;')
+                  span #{userInfo.count_subscriptions}
+                  desc подписок
+    - if (error == 'empty posts')
+      .empty-posts.col-md-12.text-center У данного пользователя нет ни одной записи.
+    - if (error != 'empty posts')
+      div.posts.col-md-12
+      //- - for (var ii in data)
+        div.posts.col-md-12(id='post#{data[ii].id}')
+          .col-md-6.col-md-offset-3.post
+            .post-information.row
+              - if (data[ii].loginPostOwners != 0)
+                a.text-left(href='/#{data[ii].loginPostOwners}') #{data[ii].loginPostOwners}
+              h4.text-right 2 days
+            .post-title
+              h3.text-center #{data[ii].title}
+            h2#header.text-center
+            .group-items-step3
+              - for (var jj in data[ii].items)
+                .text-center.item-step3
+                  .col-md-8.col-md-offset-2.thumbnail
+                    h3.itemHeading #{data[ii].items[jj].name}
+                    .caption
+                      p #{data[ii].items[jj].desc}
+                    - if (data[ii].vote != 1)
+                      div
+                        div(class='stat#{data[ii].id}' style='display: none;')
+                          ul.list-inline.statistics.col-md-12.col-xs-12(id='post#{data[ii].items[jj].id}Stat')
+                            li
+                            li #{data[ii].items[jj].votes}
+                        div(class='btn#{data[ii].id}')
+                          button.btn.btn-primary.btn-vote.col-md-12.col-xs-12(type='submit' name='#{data[ii].items[jj].id}' value='#{data[ii].id}') Голосовать
+                    - else
+                      p
+                        ul.list-inline.statistics.col-md-12.col-xs-12
+                          li
+                          li #{data[ii].items[jj].votes}
+            .post-footer.col-md-12
+          - if (authorization && !follow && !unfollow)
+            .right-post-menu.col-md-1
+              button.delete-post(value='#{data[ii].id}')
+    .col-md-6.col-md-offset-3(style='display: none;' id = 'subscriptions-followers')
+      //- ul.subs.list-inline.col-md-12.text-center
+      //-   li.subs-logo
+      //-   li.subs-login @test
+      //-   li
+      //-     button.btn.btn-success( id='btn-follow' type='submit' name='follow' value='#{userInfo.id}') Подписаться
+  - else
+    h3 Пользователя с таким именем не существует
 
-	script(src='/js/jquery-2.1.4.min.js')
-	script(src='/js/profileF.js')
-	script(src='/js/main.js')
+  script(src='/js/jquery-2.1.4.min.js')
+  script(src='/js/profileF.js')
+  script(src='/js/main.js')

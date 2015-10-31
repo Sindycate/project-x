@@ -5,9 +5,11 @@ var express = require('express'),
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if (req.user.login) {
+  if (req.user.id) {
     if (req.query.mainSettingsChange) {
+
       var dataForUpdate = {};
+
       if (req.query.login) {
         dataForUpdate.login = req.query.login;
       }
@@ -17,9 +19,14 @@ router.get('/', function(req, res, next) {
       if (req.query.email) {
         dataForUpdate.email = req.query.email;
       }
+
       changeUserInformation(dataForUpdate, req.user.id, req, res);
+
     } else if (req.query.personalSettingsChange) {
-      var dataForUpdate = {};
+      // change name !1
+
+      var dataForUpdate = {id: req.user.id};
+
       if (req.query.name) {
         dataForUpdate.name = req.query.name;
       }
@@ -29,17 +36,24 @@ router.get('/', function(req, res, next) {
       if (req.query.about) {
         dataForUpdate.about_user = req.query.about;
       }
-      dataForUpdate.user_id = req.user.id;
-      changePersonalUserInfo(dataForUpdate, req, res);
+      if (req.query.userImg) {
+        dataForUpdate.img = req.query.userImg;
+      }
+
+      changePersonalUserInfo(dataForUpdate, req.user.id, req, res);
 
     } else if (req.query.checkDuplicate) {
+
       var parameters = {};
+
       if (req.query.login) {
         parameters = {type: 'login', value: req.query.login};
       } else if (req.query.email) {
         parameters = {type: 'email', value: req.query.email};
       }
+
       checkForDuplicate(parameters, res);
+
     } else if (req.query.checkPassword && req.query.password) {
       var password = passwordHash(req.query.password);
       checkPassword(password, req.user.login, res);
@@ -51,11 +65,11 @@ router.get('/', function(req, res, next) {
   }
 });
 
-function changePersonalUserInfo(dataForUpdate, req, res) {
+function changePersonalUserInfo(dataForUpdate, userId, req, res) {
   connection.query(
-    'INSERT INTO users_information SET ? ON DUPLICATE KEY UPDATE ?', [dataForUpdate, dataForUpdate], function(err, result) {
+    'UPDATE users SET ? WHERE id = ' + userId, dataForUpdate, function(err, result) {
     if (!err) {
-      res.json({ success: true });
+      res.json({ success: true, data: dataForUpdate });
     } else {
       console.log(err);
       res.json({ success: false });
@@ -63,15 +77,24 @@ function changePersonalUserInfo(dataForUpdate, req, res) {
   });
 }
 
+// function changePersonalUserInfo(dataForUpdate, req, res) {
+//   connection.query(
+//     'INSERT INTO users SET ? ON DUPLICATE KEY UPDATE ?', [dataForUpdate, dataForUpdate], function(err, result) {
+//     if (!err) {
+//       res.json({ success: true });
+//     } else {
+//       console.log(err);
+//       res.json({ success: false });
+//     }
+//   });
+// }
+
 function getUserInfo(userId, res, profile) {
   connection.query(
-    'SELECT login, email, u_info.name, u_info.last_name, u_info.about_user \
-     FROM `users` as u \
-     LEFT OUTER JOIN `users_information` as u_info \
-      on `u`.`id` = `u_info`.`user_id` \
-     WHERE `u`.`id` = ?', userId, function(err, information) {
+    'SELECT * \
+     FROM `users` \
+     WHERE `id` = ?', userId, function(err, information) {
       if (!err) {
-        console.log(information);
         res.render('profileSettings', {profile: profile, userInfo: information[0]});
       } else {
         console.log(err);
@@ -127,6 +150,18 @@ function changeUserInformation(dataForUpdate, userId, req, res) {
     } else {
       console.log('error');
       res.json({ success: false });
+    }
+  });
+}
+
+function changeUserName(userName, userId, callback) {
+  var dataForUpdate = {name: userName};
+  connection.query(
+    'UPDATE users SET ? WHERE id = ' + userId, dataForUpdate, function(err, result) {
+    if (!err) {
+      callback(true);
+    } else {
+      callback(false);
     }
   });
 }

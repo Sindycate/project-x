@@ -4,13 +4,13 @@ var express = require('express'),
 
 router.post('/', function(req, res, next) {
   var post = req.body;
-  if (post.logOut && req.user.login) {
+  if (post.logOut && req.user) {
     req.logout();
     res.redirect(req.get('referer'));
   } else {
     console.log('error log out');
   }
-  if (post.profileSettings && req.user.login) {
+  if (post.profileSettings && req.user) {
     res.redirect('/settings');
   } else {
     console.log('error settigns');
@@ -20,17 +20,26 @@ router.post('/', function(req, res, next) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
   // просмотр информации о подписках или фолловерах
-  if (req.query.followOrSubs && req.query.profileLogin) {
-    var switchSubs;
+  if (req.query.followOrSubs && req.query.profileName) {
+    var switchSubs = '';
+
     if (req.query.followers) {
       // выборка по фолловерам
-      switchSubs = 'WHERE followers.follower_id = (SELECT id FROM users WHERE login = ?) AND followers.user_id = users.id';
+      if (isNaN(req.query.profileName)) {
+        switchSubs = 'WHERE followers.follower_id = (SELECT id FROM users WHERE login = ?) AND followers.user_id = users.id';
+      } else {
+        switchSubs = 'WHERE followers.follower_id = ? AND followers.user_id = users.id';
+      }
     } else if (req.query.subscriptions) {
       // выборка по подпискам
-      switchSubs = 'WHERE followers.user_id = (SELECT id FROM users WHERE login = ?) AND followers.follower_id = users.id';
+      if (isNaN(req.query.profileName)) {
+        switchSubs = 'WHERE followers.user_id = (SELECT id FROM users WHERE login = ?) AND followers.follower_id = users.id';
+      } else {
+        switchSubs = 'WHERE followers.user_id = ? AND followers.follower_id = users.id';
+      }
     }
     if (req.user.id) {
-      getSubsWhithLogin(switchSubs, req.user.id, req.query.profileLogin, function (subsInfo) {
+      getSubsWhithLogin(switchSubs, req.user.id, req.query.profileName, function (subsInfo) {
         if (subsInfo) {
           res.json({ success: true, subsInfo: subsInfo, currentUserId: req.user.id });
         } else {
@@ -38,7 +47,7 @@ router.get('/', function(req, res, next) {
         }
       });
     } else {
-      getSubsNoLogin(req.query.profileLogin, function (subsInfo) {
+      getSubsNoLogin(switchSubs, req.query.profileName, function (subsInfo) {
         if (subsInfo) {
           res.json({ success: true, subsInfo: subsInfo});
         } else {
@@ -73,9 +82,15 @@ router.get('/', function(req, res, next) {
       }
     });
   } else if (req.query.deletePost && req.query.postId) {
-    var login = req.baseUrl.split('/')[1];
-    console.log(login);
-    checkProfile(login, function (userInfo) {
+
+    var profileParams = {
+      uniqueIdentifier: req.baseUrl.split('/')[1],
+      field: '',
+      url: '',
+      name: ''
+    }
+
+    getUserInfo(profileParams, function (userInfo) {
       if (userInfo.id == req.user.id) {
         deletePost(req.query.postId, function (result) {
           if (result) {
@@ -128,8 +143,15 @@ router.get('/', function(req, res, next) {
       }
   }
   else {
-    var login = req.baseUrl.split('/')[1];
-    checkProfile(login, function (userInfo) {
+
+    var profileParams = {
+      uniqueIdentifier: req.baseUrl.split('/')[1],
+      field: ''
+    }
+
+    // checkProfile(profileParams);
+
+    getUserInfo(profileParams, function (userInfo) {
       if (userInfo.id) {
         if (!req.user) {
           res.render('profile', {userInfo: userInfo, authorization: false, follow: false, unfollow: false});
@@ -143,7 +165,6 @@ router.get('/', function(req, res, next) {
               res.render('profile', {userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: true});
             // пользователь на своей странице
             } else {
-              console.log('err');
               res.render('profile', {userInfo: userInfo, profile: req.user, authorization: true, follow: false, unfollow: false});
             }
             // if (req.user.id == userInfo.id) {
@@ -160,11 +181,11 @@ router.get('/', function(req, res, next) {
           });
         }
       } else {
-        if (req.user.id) {
-          res.render('profile', {error: true, profile: req.user});
-        } else {
+        // if (req.user.id) {
+        //   res.render('profile', {error: true, profile: req.user});
+        // } else {
           res.render('profile', {error: true,  profile: false});
-        }
+        // }
       }
     });
   }
@@ -175,6 +196,8 @@ function getSubsWhithLogin (switchSubs, userId, profileLogin, callback) {
     'SELECT \
       users.login, \
       users.id, \
+      users.name, \
+      users.img, \
       (case when (SELECT count(*) FROM followers WHERE followers.user_id = ? AND followers.follower_id = users.id ) then true else false end) as follow \
     FROM users, followers ' + switchSubs, [userId, profileLogin], function(err, result) {
       console.log(result);
@@ -188,11 +211,12 @@ function getSubsWhithLogin (switchSubs, userId, profileLogin, callback) {
   );
 }
 
-function getSubsNoLogin (profileLogin, callback) {
+function getSubsNoLogin (switchSubs, profileLogin, callback) {
   connection.query(
     'SELECT \
       users.login, \
-      users.id \
+      users.id, \
+      users.name \
     FROM users, followers ' + switchSubs, profileLogin, function(err, result) {
       console.log(result);
       if (!err) {
@@ -231,18 +255,27 @@ function removeFollower (userId, followerId, callback) {
   );
 }
 
-function checkProfile(login, callback) {
+function getUserInfo(profileParams, callback) {
+
+  if (isNaN(profileParams.uniqueIdentifier)) {
+    profileParams.field = 'login';
+  } else {
+    profileParams.field = 'id';
+  }
+
   connection.query(
     'SELECT \
       users.id, \
       users.login, \
+      users.name, \
+      users.img, \
+      users.about_user, \
       (SELECT count(*) from users_posts where users_posts.user_id = users.id) as count_posts, \
       (SELECT count(*) from followers where followers.user_id = users.id) as count_subscriptions, \
       (SELECT count(*) from followers where followers.follower_id = users.id) as count_followers \
     FROM \
       users \
-    WHERE users.login = ?', login, function(err, result) {
-      console.log(result[0]);
+    WHERE users.'+ profileParams.field +' = ?', profileParams.uniqueIdentifier, function(err, result) {
       if (!err && result.length != 0) {
         callback(result[0]);
       } else {
@@ -252,6 +285,32 @@ function checkProfile(login, callback) {
     }
   );
 };
+
+// function checkProfile(profileParams) {
+
+//   if (isNaN(profileParams.uniqueIdentifier)) {
+//     profileParams.field = 'login';
+//   } else {
+//     profileParams.field = 'id';
+//   }
+
+//   connection.query(
+//     'SELECT \
+//       users.id, \
+//       users.login, \
+//       (SELECT name from users_information WHERE users_posts.user_id = users.id) as count_posts, \
+//     FROM \
+//       users \
+//     WHERE users.'+ profileParams.field +' = ?', profileParams.uniqueIdentifier, function(err, result) {
+//       if (!err && result.length != 0) {
+//         callback(result[0]);
+//       } else {
+//         console.log('error');
+//         callback(false);
+//       }
+//     }
+//   );
+// };
 
 function addVote(itemId ,callback) {
   connection.query(

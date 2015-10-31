@@ -37,6 +37,7 @@ var upload = multer({
   storage: storage
 }).fields([
   { name: 'postImg', maxCount: 1 },
+  { name: 'userIcon', maxCount: 1 },
   { name: 'itemImg1', maxCount: 1 },
   { name: 'itemImg2', maxCount: 1 },
   { name: 'itemImg3', maxCount: 1 },

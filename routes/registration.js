@@ -37,7 +37,6 @@ passport.use('local-signup', new LocalStrategy(
   { passReqToCallback: true },
   function(req, username, password, done) {
 
-    console.log(223);
     var post = req.body;
     var enteredData = checkEnteredData(post);
 

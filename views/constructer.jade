@@ -5,24 +5,24 @@ block content
 		div#postForm
 			.col-md-8.col-md-offset-2
 				.col-md-12.constructorPostHead
-					.col-md-4.postImageBlock
-						form.uploadForm(enctype='multipart/form-data' action='/upload/image' method='post')
-							.mask-wrapper
-								ul.list-inline.mask
-									li.col-md-6
-										input.fileInputText(type="text" disabled value='Файл не выбран')
-									li.col-md-3
-										input.fileInput(type='file', name='postImg')
-										div#inputMask
-									li.col-md-3
-										input.download-image(type='submit' value='' name='submit')
-								//- span.status
-						.col-md-12.imgBlock
-							p.alignmentPostImg
-								img.postImg(src="../images/default-thumb.gif" alt="Mountain View" )
-					.col-md-8.constructorPostInfo
+					//- .col-md-4.postImageBlock
+					//- 	form.uploadForm(enctype='multipart/form-data' action='/upload/image' method='post')
+					//- 		.mask-wrapper
+					//- 			ul.list-inline.mask
+					//- 				li.col-md-6
+					//- 					input.fileInputText(type="text" disabled value='Файл не выбран')
+					//- 				li.col-md-3
+					//- 					input.fileInput(type='file', name='postImg')
+					//- 					div#inputMask
+					//- 				li.col-md-3
+					//- 					input.download-image(type='submit' value='' name='submit')
+					//- 			//- span.status
+					//- 	.col-md-12.imgBlock
+					//- 		p.alignmentPostImg
+					//- 			img.postImg(src="../images/default-thumb.gif" alt="Mountain View" )
+					.col-md-8.col-md-offset-2.constructorPostInfo
 						input.form-control.postNameConstructor(placeholder='Название поста' type='text' name='postName')
-						textarea.form-control(placeholder='Описание поста' cols='40' rows='5' name='postDesc' type='text')
+						textarea.postDescConstructor.form-control(placeholder='Описание поста' cols='40' rows='5' name='postDesc' type='text')
 				.col-md-12.text-center.display-type
 					ul.list-inline.col-md-5
 						li.fullStrItems#activeStr

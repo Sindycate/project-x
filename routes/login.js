@@ -13,7 +13,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  connection.query("select * from users where id = "+id,function(err,rows){
+  connection.query("select id, login, name from users where id = " + id, function(err, rows) {
     console.log(rows);
     done(err, rows[0]);
   });
@@ -47,12 +47,14 @@ passport.use(new TwitterStrategy({
   },
   function(token, tokenSecret, profile, done) {
 
-    checkSocial(profile.id, function(err, result) {
-      if (err) {
-        return done(err);
-      } else {
-        return done(null, result);
-      }
+    generateNewUser(profile, 'twitter', function(newUser) {
+      checkSocial(newUser, function(err, result) {
+        if (err) {
+          return done(err);
+        } else {
+          return done(null, result);
+        }
+      });
     });
   }
 ));
@@ -89,9 +91,9 @@ router.post('/', function(req, res, next) {
   })(req, res, next);
 });
 
-function checkSocial(id, cb) {
+function checkSocial(newUser, cb) {
   var query = 'SELECT * from social_auth where social_id = ?';
-  connection.query(query, [id], function(err, rows, fields) {
+  connection.query(query, [newUser.id], function(err, rows, fields) {
     if (!err) {
       if (rows != '') {
         cb(null, {id: rows[0].user_id});
@@ -99,8 +101,12 @@ function checkSocial(id, cb) {
         connection.beginTransaction(function(err) {
           if (err) { throw err; }
 
-          var newUserQuery = 'INSERT INTO `test`.`users` (`login`) VALUES (?);'
-          connection.query(newUserQuery, [id], function(err, result, fields) {
+          var newUserQuery = 'INSERT INTO `test`.`users` SET ?;'
+          connection.query(
+            newUserQuery, {
+              login: newUser.login,
+              name: newUser.name
+            }, function(err, result, fields) {
             if (err) {
               cb(err);
               return connection.rollback(function() {
@@ -109,14 +115,16 @@ function checkSocial(id, cb) {
             } else {
               var newSocialQuery = 'INSERT INTO `test`.`social_auth` (`user_id`, `social_id`, `social_site`) VALUES (?, ?, ?);'
               var user_id = result.insertId;
-              connection.query(newSocialQuery, [user_id, id, 'twitter'], function(err, result, fields) {
+              connection.query(newSocialQuery, [user_id, newUser.id, newUser.social_site], function(err, result, fields) {
                 if (err) {
                   cb(err);
                   return connection.rollback(function() {
                     throw err;
                   });
                 } else {
-                  cb(null, {id: user_id, login: id});
+                  var profileName = (newUser.login) ? newUser.login : (newUser.name) ? newUser.name : newUser.id;
+
+                  cb(null, {id: user_id, login: profileName});
                   connection.commit(function(err) {
                     if (err) {
                       return connection.rollback(function() {
@@ -137,10 +145,33 @@ function checkSocial(id, cb) {
   });
 }
 
+function generateNewUser(profile, social_site, callback) {
+  var newUser = {id: profile.id, social_site: social_site};
+  newUser.name = (profile.displayName) ? profile.displayName : '';
+  newUser.login = '';
+
+  if (profile.username) {
+    checkForDuplicates(profile.username, false, function(result) {
+      if (!result) {
+        newUser.login = profile.username;
+      }
+      callback(newUser);
+    });
+  } else {
+    callback(newUser);
+  }
+}
+
 function checkForDuplicates(username, password, callback) {
 
-  var query = 'SELECT * from users where login = ? and password = ?';
-  connection.query(query, [username, password], function(err, rows, fields) {
+  var queryStr = '';
+
+  if (password) {
+    queryStr = 'and password =' + connection.escape(password);
+  }
+
+  var query = 'SELECT * FROM users WHERE login = ?' + queryStr;
+  connection.query(query, [username], function(err, rows, fields) {
     if (!err) {
       console.log(rows);
       if(rows != '') {

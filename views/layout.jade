@@ -13,7 +13,12 @@ html
 						a(href='/') OptiOption
 					- if (profile)
 						li.profile-page.col-md-1
-							a(href='/#{profile.login}') #{profile.login}
+							- if (profile.login != '')
+								a(href='/#{profile.login}') #{profile.login}
+							- else if (profile.login == '' && profile.name != '')
+								a(href='/#{profile.id}') #{profile.name}
+							- else
+								a(href='/#{profile.id}') #{profile.id}
 					- else
 						li.col-md-4.auth-page
 							a(href='/registration') Registration
