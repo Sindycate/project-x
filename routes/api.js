@@ -93,6 +93,9 @@ router.get('/getPosts', function(req, res, next) {
 
       var userId = 0;
 
+      console.log('dsadsad');
+      // console.log(_.sortBy(result[1].items, 'votes').reverse());
+      // result =  _.sortBy(result[1].items, 'votes');
       result = _.sortBy(result, 'date');
       result = _.sortBy(result, 'countVotesItems');
       result.reverse();
@@ -270,6 +273,7 @@ function getItems(postsIdStr, posts, callback) {
           posts[items[ii].post_id].countVotesItems = 0;
         }
         posts[items[ii].post_id].countVotesItems += items[ii].votes;
+        posts[items[ii].post_id].items = _.sortBy(posts[items[ii].post_id].items, 'votes').reverse();
       }
       callback(true);
     } else {

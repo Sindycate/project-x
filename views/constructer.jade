@@ -3,8 +3,9 @@ extends layout
 block content
 	.col-md-12.constructorBeginning
 		div#postForm
-			.col-md-8.col-md-offset-2
-				.col-md-12.constructorPostHead
+			.col-md-8.col-md-offset-2.postBlock
+				h1.text-center Конструктор
+				//- .col-md-12.constructorPostHead
 					//- .col-md-4.postImageBlock
 					//- 	form.uploadForm(enctype='multipart/form-data' action='/upload/image' method='post')
 					//- 		.mask-wrapper
@@ -20,23 +21,25 @@ block content
 					//- 	.col-md-12.imgBlock
 					//- 		p.alignmentPostImg
 					//- 			img.postImg(src="../images/default-thumb.gif" alt="Mountain View" )
-					.col-md-8.col-md-offset-2.constructorPostInfo
-						input.form-control.postNameConstructor(placeholder='Название поста' type='text' name='postName')
-						textarea.postDescConstructor.form-control(placeholder='Описание поста' cols='40' rows='5' name='postDesc' type='text')
-				.col-md-12.text-center.display-type
-					ul.list-inline.col-md-5
-						li.fullStrItems#activeStr
-						li.shortStrItems
-					div.col-md-2.counter 2
-					div.col-md-5.addItem Добавить
+				.col-md-10.col-md-offset-1.constructorPostInfo
+						input.form-control.postNameConstructor(placeholder='Название поста' maxlength='90' type='text' name='postName')
+						textarea.postDescConstructor.form-control(placeholder='Описание поста' maxlength='190' cols='40' rows='2' name='postDesc' type='text')
+				.col-md-10.col-md-offset-1.text-center.constructorPanel
+					div
+						button.addItem Добавить объект
+						span.counter 2
+					.display-type.text-right
+						ul.list-inline
+							li.fullStrItems#activeStr Полный режим
+							li.shortStrItems Режим списка
 				.col-md-10.col-md-offset-1.messageConstructor.text-center(style='display: none;')
 					.col-md-2
 					.col-md-10
 						h3.messageConstructorText
 				.col-md-12.group-items
 					.col-md-6.text-center.item
-						.col-md-1.delItemShort.delItem(style='display: none;')
-						.thumbnail
+						.col-md-2.delItemShort.delItem(style='display: none;')
+						.thumbnail.fullItem
 							form.itemForm.uploadForm(enctype='multipart/form-data', action='/upload/image', method='post')
 								.mask-wrapper
 									ul.list-inline.mask
@@ -55,11 +58,11 @@ block content
 								p
 									input.form-control.itemName(name='itemsName' placeholder='Название' type='text' maxlength='85')
 								p.itemDescribe
-									textarea.form-control(name='itemsDescription' placeholder='Краткое описание', cols='40', rows='3', type='text')
-						.col-md-12.delItemFull.delItem Удалить
+									textarea.form-control(name='itemsDescription' maxlength='200' placeholder='Краткое описание', cols='40', rows='3', type='text')
+						.col-md-12.delItemFull.delItem
 					.col-md-6.text-center.item
-						.col-md-1.delItemShort.delItem(style='display: none;')
-						.thumbnail
+						.col-md-2.delItemShort.delItem(style='display: none;')
+						.thumbnail.fullItem
 							form.itemForm.uploadForm(enctype='multipart/form-data', action='/upload/image', method='post')
 								.mask-wrapper
 									ul.list-inline.mask
@@ -78,11 +81,11 @@ block content
 								p
 									input.form-control.itemName(name='itemsName' placeholder='Название' type='text' maxlength='85')
 								p.itemDescribe
-									textarea.form-control(name='itemsDescription' placeholder='Краткое описание', cols='40', rows='3', type='text')
-						.col-md-12.delItemFull.delItem Удалить
+									textarea.form-control(name='itemsDescription' maxlength='200' placeholder='Краткое описание', cols='40', rows='3', type='text')
+						.col-md-12.delItemFull.delItem
 		.col-md-11.col-md-offset-1.text-center
 			.col-md-3.col-md-offset-2.goToSettings Открыть настройки
-			.col-md-3.col-md-offset-1.savePost.btn-step2 Завершить редактирование
+			.col-md-3.col-md-offset-1.savePost.btn-step2 Сохранить
 		.col-md-8.col-md-offset-2.text-center(style='display: none;')
 			.col-md-12.openSettings
 				.col-md-12.titleSettings
@@ -108,7 +111,7 @@ block content
 							input#onlyForReg(type='checkbox' size='30')
 						li
 							label(for='onlyForReg') Голосовать могут только зарегистрированные пользователи
-			.col-md-4.col-md-offset-4.savePost.btn-step2 Завершить
+			.col-md-4.col-md-offset-4.savePost.btn-step2 Сохранить
 	.col-md-12.constructorComplete(style='display: none;')
 		.col-md-4.col-md-offset-4.text-center.constructorInfo
 			.col-md-12.shareToFriends
@@ -118,7 +121,7 @@ block content
 					li#shareTwitter
 					li#shareFB
 				h5.postLink Ссылка на пост
-					span optioption.com/post/34
+					span
 			.col-md-12.goToPost
 				h3 Перейти к посту
 	script(src='/js/jquery-2.1.4.min.js')

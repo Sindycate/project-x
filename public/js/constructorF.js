@@ -26,6 +26,7 @@ $(document).ready(function() {
     titleSettings       = $('.titleSettings'),
     goToSettings        = $('.goToSettings'),
     openSettings        = $('.openSettings').parent('div'),
+    postLink            = $('.postLink').children('span'),
     goToPost            = $('.goToPost');
 
   var countItems = 2;
@@ -37,19 +38,19 @@ $(document).ready(function() {
   function createItem(typeOfStructureItems, countItems) {
     var itemStr = '';
     if (typeOfStructureItems == 'full') {
-      itemStr = '<div class="text-center item col-md-6"><div style="display: none;" class="col-md-1 delItemShort delItem"></div><div class="thumbnail"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: block;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: block;"><textarea name="itemsDescription" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: block;">Удалить</div></div>';
+      itemStr = '<div class="text-center item col-md-6"><div style="display: none;" class="col-md-1 delItemShort delItem"></div><div class="thumbnail fullItem"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: block;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: block;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: block;"></div></div>';
     } else if (typeOfStructureItems == 'short') {
-      itemStr = '<div class="text-center item col-md-12"><div style="" class="col-md-1 delItemShort delItem"></div><div class="thumbnail itemBody col-md-10"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: none;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: none;"><textarea name="itemsDescription" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: none;">Удалить</div></div>';
+      itemStr = '<div class="text-center item col-md-10 col-md-offset-1"><div style="" class="col-md-1 delItemShort delItem"></div><div class="thumbnail itemBody col-md-10"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: none;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: none;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: none;"></div></div>';
     }
       $('.group-items').append(itemStr);
   }
 
   var changeType = {
     fullStructureItems: function() {
-      $('.item').removeClass('col-md-12').addClass('col-md-6');
+      $('.item').removeClass('col-md-10 col-md-offset-1').addClass('col-md-6');
       $('.itemForm').show();
       $('.delItemShort').hide();
-      $('.thumbnail').removeClass('itemBody col-md-10');
+      $('.thumbnail').removeClass('itemBody col-md-10').addClass('fullItem');
       $('.itemImg').show();
       $('.itemDescribe').show();
       $('.delItemFull').show();
@@ -57,10 +58,10 @@ $(document).ready(function() {
       fullStructureItems.attr('id', 'activeStr');
     },
     shortStructureItems: function() {
-      $('.item').removeClass('col-md-6').addClass('col-md-12');
+      $('.item').removeClass('col-md-6').addClass('col-md-10 col-md-offset-1');
       $('.itemForm').hide();
       $('.delItemShort').show();
-      $('.thumbnail').addClass('itemBody col-md-10');
+      $('.thumbnail').removeClass('fullItem').addClass('itemBody col-md-10');
       $('.itemImg').hide();
       $('.itemDescribe').hide();
       $('.delItemFull').hide();
@@ -329,8 +330,6 @@ $(document).ready(function() {
           }
         });
 
-        console.log(dataPostForm);
-
         $.ajax({
           type: "POST",
           url: '/constructer',
@@ -342,6 +341,7 @@ $(document).ready(function() {
               constructorBegin.hide("slide", { direction: "right" }, 500);
               constructorComplete.delay(500).show("slide", { direction: "left" }, 500);
               postId = response.postId;
+              postLink.text('optioption.com/post/' + postId);
               // step3.show();
               // var titleString = '<h2 id="header" class="text-center">' + response.postName + '</h2><div class="col-sm-12 col-md-10 col-md-offset-1 group-items-step3">';
               // for (var ii = 0; ii < response.items.length; ii++) {
@@ -407,8 +407,9 @@ $(document).ready(function() {
   }
 
   function checkPostValues(typeOfStructureItems, countItems, callback) {
+    console.log(countItems);
     if (countItems < 2) {
-      callback({response: false, message: 'Заполните все имена объектов, либо удалите лишние'});
+      callback({response: false, message: 'У вас не может быть меньше двух объектов'});
     } else if (postName.val().length > 90) {
       callback({response: false, message: 'Не больше 90 символов в названии поста'});
     } else if (postDesc.val().length > 270) {

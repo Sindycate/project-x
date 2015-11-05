@@ -186,12 +186,14 @@ $(document).ready(function() {
               postsStr += ' \
                 <div class="stat'+ data[ii].id +'"> \
                   <div class="statistics col-md-12 usersVote">'+ data[ii].items[jj].votes +'</div> \
+                  <div class="statisticsPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
                 </div> \
               ';
             } else {
               postsStr += ' \
                 <div class="stat'+ data[ii].id +'"> \
                   <div class="statistics col-md-12">'+ data[ii].items[jj].votes +'</div> \
+                  <div class="statisticsPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
                 </div> \
               ';
             }
@@ -218,12 +220,14 @@ $(document).ready(function() {
               postsStr += ' \
                 <div class="stat'+ data[ii].id +'"> \
                   <div class="statInRow usersVote col-md-2">'+ data[ii].items[jj].votes +'</div> \
+                   <div class="statInRowPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
                 </div> \
               ';
             } else {
               postsStr += ' \
                 <div class="stat'+ data[ii].id +'"> \
                   <div class="statInRow col-md-2">'+ data[ii].items[jj].votes +'</div> \
+                  <div class="statInRowPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
                 </div> \
               ';
             }
@@ -282,10 +286,10 @@ $(document).ready(function() {
       postsStr += ' <li class="postRating" id="postRating'+ data[ii].id +'">'+ data[ii].countVotesItems +'</li></ul> \
         <ul class="share col-md-6 list-inline text-right"> \
           <li class="shareVK"> \
-            <a href="http://vk.com/share.php?url=http://localhost:3000/post/'+ data[ii].id +'&image='+ (data[ii].img ? data[ii].img : 'http://localhost:3000//images/noimage.png') +'&title='+ data[ii].title +'&description='+ data[ii].desc +'" target="_blank">Этот текст нужно удалить</a> \
+            <a href="http://vk.com/share.php?url=http://localhost:3000/post/'+ data[ii].id +'&image='+ (data[ii].img ? data[ii].img : 'http://localhost:3000//images/noimage.png') +'&title='+ data[ii].title +'&description='+ data[ii].desc +'" target="_blank"></a> \
           </li> \
           <li class="shareTwitter"> \
-            <a href="https://twitter.com/share?url=http://localhost:3000/post/'+ data[ii].id +'&via=OPIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ data[ii].title +'" target="_blank">Этот текст нужно удалить</a> \
+            <a href="https://twitter.com/share?url=http://localhost:3000/post/'+ data[ii].id +'&via=OPIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ data[ii].title +'" target="_blank"></a> \
           </li> \
         </ul> \
           </div> \
