@@ -309,10 +309,10 @@ $(document).ready(function() {
       postsStr += ' <li class="postRating" id="postRating'+ data[ii].id +'">'+ data[ii].countVotesItems +'</li></ul> \
         <ul class="share col-md-6 col-sm-6 col-xs-6 list-inline text-right"> \
           <li class="shareVK"> \
-            <a href="http://vk.com/share.php?url=http://localhost:3000/post/'+ data[ii].id +'&image='+ (data[ii].img ? data[ii].img : 'http://localhost:3000//images/noimage.png') +'&title='+ data[ii].title +'&description='+ data[ii].desc +'" target="_blank"></a> \
+            <a onclick="return shareBox(\'http://vk.com/share.php?url=http://localhost:3000/post/'+ data[ii].id +'&image='+ (data[ii].img ? data[ii].img : 'http://localhost:3000//images/noimage.png') +'&title='+ data[ii].title +'&description='+ data[ii].desc +'\', event)" target="_blank"></a> \
           </li> \
           <li class="shareTwitter"> \
-            <a href="https://twitter.com/share?url=http://localhost:3000/post/'+ data[ii].id +'&via=OPTIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ data[ii].title +'" target="_blank"></a> \
+            <a onclick="return shareBox(\'https://twitter.com/share?url=http://localhost:3000/post/'+ data[ii].id +'&via=OPTIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ data[ii].title +'\', event)" target="_blank"></a> \
           </li> \
         </ul> \
           </div> \
@@ -389,5 +389,22 @@ $(document).ready(function() {
 
     $('.posts').append(wrapper);
   }
-
 });
+
+function shareBox(url, ev) {
+  var
+    screenX = typeof window.screenX != 'undefined' ? window.screenX : window.screenLeft,
+    screenY = typeof window.screenY != 'undefined' ? window.screenY : window.screenTop,
+    outerWidth = typeof window.outerWidth != 'undefined' ? window.outerWidth : document.body.clientWidth,
+    outerHeight = typeof window.outerHeight != 'undefined' ? window.outerHeight : (document.body.clientHeight - 22),
+    features = 'width=540,height=300,left=' + parseInt(screenX + ((outerWidth - 540) / 2), 10) + ',top=' + parseInt(screenY + ((outerHeight - 300) / 2), 10);
+  window.open(url, 'vkShare', features);
+  ev = ev || window.event;
+  if (!ev) return false;
+  ev = (ev.originalEvent || ev);
+  if (ev.preventDefault) ev.preventDefault();
+  if (ev.stopPropagation) ev.stopPropagation();
+  ev.cancelBubble = true;
+  ev.returnValue = false;
+  return false;
+}

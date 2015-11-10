@@ -342,6 +342,12 @@ $(document).ready(function() {
               constructorComplete.delay(500).show("slide", { direction: "left" }, 500);
               postId = response.postId;
               postLink.text('optioption.com/post/' + postId);
+              $('#shareVk').click(function() {
+                return shareBox('http://vk.com/share.php?url=http://localhost:3000/post/'+ response.postId +'&title='+ response.postName +'&description='+ response.postDesc, event);
+              });
+              $('#shareTwitter').click(function() {
+                return shareBox('https://twitter.com/share?url=http://localhost:3000/post/'+ response.postId +'&via=OPTIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ response.postName, event);
+              });
               // step3.show();
               // var titleString = '<h2 id="header" class="text-center">' + response.postName + '</h2><div class="col-sm-12 col-md-10 col-md-offset-1 group-items-step3">';
               // for (var ii = 0; ii < response.items.length; ii++) {
@@ -442,3 +448,21 @@ $(document).ready(function() {
   }
 
 });
+
+function shareBox(url, ev) {
+  var
+    screenX = typeof window.screenX != 'undefined' ? window.screenX : window.screenLeft,
+    screenY = typeof window.screenY != 'undefined' ? window.screenY : window.screenTop,
+    outerWidth = typeof window.outerWidth != 'undefined' ? window.outerWidth : document.body.clientWidth,
+    outerHeight = typeof window.outerHeight != 'undefined' ? window.outerHeight : (document.body.clientHeight - 22),
+    features = 'width=540,height=300,left=' + parseInt(screenX + ((outerWidth - 540) / 2), 10) + ',top=' + parseInt(screenY + ((outerHeight - 300) / 2), 10);
+  window.open(url, 'vkShare', features);
+  ev = ev || window.event;
+  if (!ev) return false;
+  ev = (ev.originalEvent || ev);
+  if (ev.preventDefault) ev.preventDefault();
+  if (ev.stopPropagation) ev.stopPropagation();
+  ev.cancelBubble = true;
+  ev.returnValue = false;
+  return false;
+}
