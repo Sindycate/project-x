@@ -9,10 +9,16 @@ html
 		div.menu
 			div.menu-items
 				ul.list-inline.col-md-12
-					li.home-page.col-md-6.col-md-offset-0
-						a(href='/') OptiOption
+					li.main-page.col-md-4.col-sm-4.col-xs-4
+						- if (profile)
+							a(href='/posts') OptiOption
+						- else
+							a(href='/') OptiOption
+					li.constructor-page.col-md-4.col-sm-4.col-xs-4
+						div
+							a(href='/constructer')
 					- if (profile)
-						li.profile-page.col-md-1
+						li.profile-page.col-md-4.col-sm-4.col-xs-4
 							- if (profile.login != '')
 								a(href='/#{profile.login}') #{profile.login}
 							- else if (profile.login == '' && profile.name != '')
@@ -20,9 +26,7 @@ html
 							- else
 								a(href='/#{profile.id}') #{profile.id}
 					- else
-						li.col-md-4.auth-page
-							a(href='/registration') Registration
+						li.col-md-4.col-sm-4.col-xs-4.auth-page
 							a(href='/login') Login
-					li.feed-page.col-md-1
-						a(href='/posts') Feed
+							a(href='/registration') Registration
 		block content

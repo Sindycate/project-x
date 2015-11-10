@@ -11,52 +11,112 @@ a {
 }
 
 .menu {
-  /*background-color: rgb(238, 114, 136);*/
   /*background-color: #EAEAEA;*/
+  /*background-color: #006699;*/
+  /*background-color: #505355;*/
   background-color: #fff;
-  margin: 0 0 10px 0;
-  height: 70px;
+  margin: 0;
+  padding: 0;
+  height: 65px;
   /*background-image: url(../images/codepen.svg);*/
   box-shadow: 0px 1px 1px #EAEAEA;
+  /*box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);*/
 }
 
 .menu-items {
   font-family: "Helvetica";
-  margin: 0;
-  padding: 16px 0 0 20px;
+  padding: 12px 0 0 0;
   font-size: 30px;
   text-shadow: 1px 1px 1px #bbb;
-  cursor: pointer;
   /*opacity: .9;*/
 }
 
-.menu-items a {
-  color: #346BA9;
-  /*color: #fff;*/
+.main-page {
+  text-align: center;
 }
 
-.menu-items .home-page {
-  float: left;
-  padding-right: 40px;
-  /*color: #fff;*/
+.main-page a {
+  color: #444;
+  /*color: #0C70B6;*/
 }
 
-.menu-items .profile-page {
-  float: right;
-  margin-top: 8px;
-  margin-right: 20px;
+.constructor-page {
+  text-align: center;
+  /*background-color: red;*/
+}
+
+.constructor-page div {
+  margin-left: 50%;
+  /*margin-top: -4px;*/
+  border-radius: 25px;
+  width: 40px;
+  height: 40px;
+  /*background-color: #EF7C6D;*/
+  /*background-color: #444;*/
+  opacity: .97;
+  /*box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);*/
+  /*border-bottom: 2px dashed #444;*/
+}
+
+.constructor-page div:before {
+  content: '';
+  background-image: url(../images/icons/create7.png);
+  background-size: cover;
+  height: 25px;
+  width: 25px;
+  top: 5px;
+  /*left: 7px;*/
+  position: relative;
+  display: inline-block;
+}
+
+.constructor-page div:hover:before {
+  opacity: 1;
+  top: 6px;
+  height: 27px;
+  width: 27px;
+}
+
+.constructor-page div:hover {
+  opacity: 1;
+}
+
+.constructor-page div:active {
+  -moz-box-shadow:    inset 1px 1px 4px #bbb;
+  -webkit-box-shadow: inset 1px 1px 4px #bbb;
+  box-shadow:         inset 1px 1px 2px #bbb;
+}
+
+.constructor-page div a {
+  height: 38px;
+  width: 38px;
+  border-radius: 27px;
+  opacity: .3;
+  top: -34px;
+  left: 1px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  /*background-color: red;*/
+}
+
+.profile-page {
+  text-align: center;
+}
+
+.profile-page a {
   font-size: 20px;
-
-  /*color: #fff;*/
+  text-shadow: none;
+  /*color: #0C70B6;*/
+  color: #444;
 }
 
-.menu-items .auth-page {
-  float: right;
-  /*color: #fff;*/
+.auth-page {
+  text-align: center;
 }
 
-.menu-items .auth-page a {
-  float: right;
+.auth-page a {
+  color: #fff;
   margin-right: 10px;
   margin-top: 8px;
   font-size: 20px;
@@ -64,32 +124,27 @@ a {
 }
 
 
-
-.menu-items .feed-page {
-  margin-left: -40px;
-}
-
-
-.menu-items a:hover {
+/*.menu-items a:hover {
   color: #fff;
-  /*color: #346BA9;*/
+  color: #346BA9;
   text-shadow:1px 1px 1px #444;
-}
+}*/
 
 /************************profile*******************************/
 
 .profile-information {
   margin-top: 20px;
   background: none;
-  padding: 0;
+  padding: 0 0 0 30px;
+  /*background-color: red;*/
 }
 
 .profile-picture {
-  /*background-color: red;*/
+  /*background-color: blue;*/
   width: 130px;
   height: 132px;
   margin-top: 10px;
-  margin-left: 30px;
+  /*margin-left: 30px;*/
 }
 
 .alignProfileImg {
@@ -257,7 +312,7 @@ a {
 /*****************************posts******************************/
 
 .sorting-params {
-  margin-top: 30px;
+  margin-top: 45px;
   color: #666;
 }
 
@@ -645,8 +700,25 @@ small {
   background-color: #fff;
   border: 1px solid #eee;
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 65px;
 }
+
+.constructorTitle {
+  opacity: .8;
+}
+
+.constructorTitle:before {
+  content: '';
+  background-image: url(../images/icons/create7.png);
+  background-size: cover;
+  height: 28px;
+  width: 28px;
+  /*top: 5px;*/
+  left: -10px;
+  position: relative;
+  display: inline-block;
+}
+
 
 .postName {
   margin-top: 15px;
@@ -730,7 +802,8 @@ small {
 }
 
 #activeStr {
-  background-color: #84BF91;
+  /*background-color: #EF7C6D;*/
+  background-color: #444;
   color: #fff;
 }
 
@@ -866,7 +939,8 @@ small {
   margin-top: -5px;
   margin-bottom: 0;
   border: none;
-  background-color: #84BF91;
+  /*background-color: #EF7C6D;*/
+  background-color: #444;
 }
 
 .itemBody input {
@@ -877,7 +951,8 @@ small {
 .group-items {
   /*border: 1px solid #eee;*/
   padding: 30px 15px 15px 15px;
-  background-color: #84BF91;
+  /*background-color: #EF7C6D;*/
+  background-color: #444;
   margin-top: 20px;
 }
 
@@ -1270,6 +1345,10 @@ small {
 
 /********************style-post-items*************************/
 
+.post {
+
+  /*box-shadow: 0 -1px 5px 0 #eee,0 1px 5px 0 #eee;*/
+}
 
 .postItemsBlock .postItem:last-child {
   /*background-color: red;*/
@@ -1378,7 +1457,7 @@ small {
 }
 
 .postHead {
-  max-height: 185px;
+  /*max-height: 185px;*/
   margin-top: 10px;
   margin-bottom: 30px;
   padding: 0;
@@ -1480,9 +1559,10 @@ small {
 }*/
 
 .statistics {
+  text-align: left;
   border-top: 1px dashed #999;
   background-color: #fff;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 10% 10px 10%;
   margin-bottom: 0;
   margin-top: -10px;
   border-radius:0 0 3px 3px;
@@ -1508,8 +1588,9 @@ small {
   position: relative;
   float: right;
   margin-top: -33px;
-  margin-right: 15px;
+  margin-right: 10%;
   /*margin-top: 6px;*/
+  /*margin-left: 15px;*/
   font-size: 18px;
   color: #777;
 }
@@ -1573,7 +1654,7 @@ small {
   display: block;
   position: absolute;
   top: 17px;
-  left: 20px;
+  left: 20%;
   height: 22px;
   width: 22px;
   background-image: url(../images/icons/vote3.png);
@@ -1636,6 +1717,18 @@ small {
   border-radius: 0 2px 2px 0;
 }
 
+.btnVoteInRowDisabled {
+  float: right;
+  height: 55px;
+  padding: 0;
+  background-color: #bbb;
+  border: none;
+  border-left: 1px dashed #777;
+  border-radius: 0;
+  color: #444;
+  opacity: .5;
+}
+
 
 .btnVoteFull {
   background-color: grey;
@@ -1648,8 +1741,33 @@ small {
   padding-bottom: 10px;
 }
 
+.btnVoteFullDisabled {
+  background-color: #999;
+  color: #000;
+  border: none;
+  border-radius:0 0 3px 3px;
+  opacity: .4;
+  float: left;
+  margin-top: -10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  opacity: .3;
+  cursor: auto;
+}
+
+.btnVoteFullDisabled:focus {
+  outline: none;
+}
+
+.btnVoteFullDisabled:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+
 .post-footer {
-  background-color: #eee;
+  background-color: #fff;
   margin-top: 25px;
   border-top: 1px solid #E9E9E9;
   height: 40px;

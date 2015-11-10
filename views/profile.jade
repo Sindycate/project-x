@@ -3,15 +3,15 @@ extends layout
 block content
   - if (!error || error == 'empty posts')
     //- .col-md-6.col-md-offset-3.text-center Внимание! Привяжите аккаунт к уже существующему, либо создайте новый
-    .col-md-6.col-md-offset-3.profile-information
-      ul.list-inline.col-md-12
-        li.profile-picture.col-md-2
+    .col-md-7.col-md-offset-3.col-sm-10.col-sm-offset-1.col-xs-12.col-xs-offset-0.profile-information
+      ul.list-inline.col-md-12.col-sm-12.col-xs-12
+        li.profile-picture.col-md-2.col-md-offset-0.col-sm-2.col-sm-offset-0.col-xs-2.col-xs-offset-4
           p.alignProfileImg
             - if (userInfo.img != '')
               img(src="..#{userInfo.img}" alt="Mountain View")
             - else
               img(src="../images/noimage.png" alt="Mountain View")
-        li.col-md-9
+        li.col-md-9.col-sm-9.col-xs-12.col-xs-offset-0
           ul.list-inline
             - if (userInfo.login != '')
               li(id='login') @#{userInfo.login}
@@ -32,10 +32,10 @@ block content
               li#profileSettings
                 form.text-right(method='POST')
                   button(type='submit' name='profileSettings' value='1')
-            li.col-md-12.profile-description
+            li.col-md-12.col-sm-12.col-xs-12.profile-description
               span.profileName #{userInfo.name}
               span.profileDesc #{userInfo.about_user}
-            li.profile-stat.col-md-8
+            li.profile-stat.col-md-12
               ul.list-inline.col-md-12
                 li.col-md-12#userPosts
                   span #{userInfo.count_posts}

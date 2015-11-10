@@ -124,14 +124,14 @@ $(document).ready(function() {
       }
 
       postsStr += ' \
-        <div class="col-md-8 col-md-offset-2 post" id="post'+ data[ii].id +'"> \
+        <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 post" id="post'+ data[ii].id +'"> \
           <div class="post-information row"> \
       ';
       if (data[ii].loginPostOwners && data[ii].loginPostOwners != 0) {
-        if (data[ii].img == '') {
+        if (data[ii].imgProfile == '') {
           postsStr += '<p class="alignPostImg"><img src="../images/noimage.png"></p>';
         } else {
-          postsStr += '<p class="alignPostImg"><img src="..'+ data[ii].img +'"></p>';
+          postsStr += '<p class="alignPostImg"><img src="..'+ data[ii].imgProfile +'"></p>';
         }
         if (data[ii].loginPostOwnersId) {
           postsStr += '<a href="/'+ data[ii].loginPostOwnersId +'" class="text-left">'+ data[ii].loginPostOwners +'</a>';
@@ -143,17 +143,17 @@ $(document).ready(function() {
           <h4 class="text-right">'+ formatDate(new Date(data[ii].date)) +'</h4> \
         </div> \
         <div class="post-title"> \
-          <div class="col-md-10 col-md-offset-1 postHead"> \
+          <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 postHead"> \
             <h3 class="postName text-center">'+ data[ii].title +'</h3> \
             <h4 class="postDesc text-center">'+ data[ii].desc +'</h4> \
           </div> \
         </div> \
-        <div class="col-md-10 col-md-offset-1 postItemsBlock"> \
+        <div class="col-md-10 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 postItemsBlock"> \
       ';
       for (var jj in data[ii].items) {
         if (data[ii].postSettings.full_mode) {
           postsStr += ' \
-            <div class="postItem col-md-6"> \
+            <div class="postItem col-md-6 col-sm-12 col-xs-12"> \
               <div class="text-center postBody"> \
                 <div class="itemName"> \
                   <h3 class="itemHeading">'+ data[ii].items[jj].name +'</h3> \
@@ -171,65 +171,88 @@ $(document).ready(function() {
               <p class="itemDesc">'+ data[ii].items[jj].desc +'</p> \
             </div> \
           ';
-          if (!data[ii].vote && postAvailable && userId) {
+          if ((!data[ii].vote && postAvailable) && ((data[ii].postSettings.reg_only && userId) || (!data[ii].postSettings.reg_only))) {
             postsStr += ' \
               <div class="stat'+ data[ii].id +'" style="display: none"> \
-                <div class="statistics col-md-12" id="post'+ data[ii].items[jj].id +'Stat">'+ data[ii].items[jj].votes +' \
+                <div class="statistics col-md-12 col-sm-12 col-xs-12" id="post'+ data[ii].items[jj].id +'Stat">'+ data[ii].items[jj].votes +' \
                 </div> \
+                <div class="statisticsPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
               </div> \
               <div class="btn'+ data[ii].id +'"> \
-                <button class="btn btn-primary btn-vote btnVoteFull col-md-12" type="submit" name="'+ data[ii].items[jj].id +'" value="'+ data[ii].id +'">Голосовать</button> \
+                <button class="btn btn-primary btn-vote btnVoteFull col-md-12 col-sm-12 col-xs-12" type="submit" name="'+ data[ii].items[jj].id +'" value="'+ data[ii].id +'">Голосовать</button> \
+              </div> \
+            ';
+          } else if (data[ii].postSettings.reg_only && !userId) {
+            postsStr += ' \
+              <div class="btn'+ data[ii].id +'"> \
+                <button class="btnVoteFullDisabled col-md-12 col-sm-12 col-xs-12" type="submit" name="'+ data[ii].items[jj].id +'" value="'+ data[ii].id +'">Голоcовать</button> \
               </div> \
             ';
           } else {
             if (data[ii].vote == data[ii].items[jj].id) {
               postsStr += ' \
                 <div class="stat'+ data[ii].id +'"> \
-                  <div class="statistics col-md-12 usersVote">'+ data[ii].items[jj].votes +'</div> \
-                  <div class="statisticsPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
-                </div> \
-              ';
+                  <div class="statistics col-md-12 col-sm-12 col-xs-12 usersVote">'+ data[ii].items[jj].votes +'</div>';
+              if (data[ii].countVotesItems) {
+                postsStr += ' \
+                  <div class="statisticsPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div>';
+              }
+              postsStr += '</div>';
             } else {
               postsStr += ' \
                 <div class="stat'+ data[ii].id +'"> \
-                  <div class="statistics col-md-12">'+ data[ii].items[jj].votes +'</div> \
-                  <div class="statisticsPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
-                </div> \
-              ';
+                  <div class="statistics col-md-12 col-sm-12 col-xs-12">'+ data[ii].items[jj].votes +'</div>';
+              if (data[ii].countVotesItems) {
+                postsStr += ' \
+                  <div class="statisticsPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div>';
+              }
+              postsStr += '</div>';
             }
           }
         } else {
           postsStr += ' \
-            <div class="postItemInRow col-md-10 col-md-offset-1"> \
+            <div class="postItemInRow col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1"> \
               <div class="text-center postBody"> \
-                <div class="itemNameInRow col-md-10"> \
+                <div class="itemNameInRow col-md-10 col-sm-10 col-xs-10"> \
                   <h3>'+ data[ii].items[jj].name +'</h3> \
                 </div> \
           ';
-          if (!data[ii].vote && postAvailable && userId) {
+          if ((!data[ii].vote && postAvailable) && ((data[ii].postSettings.reg_only && userId) || (!data[ii].postSettings.reg_only))) {
             postsStr += ' \
               <div class="stat'+ data[ii].id +'" style="display: none;"> \
-                <div class="statInRow col-md-2" id="post'+ data[ii].items[jj].id +'Stat">'+ data[ii].items[jj].votes +'</div> \
+                <div class="statInRow col-md-2 col-sm-2 col-xs-2" id="post'+ data[ii].items[jj].id +'Stat">'+ data[ii].items[jj].votes +'</div> \
+                <div class="statInRowPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
               </div> \
               <div class="btn'+ data[ii].id +'"> \
-                <button class="btn-vote btnVoteInRow col-md-2" type="submit" name="'+ data[ii].items[jj].id +'" value="'+ data[ii].id +'">Голосовать</button> \
+                <button class="btn-vote btnVoteInRow col-md-2 col-sm-2 col-xs-2" type="submit" name="'+ data[ii].items[jj].id +'" value="'+ data[ii].id +'">Голосовать</button> \
               </div> \
             ';
+          } else if (!data[ii].vote && postAvailable && data[ii].postSettings.reg_only && !userId) {
+            postsStr += ' \
+              <div class="btn'+ data[ii].id +'"> \
+                <button class="btnVoteInRowDisabled col-md-2 col-sm-2 col-xs-2" disabled type="submit" name="'+ data[ii].items[jj].id +'" value="'+ data[ii].id +'">Голоcовать</button> \
+              </div>';
           } else {
             if (data[ii].vote == data[ii].items[jj].id) {
               postsStr += ' \
                 <div class="stat'+ data[ii].id +'"> \
-                  <div class="statInRow usersVote col-md-2">'+ data[ii].items[jj].votes +'</div> \
+                  <div class="statInRow usersVote col-md-2 col-sm-2 col-xs-2">'+ data[ii].items[jj].votes +'</div>';
+              if (data[ii].countVotesItems) {
+                postsStr += ' \
                    <div class="statInRowPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
-                </div> \
-              ';
+                ';
+              }
+              postsStr += '</div>';
             } else {
               postsStr += ' \
                 <div class="stat'+ data[ii].id +'"> \
-                  <div class="statInRow col-md-2">'+ data[ii].items[jj].votes +'</div> \
-                  <div class="statInRowPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
-                </div> \
-              ';
+                  <div class="statInRow col-md-2 col-sm-2 col-xs-2">'+ data[ii].items[jj].votes +'</div>';
+              if (data[ii].countVotesItems) {
+                postsStr += ' \
+                   <div class="statInRowPercent text-right">'+ Math.round(data[ii].items[jj].votes * 100 / data[ii].countVotesItems) +'</div> \
+                ';
+              }
+              postsStr += '</div>';
             }
           }
         }
@@ -240,7 +263,7 @@ $(document).ready(function() {
       }
       postsStr += ' \
             </div> \
-        <div class="postLimit col-md-12 text-center"> \
+        <div class="postLimit col-md-12 col-sm-12 col-xs-12 text-center"> \
           <ul class="list-inline"> \
       ';
 
@@ -263,7 +286,7 @@ $(document).ready(function() {
               </li> \
             ';
           }
-        } else if (data[ii].postSettings.reg_only && !userId) {
+        } else if (!data[ii].vote && postAvailable && data[ii].postSettings.reg_only && !userId) {
           postsStr += ' \
             <li class="notAuthorized">Авторизуйтесь, чтобы проголосовать \
             </li> \
@@ -278,25 +301,25 @@ $(document).ready(function() {
       postsStr += ' \
              </ul> \
           </div> \
-          <div class="post-footer col-md-12"> \
-            <ul class="indicators col-md-6 list-inline">';
+          <div class="post-footer col-md-12 col-sm-12 col-xs-12"> \
+            <ul class="indicators col-md-6 col-sm-6 col-xs-6 list-inline">';
       if (data[ii].postSettings.reg_only) {
         postsStr += '<li class="privatePost"></li>';
       }
       postsStr += ' <li class="postRating" id="postRating'+ data[ii].id +'">'+ data[ii].countVotesItems +'</li></ul> \
-        <ul class="share col-md-6 list-inline text-right"> \
+        <ul class="share col-md-6 col-sm-6 col-xs-6 list-inline text-right"> \
           <li class="shareVK"> \
             <a href="http://vk.com/share.php?url=http://localhost:3000/post/'+ data[ii].id +'&image='+ (data[ii].img ? data[ii].img : 'http://localhost:3000//images/noimage.png') +'&title='+ data[ii].title +'&description='+ data[ii].desc +'" target="_blank"></a> \
           </li> \
           <li class="shareTwitter"> \
-            <a href="https://twitter.com/share?url=http://localhost:3000/post/'+ data[ii].id +'&via=OPIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ data[ii].title +'" target="_blank"></a> \
+            <a href="https://twitter.com/share?url=http://localhost:3000/post/'+ data[ii].id +'&via=OPTIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ data[ii].title +'" target="_blank"></a> \
           </li> \
         </ul> \
           </div> \
         </div>';
       if (accessDel) {
         postsStr += ' \
-          <div class="right-post-menu col-md-1" id="btnDel'+ data[ii].id +'"> \
+          <div class="right-post-menu col-md-1 col-sm-1 col-xs-1" id="btnDel'+ data[ii].id +'"> \
             <button class="button delete-post" value="'+ data[ii].id +'"></button> \
           </div> \
         ';
@@ -324,10 +347,16 @@ $(document).ready(function() {
           currentItem.text(Number(oldValue) + 1);
           voteCounter.text(Number(oldValueVoteCounter) + 1);
           postRating.text(Number(postRating.text()) + 1);
-          buttons.hide();
+
+          var itemsStat = (statistics.children('.statistics').length) ? statistics.children('.statistics') : statistics.children('.statInRow');
+          var itemsStatPercent = (statistics.children('.statisticsPercent').length) ? statistics.children('.statisticsPercent') : statistics.children('.statInRowPercent');
+          for (var ii = 0; ii < itemsStatPercent.length; ii++) {
+            itemsStatPercent[ii].textContent = Math.round(Number(itemsStat[ii].textContent) * 100 / Number(postRating.text()));
+          }
+
           $wrapper.find(currentPost).parent('div').prev('div').children('div').addClass('usersVote');
+          buttons.hide();
           statistics.show();
-          $wrapper.find('#header').text('Ваш голос принят');
         } else if (response.warning == 'already voted') {
           console.log('already voted');
         } else {

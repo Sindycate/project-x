@@ -223,7 +223,16 @@ function getPosts(queryParams, callback) {
         FROM users, users_posts \
         WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
       else 0 \
-      end) as loginPostOwnersId \
+      end) as loginPostOwnersId, \
+    (case when \
+      (SELECT count(*) \
+      FROM users_posts, users \
+      WHERE `users_posts`.`post_id` = `posts`.`id` and `users`.`id` = `users_posts`.`user_id`) \
+      then (SELECT `users`.`img` \
+        FROM users, users_posts \
+        WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
+      else "" \
+      end) as imgProfile \
     FROM ' + queryParams.sorting.tables + queryParams.sorting.query + queryParams.limit, function(err, queryPosts) {
 
       console.log(queryPosts);

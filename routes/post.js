@@ -31,10 +31,8 @@ router.get('/', function(req, res, next) {
     } else {
       checkForVote(req.query.postId, req.user.id, function (result) {
         if (result) {
-          console.log(req.query.itemId);
           addVote(req.query.itemId, function (result) {
             if (result) {
-              console.log('test2');
               saveVotes(req.query.postId, req.query.itemId, req.user.id, function (result) {
                 if (result) {
                   res.json({ success: true });
