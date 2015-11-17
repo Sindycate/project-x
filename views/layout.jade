@@ -5,15 +5,17 @@ html
 		link(rel='stylesheet' href='/stylesheets/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		link(rel='stylesheet', href='/stylesheets/fileinput.min.css')
-	body
+	body.clearfix
 		div.menu
 			div.menu-items
-				ul.list-inline.col-md-12
+				ul.list-inline.col-lg-10.col-lg-offset-1.col-md-12.col-sm-12.col-xs-12
 					li.main-page.col-md-4.col-sm-4.col-xs-4
 						- if (profile)
-							a(href='/posts') OptiOption
+							a(href='/posts')
+								img(src="/images/Pollweber.png" width="160px"  alt="")
 						- else
-							a(href='/') OptiOption
+							a(href='/')
+								img(src="/images/Pollweber.png" width="160px"  alt="")
 					li.constructor-page.col-md-4.col-sm-4.col-xs-4
 						div
 							a(href='/constructer')
@@ -27,6 +29,10 @@ html
 								a(href='/#{profile.id}') #{profile.id}
 					- else
 						li.col-md-4.col-sm-4.col-xs-4.auth-page
-							a(href='/login') Login
-							a(href='/registration') Registration
+							.col-md-2.col-sm-3.col-xs-12
+								a(href='/login') Login
+							.col-md-2.col-sm-3.col-xs-12
+								a(href='/registration') Registration
 		block content
+
+	script(src="//use.edgefonts.net/cookie.js")

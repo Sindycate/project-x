@@ -92,9 +92,9 @@ function checkEnteredData(post) {
     return {success: false, message: 'Заполните все поля'};
   }
 
-  if (!(/^[\-\_a-zA-Z0-9]{4,20}$/.test(post.username))) {
+  if (!(/^[\-\_a-zA-Z0-9]{4,15}$/.test(post.username))) {
     console.log('mistake in login');
-    return {success: false, message: 'Логин должен содержать от 4 до 20 символов, разрешены только следующие специальные символы: (-,_)'};
+    return {success: false, message: 'Логин должен содержать от 4 до 15 символов, разрешены только следующие специальные символы: (-,_)'};
   } else if (!(/^.{6,20}$/.test(post.password))) {
     console.log('mistake in password');
     return {success: false, message: 'Пароль должен содержать от 6 до 20 символов'};

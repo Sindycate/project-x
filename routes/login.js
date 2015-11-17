@@ -93,15 +93,18 @@ router.post('/', function(req, res, next) {
 
 function checkSocial(newUser, cb) {
   var query = 'SELECT * from social_auth where social_id = ?';
+  console.log(newUser);
   connection.query(query, [newUser.id], function(err, rows, fields) {
     if (!err) {
+      console.log('-');
+      console.log(rows);
       if (rows != '') {
         cb(null, {id: rows[0].user_id});
       } else {
         connection.beginTransaction(function(err) {
           if (err) { throw err; }
 
-          var newUserQuery = 'INSERT INTO `test`.`users` SET ?;'
+          var newUserQuery = 'INSERT INTO `users` SET ?;'
           connection.query(
             newUserQuery, {
               login: newUser.login,
@@ -113,9 +116,11 @@ function checkSocial(newUser, cb) {
                 throw err;
               });
             } else {
-              var newSocialQuery = 'INSERT INTO `test`.`social_auth` (`user_id`, `social_id`, `social_site`) VALUES (?, ?, ?);'
+              var newSocialQuery = 'INSERT INTO `social_auth` (`user_id`, `social_id`, `social_site`) VALUES (?, ?, ?);'
               var user_id = result.insertId;
-              connection.query(newSocialQuery, [user_id, newUser.id, newUser.social_site], function(err, result, fields) {
+              console.log(newUser.id);
+              var qwe = connection.query(newSocialQuery, [user_id, newUser.id, newUser.social_site], function(err, result, fields) {
+                console.log(qwe);
                 if (err) {
                   cb(err);
                   return connection.rollback(function() {

@@ -21,6 +21,8 @@ $(document).ready(function() {
     countVotesForEnd    = $('#countVotesForEnd'),
     timeForEndHours     = $('#timeForEndHours'),
     timeForEndDate      = $('#timeForEndDate'),
+    hoursCheckbox       = $('#hoursCheckbox'),
+    dateCheckbox        = $('#dateCheckbox'),
     onlyForReg          = $('#onlyForReg'),
     savePost            = $('.savePost'),
     titleSettings       = $('.titleSettings'),
@@ -31,26 +33,26 @@ $(document).ready(function() {
 
   var countItems = 2;
   var typeOfStructureItems = 'full';
-  var postSettings = {countVotesForEnd: '', timeForEndHours: '', timeForEndHours: '', timeForEnd: true, regOnly: false},
+  var postSettings = {countVotesForEnd: '', timeForEndHours: '', timeForEnd: true, regOnly: false},
       postImg = '',
       postId  = 0;
 
   function createItem(typeOfStructureItems, countItems) {
     var itemStr = '';
     if (typeOfStructureItems == 'full') {
-      itemStr = '<div class="text-center item col-md-6"><div style="display: none;" class="col-md-1 delItemShort delItem"></div><div class="thumbnail fullItem"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: block;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: block;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: block;"></div></div>';
+      itemStr = '<div class="text-center item col-md-6 col-md-offset-0 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1"><div style="display: none;" class="col-md-1 col-sm-1 col-xs-1 delItemShort delItem"></div><div class="thumbnail fullItem"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: block;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8 col-sm-8 col-xs-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12 col-sm-12 col-xs-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: block;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 col-sm-12 col-xs-12 delItemFull delItem" style="display: block;"></div></div>';
     } else if (typeOfStructureItems == 'short') {
-      itemStr = '<div class="text-center item col-md-10 col-md-offset-1"><div style="" class="col-md-1 delItemShort delItem"></div><div class="thumbnail itemBody col-md-10"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: none;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: none;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 delItemFull delItem" style="display: none;"></div></div>';
+      itemStr = '<div class="text-center item col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1"><div style="" class="col-md-1 col-sm-1 col-xs-1 delItemShort delItem"></div><div class="thumbnail itemBody col-md-10 col-sm-10 col-xs-10"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: none;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8 col-sm-8 col-xs-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12 col-sm-12 col-xs-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: none;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 col-sm-12 col-xs-12 delItemFull delItem" style="display: none;"></div></div>';
     }
       $('.group-items').append(itemStr);
   }
 
   var changeType = {
     fullStructureItems: function() {
-      $('.item').removeClass('col-md-10 col-md-offset-1').addClass('col-md-6');
+      $('.item').removeClass('col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0').addClass('col-md-6 col-md-offset-0 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1');
       $('.itemForm').show();
       $('.delItemShort').hide();
-      $('.thumbnail').removeClass('itemBody col-md-10').addClass('fullItem');
+      $('.thumbnail').removeClass('itemBody col-md-10 col-md-offset-0 col-sm-10 col-sm-offset-0 col-xs-10 col-xs-offset-1').addClass('fullItem');
       $('.itemImg').show();
       $('.itemDescribe').show();
       $('.delItemFull').show();
@@ -58,10 +60,10 @@ $(document).ready(function() {
       fullStructureItems.attr('id', 'activeStr');
     },
     shortStructureItems: function() {
-      $('.item').removeClass('col-md-6').addClass('col-md-10 col-md-offset-1');
+      $('.item').removeClass('col-md-6 col-md-offset-0 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1').addClass('col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0');
       $('.itemForm').hide();
       $('.delItemShort').show();
-      $('.thumbnail').removeClass('fullItem').addClass('itemBody col-md-10');
+      $('.thumbnail').removeClass('fullItem').addClass('itemBody col-md-10 col-md-offset-0 col-sm-10 col-sm-offset-0 col-xs-10 col-xs-offset-0');
       $('.itemImg').hide();
       $('.itemDescribe').hide();
       $('.delItemFull').hide();
@@ -89,7 +91,6 @@ $(document).ready(function() {
     } else {
       message.show();
       messageText.text('У вас должно быть не более 4-ёх объектов, чтобы перейти в полный режим.');
-      console.log('Число объектов превышает допустимое значение');
     }
   });
 
@@ -169,10 +170,10 @@ $(document).ready(function() {
   countVotesForEnd.change(function() {
     if (countVotesForEnd.val() != '') {
       postSettings.countVotesForEnd = countVotesForEnd.val();
-      messageSettings.text('Ограничение на количество голосов будет установлено при завершении');
+      // messageSettings.text('Ограничение на количество голосов будет установлено при завершении');
     } else if (countVotesForEnd.val() == '') {
       postSettings.countVotesForEnd = '';
-      messageSettings.text('Лимит на количество голосов убран');
+      // messageSettings.text('Лимит на количество голосов убран');
     }
   });
 
@@ -186,71 +187,52 @@ $(document).ready(function() {
     }
   });
 
-  timeForEndHours.focus(function() {
-    if (!timeForEndHours.val()) {
-      messageSettings.text('Ограничение по времени можно сделать либо по часам, либо по конкретной дате');
-    }
+  countVotesForEnd.focus(function() {
+    messageSettings.text('Ограничение по количеству голосов не должно быть меньше 10');
   });
 
-  timeForEndDate.focus(function() {
-    if (!timeForEndDate.val()) {
-      messageSettings.text('Ограничение по времени можно сделать либо по часам, либо по конкретной дате');
-    }
+  // hoursCheckbox.is(':checked');
+
+  hoursCheckbox.change(function() {
+    // hoursCheckbox.val($(this).is(':checked'));
+    timeForEndHours.removeAttr('disabled');
+    timeForEndDate.attr('disabled', '');
+    postSettings.timeForEndDate = '';
+    postSettings.timeForEndHours = timeForEndHours.val();
   });
+
+  dateCheckbox.change(function() {
+    // dateCheckbox.val($(this).is(':checked'));
+    timeForEndDate.removeAttr('disabled');
+    timeForEndHours.attr('disabled', '');
+    postSettings.timeForEndHours = '';
+    postSettings.timeForEndDate = timeForEndDate.val();
+  });
+
+  // timeForEndHours.focus(function() {
+  //   if (!timeForEndHours.val()) {
+  //     messageSettings.text('Ограничение по времени можно сделать либо по часам, либо по конкретной дате');
+  //   }
+  // });
+
+  // timeForEndDate.focus(function() {
+  //   if (!timeForEndDate.val()) {
+  //     messageSettings.text('Ограничение по времени можно сделать либо по часам, либо по конкретной дате');
+  //   }
+  // });
 
   timeForEndHours.change(function() {
-    if (timeForEndHours.val() != '' && timeForEndDate.val() != '') {
-      messageSettings.text('Вы можете активировать только одно временное ограничение');
+    if (timeForEndHours.val() != '' && hoursCheckbox.is(':checked')) {
       postSettings.timeForEndHours = timeForEndHours.val();
-      postSettings.timeForEnd = false;
-    } else if (timeForEndHours.val() != '' && timeForEndDate.val() == '') {
-      messageSettings.text('Ограничение по времени будет установлено при завершении');
       postSettings.timeForEnd = true;
-      postSettings.timeForEndHours = timeForEndHours.val();
-    } else if (timeForEndHours.val() == '') {
-      messageSettings.text('Ограничение по количеству часов убрано');
-      postSettings.timeForEndHours = '';
     }
-    if (timeForEndHours.val() == '' && timeForEndDate.val() != '') {
-      postSettings.timeForEnd = true;
-    } else if (timeForEndDate.val() == '' && timeForEndHours.val() == '') {
-      postSettings.timeForEnd = false;
-    }
-    console.log(postSettings.timeForEnd);
   });
 
   timeForEndDate.change(function() {
-    if (timeForEndDate.val() != '' && timeForEndHours.val() != '') {
-      messageSettings.text('Вы можете активировать только одно временное ограничение');
+    if (timeForEndDate.val() != '' && dateCheckbox.is(':checked')) {
       postSettings.timeForEndDate = timeForEndDate.val();
-      postSettings.timeForEnd = false;
-    } else if (timeForEndDate.val() != '' && timeForEndHours.val() == '') {
-      messageSettings.text('Ограничение по дате будет установлено при завершении');
       postSettings.timeForEnd = true;
-      postSettings.timeForEndDate = timeForEndDate.val();
-    } else if (timeForEndDate.val() == '') {
-      messageSettings.text('Ограничение по дате убрано');
-      postSettings.timeForEndDate = '';
     }
-    if (timeForEndDate.val() == '' && timeForEndHours.val() != '') {
-      postSettings.timeForEnd = true;
-    } else if (timeForEndDate.val() == '' && timeForEndHours.val() == '') {
-      postSettings.timeForEnd = false;
-    }
-    console.log(postSettings.timeForEnd);
-  });
-
-  goToSettings.click(function() {
-    goToSettings.parent('div').toggle('slow');
-    openSettings.toggle('fast');
-    $('html,body').animate({
-      scrollTop: $('.titleSettings').offset().top-15
-    }, 1000);
-  });
-
-  titleSettings.click(function() {
-    openSettings.toggle('slow');
-    goToSettings.parent('div').toggle('slow');
   });
 
   $('.fileInput').on('change', function() {
@@ -272,11 +254,19 @@ $(document).ready(function() {
           // status('Error: ' + xhr.status);
         },
         success: function(response) {
-          if (response) {
+          if (response.access) {
             curItem.children('div').children('ul').children('li').children('.fileInputText').val('Загружено');
             // curItem.children('.status').empty().text('Success');
           } else {
-            curItem.children('div').children('ul').children('li').children('.fileInputText').val('Неверный формат');
+            var errorMessage = '';
+            if (response.errorType == 'notFound') {
+              errorMessage = 'Ошибка загрузки';
+            } else if (response.errorType == 'oversize') {
+              errorMessage = 'Размер превышает 2Мб';
+            } else {
+              errorMessage = 'Неверный формат';
+            }
+            curItem.children('div').children('ul').children('li').children('.fileInputText').val(errorMessage);
             // curItem.children('.status').empty().text('Error');
           }
           if (response.imgName == 'postImg') {

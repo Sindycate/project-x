@@ -12,8 +12,9 @@ var storage = multer.diskStorage({
     cb(null, './public/images/upload/');
   },
   filename: function (req, file, cb) {
-    console.log(file);
-    cb(null, 'salt_' + file.originalname);
+    var tmp = file.originalname.split('.')
+    var newImgName = Date.now();
+    cb(null, newImgName + '.' + tmp[tmp.length-1]);
   }
 })
 
@@ -53,25 +54,30 @@ router.post('/image', function (req, res, next) {
     }
 
     if (!Object.keys(req.files).length) {
-      res.json(false);
+      res.json({access: false});
       return;
     }
 
     //работает для одного файла
     for (var ii in req.files) {
       var file = req.files[ii];
+      console.log(file[0]);
       if (file.length === 0) {
-        res.json(false);
+        res.json({access: false, errorType: 'notFound'});
+        return;
+      } else if (file[0].size > 1024 * 1024 * 1) {
+        res.json({access: false, errorType: 'oversize'});
         return;
       } else if (
         file[0].mimetype !== 'image/jpg' &&
         file[0].mimetype !== 'image/jpeg' &&
-        file[0].mimetype !== 'image/gif' &&
-        file[0].mimetype !== 'image/png') {
-        res.json(false);
-        return;
+        file[0].mimetype !== 'image/png' &&
+        file[0].mimetype !== 'image/gif') {
+          res.json({access: false, errorType: 'wrongFormat'});
+          return;
       } else {
         res.json({
+          access: true,
           imgPath: file[0].path.replace('public', ''),
           imgName: ii
         });

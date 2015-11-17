@@ -6,13 +6,13 @@ block content
     //-   input.form-control(name='sort', type='hidden', value='1')
     - if (profile)
       a.col-md-12.col-sm-12.col-xs-12.text-left(href="/")
-    ul.sorting-params.list-inline.col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3.col-xs-8.col-xs-offset-2
+    ul.sorting-params.list-inline.col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1
       li
         .sortAllPosts#activeSorting(type='submit' name='sortAllPosts' value='1') Популярное
       - if (profile)
         li
           .sortFollowers(type='submit' name='sortFollowers' value='1') Мои подписки
-  div.posts.col-md-12
+  .posts.col-md-12.col-sm-12.col-xs-12
   //- div.scroll.col-md-12 sd
     //- - if (error == 'Empty followers posts')
     //-   .empty-posts.col-md-12.text-center Нет публикаций.

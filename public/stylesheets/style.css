@@ -4,10 +4,7 @@ html {
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+  background-color: #FAFAFA;
 }
 
 .menu {
@@ -33,11 +30,25 @@ a {
 
 .main-page {
   text-align: center;
+  margin-top: -7px;
 }
 
 .main-page a {
+  /* Embed this font from Adobe Edge Web Fonts at
+https://edgewebfonts.adobe.com/fonts#/?collection=cookie */
+
   color: #444;
-  /*color: #0C70B6;*/
+  font-family: cookie;
+  font-feature-settings: "'liga' 1";
+  font-kerning: auto;
+  font-style: normal;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 1em;
+  text-decoration: none;
+  text-transform: none;
+  word-spacing: 0em;
 }
 
 .constructor-page {
@@ -102,6 +113,7 @@ a {
 
 .profile-page {
   text-align: center;
+  overflow: hidden;
 }
 
 .profile-page a {
@@ -116,7 +128,7 @@ a {
 }
 
 .auth-page a {
-  color: #fff;
+  color: #444;
   margin-right: 10px;
   margin-top: 8px;
   font-size: 20px;
@@ -135,7 +147,7 @@ a {
 .profile-information {
   margin-top: 20px;
   background: none;
-  padding: 0 0 0 30px;
+  padding: 0;
   /*background-color: red;*/
 }
 
@@ -143,7 +155,7 @@ a {
   /*background-color: blue;*/
   width: 130px;
   height: 132px;
-  margin-top: 10px;
+  margin-top: 30px;
   /*margin-left: 30px;*/
 }
 
@@ -167,14 +179,22 @@ a {
   max-width: 130px;
 }
 
+.profileStats {
+  margin-top: 20px;
+}
+
 #login {
-  margin: 12px 0 0 70px;
   font-size: 28px;
 }
 
 .profile-description {
-  margin: 10px 0 0 70px;
+  display: inline-block;
+  margin-top: 10px;
   font-size: 17px;
+}
+
+.profile-description span {
+  min-height: 1px;
 }
 
 .profileName {
@@ -186,13 +206,16 @@ a {
 }
 
 .profile-stat {
-  margin: 0 0 0 70px;
   font-size: 18px;
   padding: 0;
 }
 
+.follow {
+  padding: 0;
+  margin-top: 10px;
+}
+
 .follow button {
-  margin-top: -10px;
   border: none;
   border-radius: 2px;
   opacity: .9;
@@ -207,29 +230,32 @@ a {
 .follow button:focus {
   outline: none;
 }
-.unfollow button {
-  margin-top: -10px;
-  background-color: #E19494;
-  border: none;
-  border-radius: 2px;
-  opacity: .9;
-  color: #fff;
-}
 
-.unfollow button:hover {
-  opacity: 1;
-  color: #fff;
+.unfollow {
+  padding: 0;
+  margin-top: 10px;
 }
 
 .unfollow button:focus {
   outline: none;
 }
 
+.log-out {
+  padding: 0;
+  margin-top: 10px;
+}
+
 .log-out button {
-  margin-top: -10px;
   border: none;
   border-radius: 2px;
   opacity: .9;
+  color: #fff;
+  background-color: #444;
+}
+
+.log-out button:hover {
+  color: #fff;
+  background-color: #666;
 }
 
 .profile-stat ul {
@@ -250,29 +276,30 @@ a {
 }
 
 /*************************************post*****************************************/
+
 .right-post-menu {
+  margin: 0 auto;
 }
 
-
-.delete-post {
-  margin-top: 55px;
-  margin-left: 8px;
+.deletePost {
   background: none;
   border: none;
-  background-image: url(../images/icons/delete6.png);
-  background-size: cover;
-  width: 25px;
+  /*background-image: url(../images/icons/delete16.png);*/
+  /*background-size: cover;*/
+  margin-top: 4px;
+  /*width: 30px;*/
   height: 30px;
   opacity: .5;
 }
 
-.delete-post:hover {
+.deletePost:hover {
   opacity: .9;
-  background-image: url(../images/icons/delete7.png);
+  /*background-image: url(../images/icons/delete7.png);*/
   cursor: pointer;
+  /*margin-top: 1px;*/
 }
 
-.delete-post:focus {
+.deletePost:focus {
   outline: none;
 }
 
@@ -356,21 +383,37 @@ a {
 
 /************************profile*****************************/
 
-#profileSettings button {
-  margin-bottom: -4px;
+#profileSettings {
+  margin-top: 10px;
+  margin-left:  4px;
+  margin-right: 5px;
+  padding: 0;
+}
+
+/*#profileSettings button {
+  display: inline-block;
+  background-color: #FAFAFA;
   margin-left: 12px;
   height: 25px;
-  width: 25px;
+  width: 27px;
   background-image: url(../images/icons/settings6.png);
   background-size: cover;
   opacity: .7;
   cursor: pointer;
-  background-color: #FAFAFA;
   box-shadow: none;
   border: none;
+}*/
+
+#profileSettings button {
+  border: 1px solid #999;
+  border-radius: 2px;
+  opacity: .9;
+  color: #444;
+  background-color: #fff;
 }
 
 #profileSettings button:hover {
+  border: 1px solid #777;
   opacity: 1;
 }
 
@@ -399,10 +442,12 @@ a {
 
 .subs {
   background-color: #fff;
-  border-radius: 4px;
-  border: 1px solid #eee;
+  border-radius: 2px;
+  /*border: 1px solid #eee;*/
   padding: 10px;
   margin: 10px 0 0 0;
+  /*box-shadow: 0 0 2px #999;*/
+  box-shadow: 1px 2px 0px 0 rgba(150, 150, 150, 0.16),0 2px 10px 0 rgba(205, 205, 205, 0.12);
 }
 
 .subs-login {
@@ -410,10 +455,39 @@ a {
   margin-top: 4px;
   margin-left: 14px;
   font-size: 22px;
+  width: 178px;
+  overflow: hidden;
+}
+
+.subs-login a {
+  color: #222;
+}
+
+.subs-login a:hover {
+  color: #337ab7;
 }
 
 .subs-logo {
   float: left;
+}
+
+#unfollow {
+  margin: 0;
+  color: #444;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 2px;
+  opacity: .9;
+}
+
+#unfollow:hover {
+  opacity: 1;
+}
+
+#follow {
+  margin: 0;
+  background-color: #444;
+  color: #fff;
 }
 
 .alignSubsImg {
@@ -435,13 +509,32 @@ a {
 }
 
 .subs-btn {
+  margin-top: 2px;
   float: right;
 }
 
-.subs-btn button {
-  color: #eee;
-  background-color: rgb(97, 133, 172);
+.subs-btn .btn-unfollow {
+  /*margin-top: 10px;*/
+  /*background-color: #E19494;*/
+  color: #444;
+  background-color: #fff;
+  border: 1px solid #777;
   border-radius: 2px;
+  opacity: .9;
+}
+
+.subs-btn .btn-follow {
+  /*margin-top: 10px;*/
+  color: #fff;
+  background-color: #444;
+  border: none;
+  border-radius: 2px;
+  opacity: .9;
+}
+
+.subs-btn.unfollow button:hover {
+  opacity: 1;
+  color: #fff;
 }
 
 .profile-stat li span:first-child {
@@ -452,10 +545,10 @@ a {
 
 }
 
-.userImg div:nth-child(1) {
+/*.userImg div:nth-child(1) {
   padding:0;
-  margin: 0 0 15px 0;
-}
+  margin-bottom: 15px;
+}*/
 
 .btnImg {
   background-color: #fff;
@@ -478,8 +571,9 @@ a {
   background-color: #fff;
   padding: 0;
   margin-bottom: 20px;
-  border: 1px dashed #C6C6C6;
-  border-radius: 4px;
+  /*border: 1px dashed #C6C6C6;*/
+  border-radius: 2px;
+  box-shadow: 0 0px 3px 0 rgba(0,0,0,0.16),0 2px 5px 0 rgba(0,0,0,0.12);
 }
 
 .alignmentProfileImg {
@@ -492,14 +586,15 @@ a {
 
 .alignmentProfileImg img {
   max-height: 200px;
-  max-width: 250px;
+  max-width: 100%;
 }
 
 #inputMaskProfile {
-  background: #eee url(../images/icons/choice.png) 50% 30% no-repeat;
+  background: #FBFBFB url(../images/icons/choice.png) 50% 30% no-repeat;
   height: 45px;
   cursor: pointer;
   margin-top: -45px;
+  border-bottom: 1px solid #eee;
 }
 
 .fileInput {
@@ -540,46 +635,127 @@ a {
   overflow-x: scroll;
 }
 
+.profileSetImgBlock .mask-wrapper .fileInputText {
+  font-size: 13px;
+}
 
+.btnProfileSet {
+  background-color: #444;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.btnProfileSet:hover {
+  background-color: #666;
+  color: #fff;
+  border-radius: 2px;
+}
 
 /***********************login***********************/
 
-#authForm {
-  background-color: #E9E9E9;
-  margin-top: 25px;
-  border: 1px solid #E4E4E4;
-  border-radius: 4px;
-  padding: 0;
-}
-
-#authTitle {
+.authForm {
   background-color: #fff;
-  height: 30px;
-  border-radius: 4px 4px 0 0;
-  border-color: #fff;
-}
-
-#authTitle h4 {
+  margin-top: 25px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16),0 2px 6px 0 rgba(0,0,0,0.12);
+  border-radius: 2px;
   padding: 0;
-  margin-top: 6px;
-  color: #999;
 }
 
-#authBody {
+.authTitle {
+  background-color: #fff;
+  border-radius: 2px 2px 0 0;
+  border-bottom: 1px solid #eee;
+  padding: 3px;
+}
+
+.authTitle h4 {
+  font-size: 20px;
+  padding: 0;
+  color: #444;
+}
+
+.authBody {
   padding: 15px 15px 0 15px;
+  border-bottom: 1px solid #eee;
 }
 
-#authBody button {
-  width: 100%;
-  margin: 0;
-  background-color: #52ABA3;
-  border-color: #E4E4E4;
+.authBody button {
+  /*width: 100%;*/
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #999;
   border-radius: 3px;
-  color: #E4E4E4;
+  color: #444;
+  opacity: .9;
 }
 
-#authBody button:focus {
+.authBody button:hover {
+  color: #222;
+  border: 1px solid #777;
+  opacity: 1;
+}
+
+.authBody button:focus {
   outline: none;
+}
+
+.socialButtons {
+  background-color: #444;
+  padding: 12px 10px 10px 10px;
+  text-align: center;
+}
+
+.socialButtons a {
+  margin-right: 10px;
+}
+
+.loginTwitter {
+  display: inline-block;
+  border-radius: 20px;
+  height: 30px;
+  width: 30px;
+  background-image: url(../images/icons/twitter2.png);
+  background-size: cover;
+}
+/*
+.loginTwitter:hover {
+  opacity: .9;
+}
+*/
+.loginVk {
+  display: inline-block;
+  /*background-color: red;*/
+  height: 30px;
+  width: 30px;
+  background-image: url(../images/icons/vk2.png);
+  background-size: cover;
+}
+
+.loginFacebook {
+  display: inline-block;
+  /*background-color: red;*/
+  height: 30px;
+  width: 30px;
+  background-image: url(../images/icons/facebook.png);
+  background-size: cover;
+}
+
+.loginGoogle {
+  display: inline-block;
+  /*background-color: red;*/
+  height: 30px;
+  width: 30px;
+  background-image: url(../images/icons/google.png);
+  background-size: cover;
+}
+
+.loginInstagram {
+  display: inline-block;
+  /*background-color: red;*/
+  height: 30px;
+  width: 30px;
+  background-image: url(../images/icons/instagram.png);
+  background-size: cover;
 }
 
 .messageLogin {
@@ -592,41 +768,48 @@ a {
 
 /***********************registration***********************/
 
-#regForm {
-  background-color: #E9E9E9;
-  margin-top: 25px;
-  border: 1px solid #E4E4E4;
-  border-radius: 4px;
-  padding: 0;
-}
-
-#regTitle {
+.regForm {
   background-color: #fff;
-  height: 30px;
-  border-radius: 4px 4px 0 0;
-  border-color: #fff;
-}
-
-#regTitle h4 {
+  margin-top: 45px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16),0 2px 6px 0 rgba(0,0,0,0.12);
+  border-radius: 2px;
   padding: 0;
-  margin-top: 6px;
-  color: #999;
 }
 
-#regBody {
+.regTitle {
+  background-color: #fff;
+  border-radius: 2px 2px 0 0;
+  border-bottom: 1px solid #eee;
+  padding: 3px;
+}
+
+.regTitle h4 {
+  font-size: 20px;
+  padding: 0;
+  color: #444;
+}
+
+.regBody {
   padding: 15px 15px 0 15px;
+  border-bottom: 1px solid #eee;
 }
 
-#regBody button {
-  width: 100%;
-  margin: 0;
-  background-color: #52ABA3;
-  border-color: #E4E4E4;
+.regBody button {
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #999;
   border-radius: 3px;
-  color: #E4E4E4;
+  color: #444;
+  opacity: .9;
 }
 
-#regBody button:focus {
+.regBody button:hover {
+  color: #222;
+  border: 1px solid #777;
+  opacity: 1;
+}
+
+.regBody button:focus {
   outline: none;
 }
 
@@ -652,11 +835,15 @@ small {
   margin-left: 7px;
 }
 
+#profile-settings {
+  margin-bottom: 50px;
+}
+
 #profile-settings h4 {
   color: #444;
   font-size: 25px;
   margin-top: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 0;
 }
 
 .profile-item .page-header {
@@ -669,6 +856,10 @@ small {
   height: 182px;
   border-radius: 4px;
   color: #fff;
+  float: right;
+  margin: 0 auto;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 .messages h3 {
@@ -723,6 +914,10 @@ small {
 .postName {
   margin-top: 15px;
   margin-bottom: 5px;
+}
+
+.postName a {
+  color: #444;
 }
 
 /*.constructorPostHead {
@@ -784,6 +979,11 @@ small {
 
 .constructorPanel {
   margin-bottom: 30px;
+  padding: 0;
+}
+
+.constructorPanel div:first-child {
+  margin-bottom: 20px;
 }
 
 .display-type ul {
@@ -865,7 +1065,7 @@ small {
   box-shadow: none;
   border: none;
   border-radius: 2px;
-  background-color: #999;
+  background-color: #444;
   font-size: 15px;
   color: #fff;
 }
@@ -883,7 +1083,7 @@ small {
 }
 
 .messageConstructor {
-  height: 70px;
+  /*height: 70px;*/
   background-color: #fff;
   margin-top: 20px;
   margin-bottom: 30px;
@@ -903,7 +1103,7 @@ small {
   /*padding: 3px 0 0 0;*/
   height: 68px;
   display: table;
-  margin-left: -43px;
+  margin-left: -13px;
 }
 
 .messageConstructor div:nth-child(1) {
@@ -960,7 +1160,6 @@ small {
   height: 40px;
   width: 40px;
   margin-top: 5px;
-  margin-left: 25px;
   opacity: .8;
   font-size: 25px;
   color: #fff;
@@ -1006,130 +1205,42 @@ small {
   margin-top: -42px;
 }
 
+.goToSettingsBlock {
+  padding: 0;
+}
+
 .goToSettings {
   background-color: #fff;
   /*padding-bottom: */
+  width: 282px;
   height: 52px;
   font-size: 20px;
   color: #333;
   border: 1px solid #eee;
   border-radius: 3px;
-  margin-bottom: 100px;
-  margin-left: 185px;
-  margin-right: 24px;
-}
-
-.goToSettings::before {
-  content: url(../images/icons/postSettings.png);
-  position: relative;
-  top: 10px;
-  left: -10px;
-}
-
-.goToSettings:hover {
-  cursor: pointer;
-}
-
-.openSettings {
-  background-color: #fff;
-  /*padding-bottom: */
-  height: 52px;
-  font-size: 20px;
-  color: #333;
-  border: 1px solid #eee;
-  /*border-radius: 4px;*/
-  margin-bottom: 20px;
-  margin-left: 45px;
-  margin-left: 0;
-  height: 355px;
-}
-
-.openSettings div:nth-child(1) h3 {
-  margin: 10px 0 0 0;
-  font-size: 20px;
-}
-
-.openSettings div:nth-child(1) h3:hover {
-  cursor: pointer;
-}
-
-.openSettings div:nth-child(1) h3::before {
-  content: url(../images/icons/postSettings.png);
-  position: relative;
-  top: 10px;
-  left: -10px;
-}
-
-.openSettings .row:nth-child(1) {
-  margin-top: 35px;
-}
-
-.openSettings .row:nth-child(2) {
-  margin-top: 20px;
-}
-
-.checkboxBlock {
   padding: 0;
-  margin-left: 15px;
-  margin-top: 35px;
 }
 
-
-.openSettings .row {
-  font-size: 15px;
-}
-
-#onlyForReg {
-  position: relative;
-  top: 4px;
-  height: 18px;
-  width: 18px;
-}
-
-.settingsMes {
-  margin-top: 52px;
-  margin-left: 30px;
-  height: 170px;
-  border-radius: 4px;
-  background-color: #eee;
-  display: table;
-}
-
-.newSettingsMessage {
-  font-size: 16px;
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.timeForEnd div:nth-child(1) {
-  margin-top: 10px;
+.savePostBlock {
+  padding: 0;
+  margin-top: 50px;
   margin-bottom: 10px;
 }
 
-.timeForEnd div label {
-  margin-top: 8px;
-}
-
-#timeForEndHours {
-  float: right;
-  width: 80px;
-}
-
-#timeForEndDate {
-  float: right;
-  width: 150px;
-}
-
 .savePost {
+  margin: 0 auto;
   /*background-color: #5480A3;*/
-  background-color: #fff;
+  background-color: #444;
+  width: 170px;
   height: 52px;
   padding: 14px;
   font-size: 20px;
-  color: #333;
+  color: #fff;
   border: 1px solid #eee;
   border-radius: 3px;
   margin-bottom: 20px;
+  /*float: right;*/
+  text-align: center;
   /*margin-left: 53px;*/
 }
 
@@ -1144,6 +1255,186 @@ small {
 
 .savePost:hover {
   cursor: pointer;
+  background-color: #666;
+  color: #fff;
+}
+
+.postItemsBlockInRow {
+  /*background-color: #32896E;*/
+  background-color: #FAFAFA;
+  border-radius: 3px;
+  margin-bottom: 40px;
+  padding: 30px 20px 10px 20px;
+  border-radius: 3px;
+  border: 1px solid #E9E9E9;
+  /*box-shadow: 0px 0px 24px #F5F4F4;*/
+}
+
+.postItemsBlock {
+  /*background-color: #32896E;*/
+  background-color: #FAFAFA;
+  border-radius: 3px;
+  margin-bottom: 40px;
+  padding: 30px 20px 10px 20px;
+  border-radius: 3px;
+  border: 1px solid #E9E9E9;
+  /*box-shadow: 0px 0px 24px #F5F4F4;*/
+}
+
+
+
+.goToSettings::before {
+  content: url(../images/icons/postSettings.png);
+  position: relative;
+  top: 10px;
+  left: -10px;
+}
+
+.openSettings {
+  background-color: #fff;
+  /*padding-bottom: */
+  font-size: 20px;
+  color: #333;
+  border: 1px solid #eee;
+  /*border-radius: 4px;*/
+  margin-bottom: 40px;
+  margin-top: 22px;
+}
+
+.titleSettings h3 {
+  margin: 10px 0 0 0;
+  font-size: 20px;
+}
+
+.titleSettings h3::before {
+  content: url(../images/icons/postSettings.png);
+  position: relative;
+  top: 10px;
+  left: -10px;
+}
+
+/*.checkboxBlock {
+  padding: 0;
+  margin-bottom: 10px;
+  background-color: red;
+  /*margin-top: 5px;*/
+}*/
+
+.openSettings .row {
+  font-size: 15px;
+}
+
+#onlyForReg {
+  position: relative;
+  top: 3px;
+  left: -10px;
+  height: 15px;
+  width: 15px;
+}
+
+#onlyForReg:hover::after {
+  opacity: .8;
+  content: 'Голосование только для авторизированных пользователей';
+  position: absolute;
+  width: 200px;
+  left: 15px; top: 20px;
+  z-index: 1;
+  background: #fff;
+  font-size: 11px;
+  padding: 5px 10px;
+  color: #888;
+  border-radius: 2px;
+  border: 1px solid #bbb;
+}
+
+.settingsMes {
+  margin-top: 52px;
+  height: 170px;
+  border-radius: 4px;
+  background-color: #eee;
+  display: table;
+}
+
+.newSettingsMessage {
+  font-size: 16px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#countVotesForEnd {
+  width: 80px;
+  margin-left: 25px;
+}
+
+.pollParams {
+  margin-top: 10px;
+  padding: 0;
+}
+
+.pollParams div {
+  padding: 0;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.pollParams div h4 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.pollParams  div ul {
+  margin-bottom: 20px;
+  /*margin-left: 50px;*/
+}
+
+.pollParams  div ul:last-child {
+  margin-top: -5px;
+}
+
+.pollParams div ul li:nth-child(2n) {
+  /*float: right;*/
+  width: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.pollParams div ul li:nth-child(3n) {
+  /*float: right;*/
+  width: 100px;
+  /*margin-left: 5px;*/
+}
+
+.pollParams div ul li:nth-child(1) {
+  width: 50%;
+  text-align: right;
+}
+
+.pollParams div ul li label {
+  margin-top: 7px;
+}
+
+#timeForEndHours {
+  width: 80px;
+}
+
+#timeForEndDate {
+  width: 150px;
+}
+
+#hoursCheckbox {
+  position: relative;
+  top: 3px;
+  left: -10px;
+  height: 15px;
+  width: 15px;
+}
+
+#dateCheckbox {
+  position: relative;
+  top: 3px;
+  left: -10px;
+  height: 15px;
+  width: 15px;
 }
 
 .constructorInfo {
@@ -1250,7 +1541,7 @@ small {
 .alignmentItemsImg img {
   padding-top: 5px;
   max-height: 200px;
-  max-width: 330px;
+  max-width: 100%;
 }
 
 .postImageBlock form {
@@ -1362,17 +1653,6 @@ small {
 .postItemsBlock .postItem:nth-child(even) {
   margin-left: 0;
   float: right;
-}
-
-.postItemsBlock {
-  /*background-color: #32896E;*/
-  background-color: #FAFAFA;
-  border-radius: 3px;
-  margin-bottom: 40px;
-  padding: 30px 20px 10px 20px;
-  border-radius: 3px;
-  border: 1px solid #E9E9E9;
-  /*box-shadow: 0px 0px 24px #F5F4F4;*/
 }
 
 .post {
@@ -1614,32 +1894,36 @@ small {
   padding: 0;
   /*background-color: #fff;*/
   margin-bottom: 20px;
-  height: 55px;
+  height: 60px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
 }
 
 .itemNameInRow {
   color: #333;
   overflow: hidden;
-  display: table;
+  text-align: center;
   background-color: #fff;
   border-radius: 2px 0 0 2px;
   overflow: hidden;
+  height: 60px;
   /*padding: 5px 0 5px 0;*/
   /*margin-top: -10px;*/
 }
 
-.itemNameInRow h3 {
-  display: table-cell;
-  vertical-align: middle;
-  height: 55px;
-  font-size: 19px;
+.itemNameInRow div {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-size: 18px;
+  overflow: hidden;
   margin: 0;
 }
 
 .statInRow {
   border-left: 1px dashed #555;
-  height: 55px;
+  height: 60px;
   padding: 16px 0 15px 25px;
   font-size: 22px;
   color: #555;
@@ -1667,7 +1951,7 @@ small {
   float: left;
   width: 50px;
   margin-top: -36px;
-  margin-left: -45px;
+  margin-left: -48px;
   /*margin-right: -45px;*/
   text-align: left;
   font-size: 18px;
@@ -1695,7 +1979,7 @@ small {
 
 .btnVoteInRow {
   float: right;
-  height: 55px;
+  height: 60px;
   padding: 0;
   background-color: #fff;
   border: none;
@@ -1790,8 +2074,9 @@ small {
   opacity: .8;
   content: 'Голосование только для авторизированных пользователей';
   position: absolute;
-  left: 5%; top: -70%;
+  left: 19px; top: -35px;
   z-index: 1;
+  width: 200px;
   background: #fff;
   font-size: 11px;
   padding: 5px 10px;
@@ -1904,3 +2189,119 @@ small {
 .twoItems .thumbnail {
   width: 300px;
 }*/
+
+@media only screen and (max-width: 767px) {
+
+  .auth-page {
+    margin-top: -5px;
+    font-size: 20px;
+  }
+
+  .goToSettingsBlock {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .goToSettings {
+    margin: 0 auto;
+  }
+
+  .savePostBlock {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .savePost {
+    margin: 0 auto;
+  }
+
+  .display-type ul {
+    float: left;
+  }
+
+  .postItemsBlockInRow {
+    /*background-color: #32896E;*/
+    background-color: #FAFAFA;
+    border-radius: 3px;
+    margin-bottom: 40px;
+    padding: 30px 10px 10px 10px;
+    border-radius: 0;
+    border-right: none;
+    border-left: none;
+    border-top: 1px solid #E9E9E9;
+    border-bottom: 1px solid #E9E9E9;
+    /*box-shadow: 0px 0px 24px #F5F4F4;*/
+  }
+
+  .postItemsBlock {
+    /*background-color: #32896E;*/
+    background-color: #FAFAFA;
+    border-radius: 3px;
+    margin-bottom: 40px;
+    padding: 30px 15px 10px 15px;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid #E9E9E9;
+    border-bottom: 1px solid #E9E9E9;
+    /*box-shadow: 0px 0px 24px #F5F4F4;*/
+  }
+
+  .itemNameInRow h3 {
+    font-size: 15px;
+  }
+
+  .itemNameInRow {
+    width: 80%;
+  }
+
+  .btnVoteInRow {
+    font-size: 11px;
+    width: 20%;
+  }
+
+  .statInRow {
+    width: 20%;
+  }
+
+  .pad-left-50 {
+    padding-left: 50px;
+  }
+
+  .statInRowPercent {
+    font-size: 16px;
+    margin-left: -42px;
+  }
+
+  .statInRowPercent:after {
+    height: 12px;
+    width: 12px;
+  }
+
+  .alignProfileImg {
+    margin: 0 auto;
+    margin-top: -20px;
+  }
+
+  .profile-picture {
+    width: 100%;
+  }
+
+  .profileStats {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .profileStats ul {
+    margin-top: 10px;
+  }
+
+  .profile-description {
+    margin-top: 20px;
+  }
+
+  .itemNameInRow div {
+    font-size: 17px;
+  }
+}

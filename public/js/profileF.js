@@ -8,8 +8,8 @@ $(document).ready(function() {
     btnDeletePost = $('.delete-post'),
     profileSettings = $('#profile-settings'),
     subscriptionsFollowers = $('#subscriptions-followers'),
-    bntFollow = $('#btn-follow'),
-    bntUnfollow = $('#btn-unfollow'),
+    bntFollow = $('#follow'),
+    bntUnfollow = $('#unfollow'),
     subscriptions = $('#subscriptions'),
     subscriptionsViewOnly = $('#subscriptionsViewOnly'),
     followers = $('#followers'),
@@ -54,7 +54,7 @@ $(document).ready(function() {
 
   bntFollow.click(function() {
     $(this).hide();
-    $('#btn-unfollow').show();
+    $('#unfollow').show();
     var OldValueFollowers = followers.children('span').text(),
       OldValueFollowersViewOnly = followersViewOnly.children('span').text();
 
@@ -62,7 +62,6 @@ $(document).ready(function() {
       if (response.success) {
         followers.children('span').text(Number(OldValueFollowers) + 1);
         followersViewOnly.children('span').text(Number(OldValueFollowersViewOnly) + 1);
-        $('#follow-info').text('Подписка оформлена');
       } else {
         console.log('error');
       }
@@ -71,7 +70,7 @@ $(document).ready(function() {
 
   bntUnfollow.click(function() {
     $(this).hide();
-    $('#btn-follow').show();
+    $('#follow').show();
     var OldValueFollowers = followers.children('span').text(),
       OldValueFollowersViewOnly = followersViewOnly.children('span').text();
 
@@ -79,7 +78,6 @@ $(document).ready(function() {
       if (response.success) {
         followers.children('span').text(Number(OldValueFollowers) - 1);
         followersViewOnly.children('span').text(Number(OldValueFollowersViewOnly) - 1);
-        $('#follow-info').text('Вы успешно отписались');
       } else {
         console.log('error');
       }
@@ -102,7 +100,6 @@ $(document).ready(function() {
             subscriptions.children('span').text(Number(OldValueSubscriptions) + 1);
             subscriptionsViewOnly.children('span').text(Number(OldValueSubscriptionsViewOnly) + 1);
           }
-          $('#follow-info').text('Подписка оформлена');
         } else {
           console.log('error');
         }
@@ -126,7 +123,6 @@ $(document).ready(function() {
             subscriptions.children('span').text(Number(OldValueSubscriptions) - 1);
             subscriptionsViewOnly.children('span').text(Number(OldValueSubscriptionsViewOnly) - 1);
           }
-          $('#follow-info').text('Вы успешно отписались');
         } else {
           console.log('error');
         }
@@ -149,14 +145,14 @@ $(document).ready(function() {
         var subsString = '';
         var btnString;
         for (var ii = 0; ii < response.subsInfo.length; ii ++) {
-          if (response.currentUserId == response.subsInfo[ii].id) {
+          if (response.currentUserId == response.subsInfo[ii].id || !response.currentUserId) {
             btnString = '';
           } else if (!response.subsInfo[ii].follow) {
-            btnString = '<button class="btn btn-success btn-follow btn-subs-follow" type="submit" name="follow" value="' + response.subsInfo[ii].id + '">Подписаться</button><button style="display: none;" class="btn unfollow btn-unfollow btn-subs-unfollow" type="submit" name="unfollow" value="' + response.subsInfo[ii].id + '">Отписаться</button>';
+            btnString = '<button class="btn btn-follow btn-subs-follow" type="submit" name="follow" value="' + response.subsInfo[ii].id + '">Подписаться</button><button style="display: none;" class="btn btn-unfollow btn-subs-unfollow" type="submit" name="unfollow" value="' + response.subsInfo[ii].id + '">Отписаться</button>';
           } else if (response.subsInfo[ii].follow) {
-            btnString = '<button style="display: none;" class="btn btn-success btn-follow btn-subs-follow" type="submit" name="follow" value="' + response.subsInfo[ii].id + '">Подписаться</button><button class="btn unfollow btn-unfollow btn-subs-unfollow" type="submit" name="unfollow" value="' + response.subsInfo[ii].id + '">Отписаться</button>';
+            btnString = '<button style="display: none;" class="btn btn-follow btn-subs-follow" type="submit" name="follow" value="' + response.subsInfo[ii].id + '">Подписаться</button><button class="btn btn-unfollow btn-subs-unfollow" type="submit" name="unfollow" value="' + response.subsInfo[ii].id + '">Отписаться</button>';
           }
-          subsString += '<ul class = "subs col-md-12 list-inline"><li class="subs-logo">';
+          subsString += '<ul class = "subs col-md-12 col-sm-12 col-xs-12 list-inline"><li class="subs-logo">';
           if (response.subsInfo[ii].img != '') {
             subsString += '<p class="alignSubsImg"><img src="'+ response.subsInfo[ii].img +'"></p>';
           } else {
@@ -190,14 +186,14 @@ $(document).ready(function() {
         var subsString = '';
         var btnString;
         for (var ii = 0; ii < response.subsInfo.length; ii ++) {
-          if (response.currentUserId == response.subsInfo[ii].id) {
+          if (response.currentUserId == response.subsInfo[ii].id || !response.currentUserId) {
             btnString = '';
           } else if (!response.subsInfo[ii].follow) {
-            btnString = '<button class="btn btn-success btn-follow btn-subs-follow" name="follow" value="' + response.subsInfo[ii].id + '">Подписаться</button><button style="display: none;" class="btn unfollow btn-unfollow btn-subs-unfollow" type="submit" name="unfollow" value="' + response.subsInfo[ii].id + '">Отписаться</button>';
+            btnString = '<button class="btn btn-follow btn-subs-follow" name="follow" value="' + response.subsInfo[ii].id + '">Подписаться</button><button style="display: none;" class="btn btn-unfollow btn-subs-unfollow" type="submit" name="unfollow" value="' + response.subsInfo[ii].id + '">Отписаться</button>';
           } else if (response.subsInfo[ii].follow) {
-            btnString = '<button style="display: none;" class="btn btn-success btn-follow btn-subs-follow" type="submit" name="follow" value="' + response.subsInfo[ii].id + '">Подписаться</button><button class="btn unfollow btn-unfollow btn-subs-unfollow" name="unfollow" value="' + response.subsInfo[ii].id + '">Отписаться</button>';
+            btnString = '<button style="display: none;" class="btn btn-follow btn-subs-follow" type="submit" name="follow" value="' + response.subsInfo[ii].id + '">Подписаться</button><button class="btn btn-unfollow btn-subs-unfollow" name="unfollow" value="' + response.subsInfo[ii].id + '">Отписаться</button>';
           }
-          subsString += '<ul class = "subs col-md-12 list-inline"><li class="subs-logo">';
+          subsString += '<ul class = "subs col-md-12 col-sm-12 col-xs-12 list-inline"><li class="subs-logo">';
           if (response.subsInfo[ii].img != '') {
             subsString += '<p class="alignSubsImg"><img src="'+ response.subsInfo[ii].img +'"></p>';
           } else {

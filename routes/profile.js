@@ -21,6 +21,7 @@ router.post('/', function(req, res, next) {
 router.get('/', function(req, res, next) {
   // просмотр информации о подписках или фолловерах
   if (req.query.followOrSubs && req.query.profileName) {
+    console.log(req.query);
     var switchSubs = '';
 
     if (req.query.followers) {
@@ -30,6 +31,7 @@ router.get('/', function(req, res, next) {
       } else {
         switchSubs = 'WHERE followers.follower_id = ? AND followers.user_id = users.id';
       }
+      console.log(switchSubs);
     } else if (req.query.subscriptions) {
       // выборка по подпискам
       if (isNaN(req.query.profileName)) {
@@ -38,7 +40,7 @@ router.get('/', function(req, res, next) {
         switchSubs = 'WHERE followers.user_id = ? AND followers.follower_id = users.id';
       }
     }
-    if (req.user.id) {
+    if (req.user) {
       getSubsWhithLogin(switchSubs, req.user.id, req.query.profileName, function (subsInfo) {
         if (subsInfo) {
           res.json({ success: true, subsInfo: subsInfo, currentUserId: req.user.id });
@@ -216,6 +218,7 @@ function getSubsNoLogin (switchSubs, profileLogin, callback) {
     'SELECT \
       users.login, \
       users.id, \
+      users.img, \
       users.name \
     FROM users, followers ' + switchSubs, profileLogin, function(err, result) {
       console.log(result);

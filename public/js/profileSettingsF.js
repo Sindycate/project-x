@@ -16,7 +16,7 @@ $(document).ready(function() {
     btnHalfMainSet = $('.btnHalfMainSet'),
     btnPersonalSet = $('.btnPersonalSet'),
     btnImg = $('.btnImg'),
-    profileSetImgBlock = $('.profileSetImgBlock'),
+    imgBlock = $('.userImg'),
     newPersonalMessage = $('.newPersonalMessage'),
     newMainMessage = $('.newMainMessage'),
     newHalfMainMessage = $('.newHalfMainMessage'),
@@ -68,8 +68,8 @@ $(document).ready(function() {
       } else if (loginSettings.val() == '') {
         blockMessages.mainSet.defaultMessage();
         keysAccess.login = true;
-      } else if (!(/^[\-\_a-zA-Z0-9]{4,20}$/.test(loginSettings.val()))) {
-        blockMessages.mainSet.showNewMessage('Логин должен содержать от 4 до 20 символов, разрешены только следующие специальные символы: (-,_)');
+      } else if (!(/^[\-\_a-zA-Z0-9]{4,15}$/.test(loginSettings.val()))) {
+        blockMessages.mainSet.showNewMessage('Логин должен содержать от 4 до 15 символов, разрешены только следующие специальные символы: (-,_)');
         keysAccess.login = false;
         btnMainSet.attr('disabled', '');
       } else if (loginSettings.val() == mainInfo.login) {
@@ -99,8 +99,8 @@ $(document).ready(function() {
 
   socialLogin.change(function() {
 
-    if (!(/^[\-\_a-zA-Z0-9]{4,20}$/.test(socialLogin.val()))) {
-      blockMessages.halfMainSet.showNewMessage('Логин должен содержать от 4 до 20 символов, разрешены только следующие специальные символы: (-,_)');
+    if (!(/^[\-\_a-zA-Z0-9]{4,15}$/.test(socialLogin.val()))) {
+      blockMessages.halfMainSet.showNewMessage('Логин должен содержать от 4 до 15 символов, разрешены только следующие специальные символы: (-,_)');
       keysAccess.socialLogin = false;
     } else if (socialLogin.val() == mainInfo.socialLogin) {
       keysAccess.socialLogin = true;
@@ -360,7 +360,7 @@ $(document).ready(function() {
 
   btnImg.click(function() {
     btnImg.parent('div').hide();
-    profileSetImgBlock.show();
+    imgBlock.show();
   })
 
   $('.fileInput').on('change', function() {
@@ -383,10 +383,18 @@ $(document).ready(function() {
           // status('Error: ' + xhr.status);
         },
         success: function(response) {
-          if (response) {
+          if (response.access) {
             curItem.children('div').children('ul').children('li').children('.fileInputText').val('Загружено');
           } else {
-            curItem.children('div').children('ul').children('li').children('.fileInputText').val('Неверный формат');
+            var errorMessage = '';
+            if (response.errorType == 'notFound') {
+              errorMessage = 'Ошибка загрузки';
+            } else if (response.errorType == 'oversize') {
+              errorMessage = 'Размер превышает 2Мб';
+            } else {
+              errorMessage = 'Неверный формат';
+            }
+            curItem.children('div').children('ul').children('li').children('.fileInputText').val(errorMessage);
           }
 
           if (response.imgName == 'userIcon') {
