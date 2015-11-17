@@ -40,6 +40,18 @@ $(document).ready(function() {
     sorting: ''
   };
 
+  $('#followers').click(function() {
+    loadingPosts = false;
+  });
+
+  $('#subscriptions').click(function() {
+    loadingPosts = false;
+  });
+
+  $('#userPosts').click(function() {
+    loadingPosts = true;
+  });
+
   sortFollowers.click(function() {
     loadingPosts = true;
     queryParams[currentPage].offset = 0;
@@ -124,7 +136,7 @@ $(document).ready(function() {
       }
 
       postsStr += ' \
-        <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 post" id="post'+ data[ii].id +'"> \
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 post" id="post'+ data[ii].id +'"> \
           <div class="post-information row"> \
       ';
       if (data[ii].loginPostOwners && data[ii].loginPostOwners != 0) {
@@ -143,13 +155,31 @@ $(document).ready(function() {
           <h4 class="text-right">'+ formatDate(new Date(data[ii].date)) +'</h4> \
         </div> \
         <div class="post-title"> \
-          <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 postHead"> \
-            <h3 class="postName text-center">'+ data[ii].title +'</h3> \
+          <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 postHead">';
+      if (currentPage == 'post') {
+        postsStr += ' \
+          <h3 class="postName text-center">' + data[ii].title +'</h3> \
+        ';
+      } else {
+        postsStr += ' \
+            <h3 class="postName text-center"><a href="/post/'+ data[ii].id +'">'+ data[ii].title +'</a></h3> \
+        ';
+      }
+      postsStr += ' \
             <h4 class="postDesc text-center">'+ data[ii].desc +'</h4> \
           </div> \
         </div> \
-        <div class="col-md-10 col-sm-12 col-xs-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 postItemsBlock"> \
       ';
+      if (data[ii].postSettings.full_mode) {
+        postsStr += ' \
+        <div class="col-md-10 col-sm-10 col-xs-12 col-xs-offset-0 col-sm-offset-1 col-md-offset-1 postItemsBlock">';
+      } else if (!data[ii].postSettings.full_mode && ((!postAvailable && data[ii].countVotesItems) || data[ii].vote)) {
+        postsStr += ' \
+        <div class="col-md-10 col-sm-10 col-xs-12 col-xs-offset-0 col-sm-offset-1 col-md-offset-1 postItemsBlockInRow pad-left-50">';
+      } else {
+        postsStr += ' \
+        <div class="col-md-10 col-sm-10 col-xs-12 col-xs-offset-0 col-sm-offset-1 col-md-offset-1 postItemsBlockInRow">';
+      }
       for (var jj in data[ii].items) {
         if (data[ii].postSettings.full_mode) {
           postsStr += ' \
@@ -211,10 +241,10 @@ $(document).ready(function() {
           }
         } else {
           postsStr += ' \
-            <div class="postItemInRow col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1"> \
+            <div class="postItemInRow col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0"> \
               <div class="text-center postBody"> \
                 <div class="itemNameInRow col-md-10 col-sm-10 col-xs-10"> \
-                  <h3>'+ data[ii].items[jj].name +'</h3> \
+                  <div>'+ data[ii].items[jj].name +'</div> \
                 </div> \
           ';
           if ((!data[ii].vote && postAvailable) && ((data[ii].postSettings.reg_only && userId) || (!data[ii].postSettings.reg_only))) {
@@ -302,31 +332,35 @@ $(document).ready(function() {
              </ul> \
           </div> \
           <div class="post-footer col-md-12 col-sm-12 col-xs-12"> \
-            <ul class="indicators col-md-6 col-sm-6 col-xs-6 list-inline">';
+            <ul class="indicators col-md-4 col-sm-4 col-xs-4 list-inline">';
       if (data[ii].postSettings.reg_only) {
         postsStr += '<li class="privatePost"></li>';
       }
-      postsStr += ' <li class="postRating" id="postRating'+ data[ii].id +'">'+ data[ii].countVotesItems +'</li></ul> \
-        <ul class="share col-md-6 col-sm-6 col-xs-6 list-inline text-right"> \
-          <li class="shareVK"> \
-            <a onclick="return shareBox(\'http://vk.com/share.php?url=http://localhost:3000/post/'+ data[ii].id +'&image='+ (data[ii].img ? data[ii].img : 'http://localhost:3000//images/noimage.png') +'&title='+ data[ii].title +'&description='+ data[ii].desc +'\', event)" target="_blank"></a> \
-          </li> \
-          <li class="shareTwitter"> \
-            <a onclick="return shareBox(\'https://twitter.com/share?url=http://localhost:3000/post/'+ data[ii].id +'&via=OPTIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ data[ii].title +'\', event)" target="_blank"></a> \
-          </li> \
-        </ul> \
-          </div> \
-        </div>';
+      postsStr += ' <li class="postRating" id="postRating'+ data[ii].id +'">'+ data[ii].countVotesItems +'</li></ul>';
       if (accessDel) {
         postsStr += ' \
-          <div class="right-post-menu col-md-1 col-sm-1 col-xs-1" id="btnDel'+ data[ii].id +'"> \
-            <button class="button delete-post" value="'+ data[ii].id +'"></button> \
-          </div> \
+          <ul class="col-md-4 col-sm-4 col-xs-4 text-center"> \
+            <div class="right-post-menu" id="btnDel'+ data[ii].id +'"> \
+              <button class="button deletePost" value="'+ data[ii].id +'">Удалить</button> \
+            </div> \
+          </ul> \
         ';
       }
+      postsStr += ' \
+       <ul class="share col-md-4 col-sm-4 col-xs-4 list-inline text-right"> \
+        <li class="shareVK"> \
+          <a onclick="return shareBox(\'http://vk.com/share.php?url=http://localhost:3000/post/'+ data[ii].id +'&image='+ (data[ii].img ? data[ii].img : 'http://localhost:3000//images/noimage.png') +'&title='+ data[ii].title +'&description='+ data[ii].desc +'\', event)" target="_blank"></a> \
+        </li> \
+        <li class="shareTwitter"> \
+          <a onclick="return shareBox(\'https://twitter.com/share?url=http://localhost:3000/post/'+ data[ii].id +'&via=OPTIMALOPTION&related=SergeShaw%2COptiOption&hashtags=OpOp%2CpollMe&text='+ data[ii].title +'\', event)" target="_blank"></a> \
+        </li> \
+      </ul> \
+        </div> \
+      </div>';
     }
 
     var wrapper = document.createElement('div');
+    wrapper.className = "container";
     wrapper.innerHTML = postsStr;
     var $wrapper = $(wrapper);
 
@@ -336,17 +370,22 @@ $(document).ready(function() {
       var buttons = $wrapper.find('.btn' + postIdVoted);
       var statistics = $wrapper.find('.stat' + postIdVoted);
       var currentItem = $wrapper.find('#post' + this.name + 'Stat');
+      var postItemsBlockInRow = $wrapper.find('#post' + postIdVoted + ' .postItemsBlockInRow');
       var voteCounter = $wrapper.find('#voteCounter'+ this.value);
       var postRating = $wrapper.find('#postRating'+ this.value);
       var oldValue = currentItem.text();
       var oldValueVoteCounter = voteCounter.text();
       var num = this.name;
 
+      console.log('#post' + postIdVoted + ' .postItemsBlockInRow');
+
       $.getJSON('/posts?vote=1&itemId=' + this.name + '&postId=' + this.value, function(response) {
         if (response.success) {
           currentItem.text(Number(oldValue) + 1);
           voteCounter.text(Number(oldValueVoteCounter) + 1);
           postRating.text(Number(postRating.text()) + 1);
+
+          postItemsBlockInRow.addClass('pad-left-50');
 
           var itemsStat = (statistics.children('.statistics').length) ? statistics.children('.statistics') : statistics.children('.statInRow');
           var itemsStatPercent = (statistics.children('.statisticsPercent').length) ? statistics.children('.statisticsPercent') : statistics.children('.statInRowPercent');
@@ -367,7 +406,7 @@ $(document).ready(function() {
     });
 
     if (accessDel) {
-      $wrapper.find('.delete-post').click(function() {
+      $wrapper.find('.deletePost').click(function() {
         var btnDel = $wrapper.find('#btnDel' + this.value);
         var deletedPost = $wrapper.find('#post' + this.value);
         var oldCountPosts = $('#userPosts').children('span').text();
