@@ -187,7 +187,7 @@ function generateNewUser(profile, social_site, callback) {
   newUser.login = '';
 
   if (profile.username) {
-    if (social_site === 'vk' && /^id[0-9]*$/.exec(profile.username != null)) {
+    if (social_site === 'vk' && /^id[0-9]*$/.exec(profile.username) != null) {
       callback(newUser);
     }
 
