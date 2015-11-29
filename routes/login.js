@@ -5,6 +5,7 @@ var express = require('express'),
 
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
+  VKStrategy = require('passport-vkontakte').Strategy,
   TwitterStrategy = require('passport-twitter').Strategy;
 
 
@@ -40,6 +41,27 @@ passport.use('local-login', new LocalStrategy(
   }
 ));
 
+passport.use(new VKStrategy({
+    clientID:     5168386, // VK.com docs call it 'API ID'
+    clientSecret: 'R8zcDW6JU388oksivYgn',
+    callbackURL:  "http://localhost:3000/login/vkontakte/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    generateNewUser(profile, 'vk', function(newUser) {
+      checkSocial(newUser, function(err, result) {
+        if (err) {
+          return done(err);
+        } else {
+          return done(null, result);
+        }
+      });
+    });
+    // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
+    //   return done(err, user);
+    // });
+  }
+));
+
 passport.use(new TwitterStrategy({
     consumerKey: 'Z7IJ6x3TvVJyIfICb7Gd9yDAB',
     consumerSecret: 'EhbZ6gBCXXXxDBMbi1fk2KALTitMnufI8SQnxA9PqICHvHj3NI',
@@ -59,6 +81,15 @@ passport.use(new TwitterStrategy({
   }
 ));
 
+
+router.get('/vkontakte', passport.authenticate('vkontakte'));
+router.get('/vkontakte/callback',
+  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+);
 
 router.get('/twitter', passport.authenticate('twitter'));
 router.get('/twitter/callback',
@@ -156,6 +187,10 @@ function generateNewUser(profile, social_site, callback) {
   newUser.login = '';
 
   if (profile.username) {
+    if (social_site === 'vk' && /^id[0-9]*$/.exec(profile.username != null)) {
+      callback(newUser);
+    }
+
     checkForDuplicates(profile.username, false, function(result) {
       if (!result) {
         newUser.login = profile.username;
