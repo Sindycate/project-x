@@ -51,9 +51,10 @@ block content
                     li.col-md-2.col-sm-2.col-xs-2
                       input.download-image(type='submit' value='' name='submit')
                 input.itemsImagePath(type='hidden' name='itemsImage')
-                .col-md-12.col-sm-12.col-xs-12
+                .col-md-12.col-sm-12.col-xs-12.imgBlock
                   p.alignmentItemsImg
                     img.itemImg1(src="../images/noimage.png" alt="Mountain View")
+                  .deleteImg(style='display: none;') Удалить
               .caption
                 p
                   input.form-control.itemName(name='itemsName' placeholder='Название' type='text' maxlength='85')
@@ -74,9 +75,10 @@ block content
                     li.col-md-2.col-sm-2.col-xs-2
                       input.download-image(type='submit' value='' name='submit')
                 input.itemsImagePath(type='hidden' name='itemsImage')
-                .col-md-12.col-sm-12.col-xs-12
+                .col-md-12.col-sm-12.col-xs-12.imgBlock
                   p.alignmentItemsImg
                     img.itemImg2(src="../images/noimage.png" alt="Mountain View")
+                  .deleteImg(style='display: none;') Удалить
               .caption
                 p
                   input.form-control.itemName(name='itemsName' placeholder='Название' type='text' maxlength='85')
@@ -124,18 +126,19 @@ block content
         //- .row.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-10.col-xs-offset-1.text-center.checkboxBlock
         .col-md-12.col-md-offset-0.col-sm-12.col-sm-offset-0.col-xs-12.col-xs-offset-0.savePostBlock.text-center
           .savePost.btn-step2 Сохранить
-  .col-md-12.col-sm-12.col-xs-12.constructorComplete(style='display: none;')
-    .col-md-4.col-md-offset-4.col-sm-4.col-sm-offset-4.col-xs-4.col-xs-offset-4.text-center.constructorInfo
-      .col-md-12.col-sm-12.col-xs-12.shareToFriends
-        h3 Сделать репост в социальные сети
-        ul.socialNet.list-inline
-          li#shareVk
-          li#shareTwitter
-          li#shareFB
-        h5.postLink Ссылка на пост
-          span
-      .col-md-12.col-sm-12.col-xs-12.goToPost
-        h3 Перейти к посту
+  .col-md-12.col-sm-12.col-xs-12.constructorComplete(style="display:none;")
+    .container
+      .col-lg-4.col-lg-offset-4.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1.text-center.constructorInfo
+        .col-md-12.col-sm-12.col-xs-12.shareToFriends
+          h3 Сделать репост в социальные сети
+          ul.socialNet.list-inline
+            li#shareVk
+            li#shareTwitter
+            li#shareFB
+          h5.postLink Ссылка на пост
+            span
+        .col-md-12.col-sm-12.col-xs-12.goToPost
+          h3 Перейти к посту
   script(src='/js/jquery-2.1.4.min.js')
   script(src='/js/jquery.form.min.js')
   script(src='/js/jquery-ui.min.js')

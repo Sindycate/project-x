@@ -16,7 +16,6 @@ $(document).ready(function() {
     fullStructureItems  = $('.fullStrItems'),
     shortStructureItems = $('.shortStrItems'),
     addItem             = $('.addItem'),
-    addItem             = $('.addItem'),
     messageSettings     = $('.newSettingsMessage'),
     countVotesForEnd    = $('#countVotesForEnd'),
     timeForEndHours     = $('#timeForEndHours'),
@@ -40,9 +39,9 @@ $(document).ready(function() {
   function createItem(typeOfStructureItems, countItems) {
     var itemStr = '';
     if (typeOfStructureItems == 'full') {
-      itemStr = '<div class="text-center item col-md-6 col-md-offset-0 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1"><div style="display: none;" class="col-md-1 col-sm-1 col-xs-1 delItemShort delItem"></div><div class="thumbnail fullItem"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: block;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8 col-sm-8 col-xs-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12 col-sm-12 col-xs-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: block;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 col-sm-12 col-xs-12 delItemFull delItem" style="display: block;"></div></div>';
+      itemStr = '<div class="text-center item col-md-6 col-md-offset-0 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1"><div style="display: none;" class="col-md-1 col-sm-1 col-xs-1 delItemShort delItem"></div><div class="thumbnail fullItem"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: block;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8 col-sm-8 col-xs-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12 col-sm-12 col-xs-12 imgBlock"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p><div class="deleteImg" style="display: none;">Удалить</div></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: block;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 col-sm-12 col-xs-12 delItemFull delItem" style="display: block;"></div></div>';
     } else if (typeOfStructureItems == 'short') {
-      itemStr = '<div class="text-center item col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1"><div style="" class="col-md-1 col-sm-1 col-xs-1 delItemShort delItem"></div><div class="thumbnail itemBody col-md-10 col-sm-10 col-xs-10"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: none;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8 col-sm-8 col-xs-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12 col-sm-12 col-xs-12"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: none;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 col-sm-12 col-xs-12 delItemFull delItem" style="display: none;"></div></div>';
+      itemStr = '<div class="text-center item col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1"><div style="" class="col-md-1 col-sm-1 col-xs-1 delItemShort delItem"></div><div class="thumbnail itemBody col-md-10 col-sm-10 col-xs-10"><form enctype="multipart/form-data" action="/upload/image" method="post" class="itemForm uploadForm" style="display: none;"><div class="mask-wrapper"><ul class="list-inline mask"><li class="col-md-8 col-sm-8 col-xs-8"><input type="text" disabled="" value="Файл не выбран" class="fileInputText"></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="file" name="itemImg' + (countItems + 1) + '" class="fileInput"><div id="inputMask"></div></li><li class="col-md-2 col-sm-2 col-xs-2"><input type="submit" value="" name="submit" class="download-image"></li></ul></div><input type="hidden" name="itemsImage" class="itemsImagePath"><div class="col-md-12 col-sm-12 col-xs-12 imgBlock"><p class="alignmentItemsImg"><img src="../images/noimage.png" alt="Mountain View" class="itemImg' + (countItems + 1) + '"></p><div class="deleteImg" style="display: none;">Удалить</div></div></form><div class="caption"><p><input name="itemsName" placeholder="Название" type="text" maxlength="85" class="form-control itemName"></p><p class="itemDescribe" style="display: none;"><textarea name="itemsDescription" maxlength="200" placeholder="Краткое описание" cols="40" rows="3" type="text" class="form-control"></textarea></p></div></div><div class="col-md-12 col-sm-12 col-xs-12 delItemFull delItem" style="display: none;"></div></div>';
     }
       $('.group-items').append(itemStr);
   }
@@ -107,16 +106,19 @@ $(document).ready(function() {
       counter.text(countItems);
       activateDelete();
       refreshUploadForm();
+      deleteImg();
     } else if (typeOfStructureItems == 'short') {
-      createItem(typeOfStructureItems);
+      createItem(typeOfStructureItems, countItems);
       countItems++;
       counter.text(countItems);
       activateDelete();
       refreshUploadForm();
+      deleteImg();
     } else {
       message.show();
       messageText.text('Данный режим поддерживает только 4 объекта, чтобы создать больше нужно перейти к списку.');
     }
+    console.log(countItems);
   });
 
   countVotesForEnd.keydown(function (e) {
@@ -255,6 +257,8 @@ $(document).ready(function() {
         },
         success: function(response) {
           if (response.access) {
+
+            curItem.children('.imgBlock').children('.deleteImg').show();
             curItem.children('div').children('ul').children('li').children('.fileInputText').val('Загружено');
             // curItem.children('.status').empty().text('Success');
           } else {
@@ -287,6 +291,15 @@ $(document).ready(function() {
   }
   refreshUploadForm();
 
+  function deleteImg() {
+    $('.deleteImg').click(function() {
+      var curItem = $(this);
+      curItem.hide();
+      curItem.prev().children('img').attr('src', '../images/noimage.png');
+      curItem.prev().parent('div').prev().prev().children('ul').children('li').children('.fileInputText').val('Изображение удалено');
+    });
+  }
+  deleteImg();
 
   savePost.click(function(e) {
 
@@ -295,6 +308,8 @@ $(document).ready(function() {
     checkPostValues(typeOfStructureItems, countItems, function(checkResult) {
       if (checkResult.response) {
         var dataPostForm = $('#postForm :input').serializeArray();
+
+        console.log(dataPostForm);
 
         dataPostForm.push({ name: "postImg", value: postImg });
         dataPostForm.push({ name: "typeOfStructureItems", value: typeOfStructureItems });

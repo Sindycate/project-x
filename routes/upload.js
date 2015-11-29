@@ -65,7 +65,7 @@ router.post('/image', function (req, res, next) {
       if (file.length === 0) {
         res.json({access: false, errorType: 'notFound'});
         return;
-      } else if (file[0].size > 1024 * 1024 * 1) {
+      } else if (file[0].size > 1024 * 1024 * 2) {
         res.json({access: false, errorType: 'oversize'});
         return;
       } else if (

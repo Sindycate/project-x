@@ -5,12 +5,333 @@ html {
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #FAFAFA;
+  padding: 0;
 }
 
+.homePage {
+  border-top: 1px solid #eee;
+  padding-top: 50px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: url(../images/img1.jpg);
+  background-size: cover;
+}
+
+.loginFormHomePage {
+  /*margin-top: 95px;*/
+}
+
+.gallerey {
+  display: block;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  border-top: 1px solid #bbb;
+  /*background-image: url(../images/img1.jpg);*/
+  /*background-size: cover;*/
+  background-color: rgba(68, 68, 68, 0.7);
+  margin: 0;
+  width: 100%;
+  /*height: 780px;*/
+  min-height: 380px;
+  color: #fff;
+  padding-top: 50px;
+  padding-bottom: 20px;
+  /*box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);*/
+  /*box-shadow: inset 0px -48px 36px -24px rgba(9, 9, 9, 0.75);*/
+}
+
+.goToPoll {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.goToPoll:active {
+  margin-top: 59px;
+}
+
+.goToPoll a {
+  text-align: center;
+  width: 200px;
+  padding: 15px;
+  background-color: #444;
+  border-radius: 3px;
+  font-size: 19px;
+  color: #fff;
+}
+
+.goToPoll a:hover {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  text-decoration: none;
+}
+
+.goToPoll a:active {
+  margin-top: -1px;
+}
+
+
+
+/*
+.gallerey:after {
+  content: '';
+  opacity: .2;
+  background-color: #444;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+*/
+.content {
+  min-height: 160px;
+  border-radius: 0px;
+  color: #333;
+  /*background-color: rgba(0,0,0,0.12);*/
+  /*border-left: 2px solid #333;*/
+  padding: 0;
+  /*background-color: #fff;*/
+}
+
+.mainInformation {
+
+  /*background-image: url(../images/img1.jpg);*/
+  /*background-size: cover;*/
+  /*box-shadow: inset 0px 48px 36px -24px rgba(9, 9, 9, 0.75);*/
+  /*border-top: 15px solid #444;*/
+  /*background-color: #D4D4D4;*/
+  margin: 0;
+  width: 100%;
+  /*height: 1345px;*/
+  min-height: 865px;
+  padding: 30px 0 0 0;
+}
+
+.mainInformationBlock {
+  /*background-color: #999;*/
+  padding: 0;
+  height: 100%;
+}
+
+.aboutProject {
+  margin: 0;
+  padding: 0;
+}
+
+.aboutProject div:first-child {
+  margin: 0;
+  padding: 0 0 0 15px;
+}
+
+
+/*.moreInfo {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+}*/
+
+.aboutProject h2 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /*text-shadow: 1px 1px #444;*/
+  color: #fff;
+}
+
+.aboutProject p {
+  color: #fff;
+  /*font-weight: bold;*/
+  /*text-shadow: 1px 1px #f0f0f0;*/
+  font-size: 25px;
+}
+
+
+.owl-carousel {
+  width: 400px;
+  margin-left: 20px;
+}
+
+.owl-carousel .item {
+  padding: 60px 80px 80px 80px;
+}
+
+.howToUseBlock {
+  overflow: hidden;
+  padding-top: 25px;
+  margin-top: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.howToUse {
+  background-color: #fff;
+  padding: 0;
+  color: #444;
+  border-radius: 2px;
+  /*border-left: 2px solid #444;*/
+  /*border-right: 2px solid #444;*/
+  /*border-bottom: 2px dashed #444;*/
+}
+
+.howToUseImg img {
+  /*background-color: red;*/
+  /*height: 200px;*/
+  width: 100px;
+  opacity: .9;
+}
+
+.howToUse div {
+  background-color: #444;
+  padding: 15px;
+  margin: 0 0 10px 0;
+  /*box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);*/
+  /*border-bottom: 1px solid #eee;*/
+}
+
+.howToUse h2 {
+  color: #fff;
+  font-size: 26px;
+  margin: 0;
+}
+
+.howToUse li {
+  color: #444;
+  list-style-type: none;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.howToUse li:first-child {
+  margin-top: 10px;
+}
+
+.forOrganizationsBlock {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  padding-top: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  overflow: hidden;
+  /*margin-top: 45px;*/
+}
+
+.forOrganizations {
+  background-color: #fff;
+  /*padding: 20px;*/
+  padding: 0;
+  /*box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);*/
+  color: #fff;
+  border-radius: 2px;
+  /*float: right;*/
+  /*border-right: 2px solid #444;*/
+}
+
+.forOrganizationsImg {
+  float: left;
+}
+
+.forOrganizationsImg img {
+  width: 100px;
+  opacity: .9;
+}
+
+.forOrganizations div {
+  /*padding-left: 15px;*/
+  padding: 15px;
+  margin: 0 0 15px 0;
+  background-color: #444;
+  /*box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);*/
+}
+
+.forOrganizations h2 {
+  color: #fff;
+  font-size: 26px;
+  /*margin: 0 0 15px 0;*/
+  margin: 0;
+}
+
+.forOrganizations li {
+  font-size: 18px;
+  list-style-type: none;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.forOrganizations li:first-child {
+  margin-top: 10px;
+}
+
+.lastInformation div {
+  margin-top: 35px;
+  font-size: 15px;
+  color: #444;
+}
+
+.feedbackBlock {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  padding-top: 45px;
+  margin-top: 20px;
+  background-color: #fff;
+  /*margin-top: 45px;*/
+}
+
+.footer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  background-color: #444;
+  /*opacity: .9;*/
+  padding: 20px;
+}
+
+.footer .container div:first-child{
+  margin-top: 12px;
+}
+
+.footer .container div:last-child{
+  margin-top: 12px;
+}
+
+.footer div {
+  color: #fff;
+  font-size: 15px;
+  text-shadow: 1px 1px #222;
+}
+
+.social {
+  padding: 10px 0;
+}
+
+.footerTwitter {
+  display: block;
+  height: 24px;
+  width: 24px;
+  background-image: url(../images/icons/twitter3.png);
+  background-size: cover;
+  opacity: .8;
+}
+
+.footerTwitter:hover {
+  opacity: 1;
+}
+
+.footerVk {
+  display: block;
+  height: 24px;
+  width: 24px;
+  background-image: url(../images/icons/vk3.png);
+  background-size: cover;
+  opacity: .8;
+}
+
+.footerVk:hover {
+  opacity: 1;
+}
+
+
 .menu {
-  /*background-color: #EAEAEA;*/
-  /*background-color: #006699;*/
-  /*background-color: #505355;*/
   background-color: #fff;
   margin: 0;
   padding: 0;
@@ -651,11 +972,15 @@ https://edgewebfonts.adobe.com/fonts#/?collection=cookie */
   border-radius: 2px;
 }
 
+.btnProfileSet:focus {
+  color: #fff;
+}
+
 /***********************login***********************/
 
 .authForm {
   background-color: #fff;
-  margin-top: 25px;
+  /*margin-top: 25px;*/
   box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16),0 2px 6px 0 rgba(0,0,0,0.12);
   border-radius: 2px;
   padding: 0;
@@ -697,6 +1022,16 @@ https://edgewebfonts.adobe.com/fonts#/?collection=cookie */
 
 .authBody button:focus {
   outline: none;
+}
+
+.goToReg {
+  color: #444;
+  font-weight: bold;
+  cursor: pointer;
+  /*float: right;*/
+  /*margin-top: 10px;*/
+  margin-right: -100px;
+  margin-left: 15px;
 }
 
 .socialButtons {
@@ -759,18 +1094,30 @@ https://edgewebfonts.adobe.com/fonts#/?collection=cookie */
 }
 
 .messageLogin {
-  margin-top: 20px;
+  /*margin-top: 20px;*/
+  /*background-color: #444;*/
+  height: 60px;
+}
+
+.messageAuthHomePage {
+  font-size: 16px;
+  color: #CE5E5E;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 
 .messageLogin h4 {
+  font-size: 18px;
   color: #CE5E5E;
+  margin-top: 21px;
 }
+
 
 /***********************registration***********************/
 
 .regForm {
   background-color: #fff;
-  margin-top: 45px;
   box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16),0 2px 6px 0 rgba(0,0,0,0.12);
   border-radius: 2px;
   padding: 0;
@@ -813,16 +1160,17 @@ https://edgewebfonts.adobe.com/fonts#/?collection=cookie */
   outline: none;
 }
 
-.messageReg {
-  margin-top: 20px;
+.messageRegBlock {
+  height: 60px;
 }
 
-.messageReg h4 {
-  color: #CE5E5E;
+.messageRegBlock h4 {
+  margin-top: 21px;
+  color: #555;
 }
 
 .messageRegSuccess {
-  margin-top: 20px;
+  /*margin-top: 20px;*/
 }
 
 .messageRegSuccess h4 {
@@ -1532,10 +1880,38 @@ small {
 
 .alignmentItemsImg {
   background-color: #fff;
+  /*background-color: red;*/
   text-align: center;
   vertical-align: center;
   height: 240px;
   line-height: 250px;
+}
+
+.alignmentImgGallerey {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.deleteImg {
+  position: absolute;
+  text-align: center;
+  color: #999;
+  font-size: 16px;
+  padding-top: 7px;
+  background-color: rgba(68, 68, 68, 0.95);
+  background-color: #eee;
+  top: -3px;
+  left: 0;
+  height: 30px;
+  width: 100%;
+  line-height: 1;
+  /*box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.1)*/
+}
+
+.deleteImg:hover {
+  background-color: rgba(68, 68, 68, 1);
+  color: #fff;
+  cursor: pointer;
 }
 
 .alignmentItemsImg img {
@@ -2190,6 +2566,24 @@ small {
   width: 300px;
 }*/
 
+@media only screen and (max-width: 970px) {
+
+  .goToPoll {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .owl-carousel {
+    width: 400px;
+    margin-left: -24px;
+    /*background-color: red;*/
+  }
+
+
+
+}
+
 @media only screen and (max-width: 767px) {
 
   .auth-page {
@@ -2304,4 +2698,14 @@ small {
   .itemNameInRow div {
     font-size: 17px;
   }
+
+  .howToUseImg {
+    padding: 0;
+  }
+
+  .owl-carousel {
+    width: 400px;
+    margin-left: 0;
+  }
 }
+

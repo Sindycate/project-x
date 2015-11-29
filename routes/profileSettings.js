@@ -30,14 +30,19 @@ router.get('/', function(req, res, next) {
       if (req.query.name) {
         dataForUpdate.name = req.query.name;
       }
-      if (req.query.lastName) {
-        dataForUpdate.last_name = req.query.lastName;
-      }
+      // if (req.query.lastName) {
+      //   dataForUpdate.last_name = req.query.lastName;
+      // }
       if (req.query.about) {
         dataForUpdate.about_user = req.query.about;
       }
       if (req.query.userImg) {
-        dataForUpdate.img = req.query.userImg;
+        console.log(req.query.userImg);
+        if (req.query.userImg == 'deleted') {
+          dataForUpdate.img = '';
+        } else {
+          dataForUpdate.img = req.query.userImg;
+        }
       }
 
       changePersonalUserInfo(dataForUpdate, req.user.id, req, res);

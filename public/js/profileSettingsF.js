@@ -17,6 +17,7 @@ $(document).ready(function() {
     btnPersonalSet = $('.btnPersonalSet'),
     btnImg = $('.btnImg'),
     imgBlock = $('.userImg'),
+    deleteImg = $('.deleteImg'),
     newPersonalMessage = $('.newPersonalMessage'),
     newMainMessage = $('.newMainMessage'),
     newHalfMainMessage = $('.newHalfMainMessage'),
@@ -277,15 +278,15 @@ $(document).ready(function() {
     }
   });
 
-  lastNameSettings.change(function() {
-    if (personalInfo.lastName != lastNameSettings.val()) {
-      blockMessages.personalSet.showNewMessage('При сохранении фамилия будет изменена');
-      personalInfoUpdate.lastName = lastNameSettings.val();
-    } else {
-      personalInfoUpdate.lastName = false;
-      blockMessages.personalSet.showNewMessage('Введённая фамилия останется без изменений');
-    }
-  });
+  // lastNameSettings.change(function() {
+  //   if (personalInfo.lastName != lastNameSettings.val()) {
+  //     blockMessages.personalSet.showNewMessage('При сохранении фамилия будет изменена');
+  //     personalInfoUpdate.lastName = lastNameSettings.val();
+  //   } else {
+  //     personalInfoUpdate.lastName = false;
+  //     blockMessages.personalSet.showNewMessage('Введённая фамилия останется без изменений');
+  //   }
+  // });
 
   aboutSettings.change(function() {
     if (aboutSettings.val().length > 120) {
@@ -310,7 +311,7 @@ $(document).ready(function() {
       ((personalInfoUpdate.name)     ? ('name=' + personalInfoUpdate.name + '&') : '') +
       ((personalInfoUpdate.lastName) ? ('lastName=' + personalInfoUpdate.lastName + '&') : '') +
       ((personalInfoUpdate.about)    ? ('about=' + personalInfoUpdate.about + '&') : '') +
-      ((userImg != '')               ? ('userImg=' + userImg + '&') : ''));
+      ((userImg != '')               ? ((userImg == 'deleted') ? ('userImg=deleted' + '&') : ('userImg=' + userImg + '&')) : ''));
     console.log(getInfo);
     if (getInfo == '') {
       blockMessages.personalSet.showNewMessage('Данные не будут изменены');
@@ -358,6 +359,15 @@ $(document).ready(function() {
     }
   });
 
+  deleteImg.click(function() {
+    var curItem = $(this);
+    curItem.hide();
+    curItem.prev().children('img').attr('src', '../images/noimage.png');
+    console.log(curItem.parent('div').prev().children('div').children('ul').children('li').children('.fileInputText').val('Изображение удалено'));
+    userImg = 'deleted';
+    // curItem.prev().parent('div').prev().prev().children('ul').children('li').children('.fileInputText').val('Изображение удалено');
+  });
+
   btnImg.click(function() {
     btnImg.parent('div').hide();
     imgBlock.show();
@@ -378,12 +388,13 @@ $(document).ready(function() {
 
       $(this).ajaxSubmit({
         error: function(xhr) {
-          console.log(xhr.status);
+
           curItem.children('.status').empty().text('Такой формат не поддерживается');
           // status('Error: ' + xhr.status);
         },
         success: function(response) {
           if (response.access) {
+            curItem.next('.imgBlock').children('.deleteImg').show();
             curItem.children('div').children('ul').children('li').children('.fileInputText').val('Загружено');
           } else {
             var errorMessage = '';

@@ -233,7 +233,7 @@ function getPosts(queryParams, callback) {
         WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
       else "" \
       end) as imgProfile \
-    FROM ' + queryParams.sorting.tables + queryParams.sorting.query + queryParams.limit, function(err, queryPosts) {
+    FROM ' + queryParams.sorting.tables + queryParams.sorting.query + ' ORDER BY `posts`.`votes` DESC ' + queryParams.limit, function(err, queryPosts) {
 
       console.log(queryPosts);
 
@@ -282,7 +282,7 @@ function getItems(postsIdStr, posts, callback) {
           posts[items[ii].post_id].countVotesItems = 0;
         }
         posts[items[ii].post_id].countVotesItems += items[ii].votes;
-        posts[items[ii].post_id].items = _.sortBy(posts[items[ii].post_id].items, 'votes').reverse();
+        // posts[items[ii].post_id].items = _.sortBy(posts[items[ii].post_id].items, 'votes').reverse();
       }
       callback(true);
     } else {

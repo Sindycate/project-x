@@ -48,7 +48,7 @@ block content
             small редактирование информации о пользователе
         .settings-content
           .col-md-6.col-sm-12.col-sm-offset-0.col-xs-12.text-center.messages
-              h3.newPersonalMessage Данная информация будет отображаться в профиле пользователя
+              h3.newPersonalMessage Данная информация будет отображаться в профиле пользователя. Внеся изменения, не забудьте сохранить
           .col-md-6.col-sm-12.col-xs-12.userImg(style='display: none;')
             .col-md-12.col-md-offset-0.col-sm-8.col-sm-offset-2.col-xs-10.col-xs-offset-1.profileSetImgBlock
               form.uploadForm(enctype='multipart/form-data' action='/upload/image' method='post')
@@ -62,11 +62,15 @@ block content
                     li.col-md-3.col-sm-3.col-xs-3
                       input.download-image(type='submit' value='' name='submit')
               .col-md-12.col-sm-12.col-xs-12.imgBlock
-                  p.alignmentProfileImg
-                    - if (userInfo.img != '')
-                      img.userIcon(src="..#{userInfo.img}" alt="Mountain View" )
-                    - else
-                      img.userIcon(src="../images/noimage.png" alt="Mountain View" )
+                p.alignmentProfileImg
+                  - if (userInfo.img != '')
+                    img.userIcon(src="..#{userInfo.img}" alt="Mountain View" )
+                  - else
+                    img.userIcon(src="../images/noimage.png" alt="Mountain View" )
+                - if (userInfo.img != '')
+                  .deleteImg Удалить
+                - else
+                  .deleteImg(style='display: none;') Удалить
           .col-md-6.col-md-offset-0.col-sm-10.col-xs-10.col-xs-offset-1
             .form-group
               button.btnImg Редактировать иконку профиля

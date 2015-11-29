@@ -7,6 +7,7 @@ var express = require('express'),
   session = require('express-session'),
   SessionStore = require('express-mysql-session'),
   sass = require('node-sass'),
+  mailer = require('express-mailer')
   passport = require('passport');
 
 var routes = require('./routes/index'),
@@ -22,7 +23,6 @@ var routes = require('./routes/index'),
 
 
 var app = express();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -70,6 +70,19 @@ app.use(passport.session());
 //    debug: true // obvious
 //  })
 // );
+
+mailer.extend(app, {
+  from: 'no-reply@example.com',
+  host: 'smtp.gmail.com', // hostname
+  secureConnection: true, // use SSL
+  port: 465, // port for secure SMTP
+  transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
+  auth: {
+    user: 'smetaninpavel.rus@gmail.com',
+    pass: 'bopute64'
+  }
+});
+
 
 app.use(function(req, res, next) {
 

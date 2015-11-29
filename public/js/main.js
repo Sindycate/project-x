@@ -18,21 +18,21 @@ $(document).ready(function() {
   var queryParams = {
     posts: {
       url: 'getPosts',
-      countItems: 1,
+      countItems: 4,
       offset: 0,
       postId: '',
       profileName: ''
     },
     post: {
       url: 'getPost',
-      countItems: 1,
+      countItems: 4,
       offset: 0,
       postId: location.pathname.split('/')[2],
       profileName: ''
     },
     profile: {
       url: 'getUserPosts',
-      countItems: 1,
+      countItems: 4,
       offset: 0,
       postId: '',
       profileName: location.pathname.split('/')[1]
@@ -77,7 +77,7 @@ $(document).ready(function() {
   $(window).scroll(function() {
     if($(window).scrollTop() > $(document).height() - $(window).height() - 200) {
       if (currentPage != 'post' && loadingPosts) {
-        console.log(queryParams[currentPage].offset++);
+        console.log(queryParams[currentPage].offset += 4);
         getPosts();
       }
     }
