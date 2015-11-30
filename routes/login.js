@@ -6,6 +6,7 @@ var express = require('express'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   VKStrategy = require('passport-vkontakte').Strategy,
+  InstagramStrategy = require('passport-instagram').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
   TwitterStrategy = require('passport-twitter').Strategy;
@@ -84,16 +85,30 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+passport.use(new InstagramStrategy({
+    clientID:     '5d75fbdc61fe4c84a3d4fe4b6e427a66',
+    clientSecret: 'fc67b5786fe74d0aa0d302fd851ab5b0',
+    callbackURL:  "http://localhost:3000/login/instagram/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    generateNewUser(profile, 'instagram', function(newUser) {
+      checkSocial(newUser, function(err, result) {
+        if (err) {
+          return done(err);
+        } else {
+          return done(null, result);
+        }
+      });
+    });
+  }
+));
+
 passport.use(new GoogleStrategy({
     clientID:     '160448020223-78p0esjjmjob9g58ro077f2r0n3md7sg.apps.googleusercontent.com',
     clientSecret: 'd6xMyU6Vkz4pxP2QcS2Tcoes',
     callbackURL:  "http://localhost:3000/login/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-
-    // console.log(profile);
-    // return;
-
     generateNewUser(profile, 'google', function(newUser) {
       checkSocial(newUser, function(err, result) {
         if (err) {
@@ -138,6 +153,15 @@ router.get('/google/callback',
 router.get('/facebook', passport.authenticate('facebook'));
 router.get('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+);
+
+router.get('/instagram', passport.authenticate('instagram'));
+router.get('/instagram/callback',
+  passport.authenticate('instagram', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
