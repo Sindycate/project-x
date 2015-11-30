@@ -6,6 +6,7 @@ var express = require('express'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   VKStrategy = require('passport-vkontakte').Strategy,
+  FacebookStrategy = require('passport-facebook').Strategy,
   TwitterStrategy = require('passport-twitter').Strategy;
 
 
@@ -62,6 +63,32 @@ passport.use(new VKStrategy({
   }
 ));
 
+passport.use(new FacebookStrategy({
+    clientID:     1104379766253076,
+    clientSecret: '54793e6d1ba404840d71451d9baf082c',
+    callbackURL:  "http://localhost:3000/login/facebook/callback",
+    enableProof: false
+  },
+  function(accessToken, refreshToken, profile, done) {
+
+    // console.log(profile);
+    // return;
+
+    generateNewUser(profile, 'facebook', function(newUser) {
+      checkSocial(newUser, function(err, result) {
+        if (err) {
+          return done(err);
+        } else {
+          return done(null, result);
+        }
+      });
+    });
+    // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
+    //   return done(err, user);
+    // });
+  }
+));
+
 passport.use(new TwitterStrategy({
     consumerKey: 'Z7IJ6x3TvVJyIfICb7Gd9yDAB',
     consumerSecret: 'EhbZ6gBCXXXxDBMbi1fk2KALTitMnufI8SQnxA9PqICHvHj3NI',
@@ -81,6 +108,15 @@ passport.use(new TwitterStrategy({
   }
 ));
 
+
+router.get('/facebook', passport.authenticate('facebook'));
+router.get('/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+);
 
 router.get('/vkontakte', passport.authenticate('vkontakte'));
 router.get('/vkontakte/callback',
@@ -187,7 +223,8 @@ function generateNewUser(profile, social_site, callback) {
   newUser.login = '';
 
   if (profile.username) {
-    if (social_site == 'vk' && /^id[0-9]*$/.exec(profile.username) != null) {
+    if ((social_site == 'vk' && /^id[0-9]*$/.exec(profile.username) != null) ||
+      (social_site == 'facebook' && profile.username == undefined)) {
       return callback(newUser);
     }
 
