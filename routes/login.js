@@ -7,6 +7,7 @@ var express = require('express'),
   LocalStrategy = require('passport-local').Strategy,
   VKStrategy = require('passport-vkontakte').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy,
+  GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
   TwitterStrategy = require('passport-twitter').Strategy;
 
 
@@ -71,9 +72,6 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
 
-    // console.log(profile);
-    // return;
-
     generateNewUser(profile, 'facebook', function(newUser) {
       checkSocial(newUser, function(err, result) {
         if (err) {
@@ -83,9 +81,28 @@ passport.use(new FacebookStrategy({
         }
       });
     });
-    // User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
-    //   return done(err, user);
-    // });
+  }
+));
+
+passport.use(new GoogleStrategy({
+    clientID:     '160448020223-78p0esjjmjob9g58ro077f2r0n3md7sg.apps.googleusercontent.com',
+    clientSecret: 'd6xMyU6Vkz4pxP2QcS2Tcoes',
+    callbackURL:  "http://localhost:3000/login/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+
+    // console.log(profile);
+    // return;
+
+    generateNewUser(profile, 'google', function(newUser) {
+      checkSocial(newUser, function(err, result) {
+        if (err) {
+          return done(err);
+        } else {
+          return done(null, result);
+        }
+      });
+    });
   }
 ));
 
@@ -108,6 +125,15 @@ passport.use(new TwitterStrategy({
   }
 ));
 
+
+router.get('/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'}));
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+);
 
 router.get('/facebook', passport.authenticate('facebook'));
 router.get('/facebook/callback',
