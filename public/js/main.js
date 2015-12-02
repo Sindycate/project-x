@@ -4,6 +4,10 @@ $(document).ready(function() {
 
   var sortFollowers = $('.sortFollowers'),
       sortAllPosts  = $('.sortAllPosts'),
+      sortAllPostsType = $('.sortAllPostsType'),
+      sortToday = $('.sortToday'),
+      sortAllTime = $('.sortAllTime'),
+      scrollToTop = $('.scrollTop'),
       posts  = $('.posts');
 
   var loadingPosts = true;
@@ -52,10 +56,19 @@ $(document).ready(function() {
     loadingPosts = true;
   });
 
+  scrollToTop.click(function() {
+    $('body,html').animate({
+        scrollTop: 0
+    }, 400);
+
+    return false;
+  });
+
   sortFollowers.click(function() {
     loadingPosts = true;
     queryParams[currentPage].offset = 0;
     sortAllPosts.removeAttr('id', '');
+    sortAllPostsType.hide('fast');
     sortFollowers.attr('id', 'activeSorting');
     $('.post').parent('div').remove();
     $('.empty-posts').remove();
@@ -66,15 +79,54 @@ $(document).ready(function() {
   sortAllPosts.click(function() {
     loadingPosts = true;
     queryParams[currentPage].offset = 0;
+    sortAllPostsType.show('slow');
     sortFollowers.removeAttr('id', '');
+    sortAllTime.removeAttr('id', '');
     sortAllPosts.attr('id', 'activeSorting');
+    sortToday.attr('id', 'activeSorting');
     $('.post').parent('div').remove();
     $('.empty-posts').remove();
     queryParams.sorting = 'allPosts';
+    queryParams.sorting = 'today';
+    getPosts();
+  });
+
+  sortToday.click(function() {
+    loadingPosts = true;
+    queryParams[currentPage].offset = 0;
+    sortAllPostsType.show('slow');
+    sortFollowers.removeAttr('id', '');
+    sortAllTime.removeAttr('id', '');
+    sortAllPosts.attr('id', 'activeSorting');
+    sortToday.attr('id', 'activeSorting');
+    $('.post').parent('div').remove();
+    $('.empty-posts').remove();
+    queryParams.sorting = 'allPosts';
+    queryParams.sorting = 'today';
+    getPosts();
+  });
+
+  sortAllTime.click(function() {
+    loadingPosts = true;
+    queryParams[currentPage].offset = 0;
+    sortAllPostsType.show('slow');
+    sortFollowers.removeAttr('id', '');
+    sortToday.removeAttr('id', '');
+    sortAllPosts.attr('id', 'activeSorting');
+    sortAllTime.attr('id', 'activeSorting');
+    $('.post').parent('div').remove();
+    $('.empty-posts').remove();
+    queryParams.sorting = 'allPosts';
+    queryParams.sorting = 'allTime';
     getPosts();
   });
 
   $(window).scroll(function() {
+    if ($(window).scrollTop() > 750) {
+        scrollToTop.show();
+    } else {
+        scrollToTop.hide();
+    }
     if($(window).scrollTop() > $(document).height() - $(window).height() - 200) {
       if (currentPage != 'post' && loadingPosts) {
         console.log(queryParams[currentPage].offset += 4);

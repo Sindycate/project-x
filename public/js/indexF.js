@@ -7,7 +7,7 @@ $(document).ready(function() {
     // margin:10,
     nav:false,
     dots: false,
-    autoplay: true,
+    // autoplay: true,
     autoplayTimeout: 3500,
     // dotsEach: true,
     autoplayHoverPause: true,

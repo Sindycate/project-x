@@ -4,17 +4,17 @@ block content
   .homePage
     .gallerey
       .container
-        .content.col-lg-6.col-lg-offset-0.col-md-5.col-md-offset-0.col-sm-10.col-sm-offset-1.text-center
+        .content.col-lg-6.col-lg-offset-0.col-md-6.col-md-offset-0.col-sm-10.col-sm-offset-1.text-center
           .aboutProject.col-xs-12
             .col-xs-12.text-left
               //- h2 Добро пожаловать на Pollweber!
               //- p Что это за сервис?
-            .col-lg-10.col-lg-offset-2.col-md-11.col-md-offset-1.text-left
+            .col-lg-10.col-lg-offset-2.col-md-12.col-md-offset-0.text-left
               p Pollweber - это сервис для создания опросов. Здесь вы можете найти людей или организации, которые вам интересны.
               .goToPoll
                 a(href='/posts') Перейти к опросам
         - if (!profile)
-          form.col-lg-6.col-lg-offset-0.col-md-6.col-md-offset-1.col-sm-10.col-sm-offset-1.col-xs-10.col-xs-offset-1#loginForm.loginFormHomePage(method='post')
+          form.col-lg-6.col-lg-offset-0.col-md-6.col-md-offset-0.col-sm-10.col-sm-offset-1.col-xs-10.col-xs-offset-1#loginForm.loginFormHomePage(method='post')
             fieldset.col-lg-7.col-lg-offset-3.col-md-8.col-md-offset-2.col-sm-6.col-sm-offset-3.col-xs-12.col-xs-offset-0.authForm
               .col-xs-12.authTitle.text-center
                 h4 Авторизация
@@ -37,14 +37,14 @@ block content
       .container
         .mainInformationBlock.col-lg-10.col-lg-offset-1.col-md-12.col-md-offset-0.col-sm-10.col-sm-offset-1.col-xs-12.col-xs-offset-0.text-center
           .howToUseBlock.col-md-12.col-sm-12.col-xs-12
-            .howToUse.col-lg-5.col-lg-offset-1.col-md-5.col-md-offset-1.col-sm-10.col-sm-offset-1.col-xs-12.col-xs-offset-0
+            .howToUse.col-md-6.col-md-offset-0.col-sm-12.col-sm-offset-0.col-xs-12.col-xs-offset-0
               .col-xs-12.col-md-offset-0.text-center
                 h2 Как использовать
               ul.col-xs-12.col-xs-offset-0.text-left
                 li Создай опрос и поделись ссылкой с друзьями или размести у себя в социальных сетях
                 li Заведи аккаунт, и подписывайся на пользователей, которые тебе интересны
                 li Участвуй в опросах, они отображаются в одном месте в виде ленты новостей
-            .howToUseImg.col-md-4.col-md-offset-0.col-sm-10.col-sm-offset-2.col-xs-10.col-xs-offset-1.text-center
+            .howToUseImg.col-md-6.col-md-offset-0.col-sm-12.col-sm-offset-0.col-xs-12.col-xs-offset-0.text-center
               .owl-carousel
                 .item
                   img(src="../images/pic1.png" width="100px" alt="Mountain View")
@@ -53,14 +53,14 @@ block content
                 .item
                   img(src="../images/pic3.png" width="100px" alt="Mountain View")
           .forOrganizationsBlock.col-md-12.col-sm-12.col-xs-12
-            .forOrganizations.col-lg-5.col-lg-offset-1.col-md-5.col-md-offset-0.col-sm-10.col-sm-offset-1.col-xs-12.col-xs-offset-0
+            .forOrganizations.col-md-6.col-md-offset-0.col-sm-12.col-sm-offset-0.col-xs-12.col-xs-offset-0
               .col-xs-12.col-xs-offset-0.text-center
                 h2 Если вы организация
               ul.col-xs-12.col-xs-offset-0.text-left
                 li Если вы организация, то для вас это станет площадкой для обратной связи с пользователями
                 li Создайте корпоративный аккаунт и взаимодействуйте с вашей аудиторией, узнавайте желания, предпочтения
                 li Покажите, что вы готовы общаться с пользователями, а мы вам в этом поможем
-            .forOrganizationsImg.col-md-4.col-md-offset-0.col-sm-10.col-sm-offset-2.col-xs-10.col-xs-offset-0.text-center
+            .forOrganizationsImg.col-md-6.col-md-offset-0.col-sm-12.col-sm-offset-0.col-xs-12.col-xs-offset-0.text-center
               .owl-carousel
                 .item
                   img(src="../images/pic4.png" width="100px" alt="Mountain View")

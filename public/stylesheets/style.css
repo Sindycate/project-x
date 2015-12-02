@@ -26,18 +26,12 @@ body {
   display: block;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
   border-top: 1px solid #bbb;
-  /*background-image: url(../images/img1.jpg);*/
-  /*background-size: cover;*/
   background-color: rgba(68, 68, 68, 0.7);
   margin: 0;
   width: 100%;
-  /*height: 780px;*/
-  min-height: 380px;
+  min-height: 300px;
   color: #fff;
-  padding-top: 50px;
-  padding-bottom: 20px;
-  /*box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);*/
-  /*box-shadow: inset 0px -48px 36px -24px rgba(9, 9, 9, 0.75);*/
+  padding: 40px 0;
 }
 
 .goToPoll {
@@ -46,7 +40,7 @@ body {
 }
 
 .goToPoll:active {
-  margin-top: 59px;
+  margin-top: 49px;
 }
 
 .goToPoll a {
@@ -94,16 +88,10 @@ body {
 }
 
 .mainInformation {
-
-  /*background-image: url(../images/img1.jpg);*/
-  /*background-size: cover;*/
-  /*box-shadow: inset 0px 48px 36px -24px rgba(9, 9, 9, 0.75);*/
-  /*border-top: 15px solid #444;*/
-  /*background-color: #D4D4D4;*/
   margin: 0;
   width: 100%;
   /*height: 1345px;*/
-  min-height: 865px;
+  min-height: 805px;
   padding: 30px 0 0 0;
 }
 
@@ -152,7 +140,7 @@ body {
 }
 
 .owl-carousel .item {
-  padding: 60px 80px 80px 80px;
+  padding: 50px 70px;
 }
 
 .howToUseBlock {
@@ -165,7 +153,7 @@ body {
 
 .howToUse {
   background-color: #fff;
-  padding: 0;
+  padding: 0 20px;
   color: #444;
   border-radius: 2px;
   /*border-left: 2px solid #444;*/
@@ -176,6 +164,8 @@ body {
 .howToUseImg img {
   /*background-color: red;*/
   /*height: 200px;*/
+  max-width: 400px;
+  margin: 0 auto;
   width: 100px;
   opacity: .9;
 }
@@ -218,7 +208,7 @@ body {
 .forOrganizations {
   background-color: #fff;
   /*padding: 20px;*/
-  padding: 0;
+  padding: 0 20px;
   /*box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);*/
   color: #fff;
   border-radius: 2px;
@@ -233,6 +223,8 @@ body {
 .forOrganizationsImg img {
   width: 100px;
   opacity: .9;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .forOrganizations div {
@@ -352,24 +344,13 @@ body {
 .main-page {
   text-align: center;
   margin-top: -7px;
+  padding-top: 5px;
 }
 
 .main-page a {
   /* Embed this font from Adobe Edge Web Fonts at
 https://edgewebfonts.adobe.com/fonts#/?collection=cookie */
-
-  color: #444;
-  font-family: cookie;
-  font-feature-settings: "'liga' 1";
-  font-kerning: auto;
-  font-style: normal;
-  font-size: 40px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  line-height: 1em;
-  text-decoration: none;
-  text-transform: none;
-  word-spacing: 0em;
+  opacity: .7;
 }
 
 .constructor-page {
@@ -659,8 +640,83 @@ https://edgewebfonts.adobe.com/fonts#/?collection=cookie */
 
 /*****************************posts******************************/
 
+.home {
+  position: relative;
+  top: 30px;
+  height: 33px;
+  padding: 2px 5px;
+  z-index: 2;
+  width: 35px;
+  background-color: #fff;
+  border-radius: 0 3px 3px 0px;
+  border-right: 1px solid #eee;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.home:before {
+  content: '';
+  position: relative;
+  display: inline-block;
+  background-image: url(../images/icons/info6.png);
+  background-size: cover;
+  height: 20px;
+  width: 20px;
+  top: 3px;
+  opacity: .4;
+  /*background-color: red;*/
+  color: #999;
+}
+
+.home:hover {
+  width: 40px;
+  padding-left: 10px;
+  opacity: 1;
+}
+
+.home a {
+  margin-top: -35px;
+  position: relative;
+  display: block;
+  top: 9px;
+  left: -6px;
+  height: 33px;
+  width: 35px;
+}
+
+.scrollTop {
+  background-color: #eee;
+  opacity: .5;
+  position: fixed;
+  z-index: 2;
+  width: 100px;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.scrollTop:after {
+  content: '';
+  position: relative;
+  width: 25px;
+  height: 25px;
+  display: block;
+  background-image: url(../images/icons/scroll.png);
+  background-size: cover;
+  top: 92%;
+  left: 35px;
+  opacity: .6;
+  /*text-align: center;*/
+}
+
+.scrollTop:hover {
+  font-weight: bold;
+  opacity: .9;
+  cursor: pointer;
+}
+
 .sorting-params {
-  margin-top: 45px;
+  margin-top: 30px;
   color: #666;
 }
 
@@ -684,6 +740,14 @@ https://edgewebfonts.adobe.com/fonts#/?collection=cookie */
   background-color: #FAFAFA;
   color: #333;
   border-radius: 0;
+  cursor: pointer;
+}
+
+.sortToday {
+  cursor: pointer;
+}
+
+.sortAllTime {
   cursor: pointer;
 }
 
@@ -2354,6 +2418,7 @@ small {
 }
 
 .btnVoteInRow {
+  font-size: 13px;
   float: right;
   height: 60px;
   padding: 0;
@@ -2427,10 +2492,14 @@ small {
 
 
 .post-footer {
-  background-color: #fff;
-  margin-top: 25px;
-  border-top: 1px solid #E9E9E9;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
   height: 40px;
+  top: 100%;
+  /*background-color: #fff;*/
+  margin-top: 25px;
   /*padding: 10px;*/
 }
 
@@ -2570,18 +2639,27 @@ small {
 
   .goToPoll {
     text-align: center;
+    display: block;
     margin-top: 60px;
     margin-bottom: 60px;
   }
 
   .owl-carousel {
-    width: 400px;
-    margin-left: -24px;
+    /*width: 400px;*/
+    /*margin-left: -24px;*/
     /*background-color: red;*/
+    margin: 0 auto;
   }
 
+  .scrollTop {
+    display: none;
+    z-index: 0;
+    opacity: 0;
+  }
 
-
+  .gallerey {
+    min-height: 240px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -2614,7 +2692,7 @@ small {
   }
 
   .postItemsBlockInRow {
-    /*background-color: #32896E;*/
+    /*background-color: #32896E;
     background-color: #FAFAFA;
     border-radius: 3px;
     margin-bottom: 40px;
@@ -2704,8 +2782,26 @@ small {
   }
 
   .owl-carousel {
-    width: 400px;
+    width: 100%;
     margin-left: 0;
+  }
+
+  .owl-carousel .item {
+    padding: 30px 50px;
+  }
+
+  .gallerey {
+    min-height: 250px;
+  }
+
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .footer .container {
+    padding-right: 0;
+    padding-left: 0;
   }
 }
 

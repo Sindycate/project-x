@@ -55,10 +55,12 @@ router.get('/getPost', function(req, res, next) {
 
 router.get('/getPosts', function(req, res, next) {
 
+  console.log(req.query.sorting);
+
   var queryParams = {
     usersVotes: '',
     sorting: {
-      query: '',
+      query: ' WHERE `posts`.`date` >= NOW() - INTERVAL 24 HOUR  ORDER BY `posts`.`votes` DESC ',
       tables: 'posts'
     },
     orderBy: 'popular',
@@ -75,9 +77,14 @@ router.get('/getPosts', function(req, res, next) {
     }
   }
 
-  if (req.query.sorting == 'allPosts') {
+  if (req.query.sorting == 'allTime') {
     queryParams.sorting = {
-      query: '',
+      query: ' ORDER BY `posts`.`votes` DESC ',
+      tables: '`posts`'
+    };
+  } else if (req.query.sorting == 'today') {
+    queryParams.sorting = {
+      query: ' WHERE `posts`.`date` >= NOW() - INTERVAL 24 HOUR  ORDER BY `posts`.`votes` DESC ',
       tables: '`posts`'
     };
   }
@@ -93,11 +100,11 @@ router.get('/getPosts', function(req, res, next) {
 
       var userId = 0;
 
-      console.log('dsadsad');
+
       // console.log(_.sortBy(result[1].items, 'votes').reverse());
       // result =  _.sortBy(result[1].items, 'votes');
       result = _.sortBy(result, 'date');
-      result = _.sortBy(result, 'countVotesItems');
+      result = _.sortBy(result, 'votes');
       result.reverse();
 
       if (!req.user) {
@@ -150,8 +157,8 @@ router.get('/getUserPosts', function(req, res, next) {
 
       var userId = 0;
 
-      result = _.sortBy(result, 'date');
-      result.reverse();
+      // result = _.sortBy(result, 'date');
+      // result.reverse();
 
       if (!req.user) {
         for (var ii in result) {
@@ -233,9 +240,56 @@ function getPosts(queryParams, callback) {
         WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
       else "" \
       end) as imgProfile \
-    FROM ' + queryParams.sorting.tables + queryParams.sorting.query + ' ORDER BY `posts`.`votes` DESC ' + queryParams.limit, function(err, queryPosts) {
+    FROM ' + queryParams.sorting.tables + queryParams.sorting.query + queryParams.limit, function(err, queryPosts) {
 
-      console.log(queryPosts);
+      console.log(' SELECT * \
+    ' + queryParams.usersVotes + ', \
+    (case when \
+      (SELECT count(*) \
+      FROM users_posts, users \
+      WHERE users_posts.post_id = posts.id and `users`.`login` != "" and `users`.`id` = `users_posts`.`user_id`) \
+      then (SELECT `users`.`login` \
+        FROM users, users_posts \
+        WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
+      else \
+        (case when \
+          (SELECT count(*) \
+          FROM users_posts, users \
+          WHERE users_posts.post_id = posts.id and `users`.`name` != "" and `users`.`id` = `users_posts`.`user_id`) \
+          then (SELECT `users`.`name` \
+            FROM users, users_posts \
+            WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
+          else \
+            (case when \
+              (SELECT count(*) \
+              FROM users_posts \
+              WHERE users_posts.post_id = posts.id) \
+              then (SELECT `users`.`id` \
+                FROM users, users_posts \
+                WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
+              else 0 \
+              end) \
+          end) \
+      end) as loginPostOwners, \
+    (case when \
+      (SELECT count(*) \
+      FROM users_posts, users \
+      WHERE `users_posts`.`post_id` = `posts`.`id` and `users`.`login` = "" and `users`.`id` = `users_posts`.`user_id`) \
+      then (SELECT `users`.`id` \
+        FROM users, users_posts \
+        WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
+      else 0 \
+      end) as loginPostOwnersId, \
+    (case when \
+      (SELECT count(*) \
+      FROM users_posts, users \
+      WHERE `users_posts`.`post_id` = `posts`.`id` and `users`.`id` = `users_posts`.`user_id`) \
+      then (SELECT `users`.`img` \
+        FROM users, users_posts \
+        WHERE users_posts.post_id = posts.id and users_posts.user_id = users.id) \
+      else "" \
+      end) as imgProfile \
+    FROM ' + queryParams.sorting.tables + queryParams.sorting.query + queryParams.limit);
 
     if (Object.keys(queryPosts).length == 0) {
       console.log('empty posts');
@@ -282,7 +336,7 @@ function getItems(postsIdStr, posts, callback) {
           posts[items[ii].post_id].countVotesItems = 0;
         }
         posts[items[ii].post_id].countVotesItems += items[ii].votes;
-        // posts[items[ii].post_id].items = _.sortBy(posts[items[ii].post_id].items, 'votes').reverse();
+        posts[items[ii].post_id].items = _.sortBy(posts[items[ii].post_id].items, 'votes').reverse();
       }
       callback(true);
     } else {

@@ -3,8 +3,9 @@
 
 $(document).ready(function() {
   // var btnVote = $('.btn-vote');
-  var sortAllPosts = $('#sortAllPosts');
-  var sortFollowers = $('#sortFollowers');
+  var sortAllPosts = $('.sortAllPosts'),
+    sortFollowers = $('.sortFollowers'),
+    sortAllPostsType = $('.sortAllPostsType');
 
   function initListeners() {
     $('.btn-vote').click(function() {
@@ -51,6 +52,8 @@ $(document).ready(function() {
   });
 
   sortAllPosts.click(function() {
+    console.log('test');
+    sortAllPostsType.show('slow');
     // $.getJSON('/posts?sort=1&sortAllPosts=1', function(response) {
     //  if (response.success) {
     //    console.log('success');

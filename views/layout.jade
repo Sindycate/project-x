@@ -1,40 +1,40 @@
 doctype html
 html
-	head
-		title= title
-		link(rel='stylesheet' href='/stylesheets/bootstrap.min.css')
-		link(rel='stylesheet', href='/stylesheets/owl.carousel.css')
-		link(rel='stylesheet', href='/stylesheets/owl.theme.default.min.css')
-		link(rel='stylesheet', href='/stylesheets/style.css')
-		link(rel='stylesheet', href='/stylesheets/fileinput.min.css')
-	body.clearfix
-		div.menu
-			div.menu-items
-				ul.list-inline.col-lg-10.col-lg-offset-1.col-md-12.col-sm-12.col-xs-12
-					li.main-page.col-md-4.col-sm-4.col-xs-4
-						- if (profile)
-							a(href='/posts')
-								img(src="/images/Pollweber.png" width="160px"  alt="")
-						- else
-							a(href='/')
-								img(src="/images/Pollweber.png" width="160px"  alt="")
-					li.constructor-page.col-md-4.col-sm-4.col-xs-4
-						div
-							a(href='/constructer')
-					- if (profile)
-						li.profile-page.col-md-4.col-sm-4.col-xs-4
-							- if (profile.login != '')
-								a(href='/#{profile.login}') #{profile.login}
-							- else if (profile.login == '' && profile.name != '')
-								a(href='/#{profile.id}') #{profile.name}
-							- else
-								a(href='/#{profile.id}') #{profile.id}
-					- else
-						li.col-md-4.col-sm-4.col-xs-4.auth-page
-							.col-md-2.col-sm-3.col-xs-12
-								a(href='/login') Login
-							.col-md-2.col-sm-3.col-xs-12
-								a(href='/registration') Registration
-		block content
+  head
+    title= title
+    link(rel='stylesheet' href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/owl.carousel.css')
+    link(rel='stylesheet', href='/stylesheets/owl.theme.default.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/fileinput.min.css')
+  body.clearfix
+    div.menu
+      div.menu-items
+        ul.list-inline.col-lg-10.col-lg-offset-1.col-md-12.col-sm-12.col-xs-12
+          li.main-page.col-md-4.col-sm-4.col-xs-4
+            - if (profile)
+              a(href='/posts')
+                img(src="/images/logo3.jpg" width="160px"  alt="")
+            - else
+              a(href='/')
+                img(src="/images/logo3.jpg" width="160px"  alt="")
+          li.constructor-page.col-md-4.col-sm-4.col-xs-4
+            div
+              a(href='/constructer')
+          - if (profile)
+            li.profile-page.col-md-4.col-sm-4.col-xs-4
+              - if (profile.login != '')
+                a(href='/#{profile.login}') #{profile.login}
+              - else if (profile.login == '' && profile.name != '')
+                a(href='/#{profile.id}') #{profile.name}
+              - else
+                a(href='/#{profile.id}') #{profile.id}
+          - else
+            li.col-md-4.col-sm-4.col-xs-4.auth-page
+              .col-md-2.col-sm-3.col-xs-12
+                a(href='/login') Login
+              .col-md-2.col-sm-3.col-xs-12
+                a(href='/registration') Registration
+    block content
 
-	script(src="//use.edgefonts.net/cookie.js")
+  script(src="//use.edgefonts.net/cookie.js")

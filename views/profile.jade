@@ -58,6 +58,7 @@ block content
     - if (error == 'empty posts')
       .empty-posts.col-md-12.col-sm-12.col-xs-12.text-center У данного пользователя нет ни одной записи.
     - if (error != 'empty posts')
+      .scrollTop(style="display:none;")
       div.posts.col-md-12.col-sm-12.col-xs-12
       //- - for (var ii in data)
         div.posts.col-md-12(id='post#{data[ii].id}')
